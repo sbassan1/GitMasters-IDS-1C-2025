@@ -4,6 +4,8 @@ Para nuestra backend decidimos utilizar las herramientas y librerias usadas en c
 
 ---
 
+# Explicacion de tablas en la base de datos
+
 Nuestra base tendra tablas para:
 
 - Usuarios
@@ -64,11 +66,27 @@ Donde guardaremos el nombre del producto, su descripción, su stock actual, su p
             horarios VARCHAR(20) NOT NULL, -- formato: '08:00-18:00'
             dias_abiertos VARCHAR(30), -- formato: 'DDD-DDD-DDD-DDD ó (DDD-DDD) si son dias seguidos'
             direccion VARCHAR(50) NOT NULL,
-            dias_restock VARCHAR(30),NOT NULL -- formato: 'D,D,D,D,D'
+            dias_restock VARCHAR(30) NOT NULL, -- formato: 'D,D,D,D,D'
             telefono VARCHAR(40) NOT NULL -- 11 5412-6738
         );
 
 Donde guardaremos los datos de las sedes fisicas de la empresa, sus horarios de atencion (HH:MM - HH-MM), su direccion fisica, sus dias de abertura, sus dias de restock y su telefono de contacto.
 
 ---
+
+# Servidor : Correr dockerfile
+
+Nustro servidor donde usaremos la base de datos se levantará utilizando un dockerfile. Este usará postgreSQL17
+
+Es posible levantar el servidor de docker con el archivo docker-compose con ```docker compose up``` desde /backend . Es necesario tener docker desktop abierto.
+
+Para correr el sv en terminal puede usarse un comando de docker
+
+    docker exec -it backend-postgres-1 psql -U postgres -d tiendaPC
+
+la informacion del servidor para su uso en dbeaver: 
+
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_USER=postgres
+        - POSTGRES_DB=tiendaPC
 
