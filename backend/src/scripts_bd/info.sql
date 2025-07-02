@@ -1,10 +1,15 @@
 
-
-INSERT INTO Usuarios (nombre, email, contrasena, cumpleanos, administrador)
+-- ESTE USUARIO VA A SER EL ADMIN!
+INSERT INTO Usuarios (nombre, email, contrasena, cumpleanos, fecha_inicio)
 VALUES
-  ('Ana Torres', 'ana.torres@email.com', 'ana123', '1990-05-12', false),
-  ('Luis Gómez', 'luis.gomez@email.com', 'luis456', '1985-11-23', false),
-  ('María Pérez', 'maria.perez@email.com', 'maria789', '1988-03-17', true); -- administradora
+  ('Admin', 'admin@admin.com', 'admin', '2025-07-2', '2025-07-2')
+
+
+INSERT INTO Usuarios (nombre, email, contrasena, cumpleanos, fecha_inicio)
+VALUES
+  ('Ana Torres', 'ana.torres@email.com', 'ana123', '1990-05-12', '1990-05-12'),
+  ('Luis Gómez', 'luis.gomez@email.com', 'luis456', '1985-11-23', '1990-05-12'),
+  ('María Pérez', 'maria.perez@email.com', 'maria789', '1988-03-17', '1990-05-12');
 
 
 INSERT INTO Sedes (horarios, dias_abiertos, direccion, dias_restock, telefono)
