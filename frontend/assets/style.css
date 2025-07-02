@@ -65,3 +65,6 @@ body {
   z-index: 1;
 }
 
+.card-body {
+  padding: 3rem;
+}
