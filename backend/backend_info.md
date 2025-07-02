@@ -16,11 +16,11 @@ Nuestra base tendra tablas para:
             email VARCHAR(50) NOT NULL UNIQUE,
             contraseña VARCHAR(50) NOT NULL,
             cumpleaños DATE,
-            administrador BOOLEAN NOT NULL -- Si es true puede crear productos, pero no comprar
+            fecha_inicio DATE NOT NULL
         );
 
 Donde guardaremos los datos de los usuarios registrados en la página, su email y
-contraseña se usaran para ingresar, el nombre se usara en la UI y para cambiar/recuperar contraseña. Si administrador es TRUE entonces el usuario podra crear productos, añadir sedes y más. 
+contraseña se usaran para ingresar, el nombre se usara en la UI y para cambiar/recuperar contraseña. Tendremos un usuario especial con el email admin@admin.com que podra agregar cambiar las tablas de la base de datos.
         
 - Ventas
 
@@ -78,7 +78,7 @@ Donde guardaremos los datos de las sedes fisicas de la empresa, sus horarios de 
 
 Nustro servidor donde usaremos la base de datos se levantará utilizando un dockerfile. Este usará postgreSQL17
 
-Es posible levantar el servidor de docker con el archivo docker-compose con ```docker compose up``` desde /backend . Es necesario tener docker desktop abierto.
+Es posible levantar el servidor de docker con el archivo docker-compose con ```docker compose up -d``` desde /backend . Es necesario tener docker desktop abierto.
 
 Para correr el sv en terminal puede usarse un comando de docker
 
