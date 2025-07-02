@@ -78,7 +78,7 @@ Donde guardaremos los datos de las sedes fisicas de la empresa, sus horarios de 
 
 Nustro servidor donde usaremos la base de datos se levantará utilizando un dockerfile. Este usará postgreSQL17
 
-Es posible levantar el servidor de docker con el archivo docker-compose con ```docker compose up``` desde /backend . Es necesario tener docker desktop abierto.
+Es posible levantar el servidor de docker con el archivo docker-compose con ```docker compose up -d``` desde /backend . Es necesario tener docker desktop abierto.
 
 Para correr el sv en terminal puede usarse un comando de docker
 
