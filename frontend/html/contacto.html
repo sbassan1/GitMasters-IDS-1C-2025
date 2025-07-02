@@ -14,19 +14,26 @@
 
 <body>
     <!--  Header -->
-    <div class="container">
-        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"> 
+    <div class="container-fluid">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-around mb-4 border-bottom"> 
                 <div class="col-md-3 mb-2 mb-md-0"> 
                 <img src="../images/lizard_logo.png" width="100px" height="100px">
                 </div>
                     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"> 
-                        <li><a href="#" class="nav-link px-4 li-header-violet">Productos</a></li> 
-                        <li><a href="#" class="nav-link px-4 li-header-violet">Sedes</a></li> 
-                        <li><a href="#" class="nav-link px-4 li-header-violet">Contactos</a></li> 
+                        <li><a href="#" class="nav-link px-4 li-header-black">Productos</a></li> 
+                        <li><a href="#" class="nav-link px-4 li-header-black">Sucursales</a></li> 
+                        <li><a href="#" class="nav-link px-4 li-header-black">Contactos</a></li> 
                     </ul> 
             <div class="col-md-3 text-end"> 
-                <button type="button" class="btn btn-outline-violet me-2">Iniciar Sesion</button> 
-                <button type="button" class="btn btn-full-violet">Registrarse</button> 
+                <div class="dropdown">
+                    <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person user-icon"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="#">Iniciar sesión</a></li>
+                        <li><a class="dropdown-item" href="#">Registrarse</a></li>
+                    </ul>
+                </div>
             </div> 
         </header>
     </div>
