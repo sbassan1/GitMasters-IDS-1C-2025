@@ -1,10 +1,19 @@
 :root {
-  --light_blue: #acd8d7;
-  --white: #ffffff;
+    /* modo claro */
+    --light_blue: #acd8d7;
+    --white: #ffffff;
+    --black: #000000;
+
+    /* modo oscuro */
+    --dark_purple: #05020f;
+    --dark_grey: #1e1e1e;
+    --grey: #A8AAB1;
+    --almost_white: #e6e6e6;
+    --purple: #fc1efe;
 }
 
 body {
-    background-color: rgb(8, 0, 8);
+    background-color: var(--white);
     font-family: "Space Grotesk", sans-serif;
     font-style: normal;
 }
@@ -94,13 +103,12 @@ footer {
   padding: 3rem;
 }
 
-/* header temporal */
-.li-header-black {
+.li-header {
     font-size: 20px;
     color: black;
 }
 
-.li-header-black:hover {
+.li-header:hover {
     color: var(--light_blue);
 }
 
@@ -114,7 +122,6 @@ footer {
   color: var(--light_blue);
 }
 
-/* sucursales temporal - cambiar color*/
 .title {
     color: black;
     padding: 1.5rem 0;
@@ -178,4 +185,43 @@ footer {
 
 ::-webkit-scrollbar-thumb {
   background: var(--light_blue);
+}
+
+/* Estilos para modo oscuro */
+[data-bs-theme="dark"] {
+    background-color: var(--dark_purple);
+    color: var(--almost_white);
+}
+
+[data-bs-theme="dark"] .location-card {
+    border: 1px solid var(--dark_grey);
+}
+
+[data-bs-theme="dark"] .location-card h5, [data-bs-theme="dark"] .li-header, [data-bs-theme="dark"] .title, [data-bs-theme="dark"] .user-icon {
+    color: var(--almost_white);
+}
+
+[data-bs-theme="dark"] .location-card p, [data-bs-theme="dark"] .btn-location {
+    border-color: var(--grey);
+    color: var(--grey);
+    margin-top: 10px;
+}
+
+[data-bs-theme="dark"] .btn-location:hover {
+    background-color: var(--purple);
+    border-color: var(--purple);
+    color: var(--almost_white);
+}
+
+[data-bs-theme="dark"] .li-header:hover, [data-bs-theme="dark"] .user-icon:hover {
+    color: var(--purple);
+}
+
+/* scroll modo oscuro */
+[data-bs-theme="dark"] ::-webkit-scrollbar-track {
+   background-color: var(--dark_grey);
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb {
+    background-color: var(--purple);
 }
