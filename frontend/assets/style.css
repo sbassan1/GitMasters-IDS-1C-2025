@@ -1,5 +1,10 @@
+:root {
+  --light_blue: #acd8d7;
+  --white: #ffffff;
+}
+
 body {
-    background-color: #05020f;
+    background-color: white;
     font-family: "Space Grotesk", sans-serif;
     font-style: normal;
 }
@@ -69,8 +74,29 @@ body {
   padding: 3rem;
 }
 
+/* header temporal */
+.li-header-black {
+    font-size: 20px;
+    color: black;
+}
+
+.li-header-black:hover {
+    color: var(--light_blue);
+}
+
+.user-icon {
+  font-size: 1.8rem;
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.user-icon:hover {
+  color: var(--light_blue);
+}
+
+/* sucursales temporal - cambiar color*/
 .title {
-    color: white;
+    color: black;
     padding: 1.5rem 0;
     margin-bottom: 1rem;
 }
@@ -92,28 +118,44 @@ body {
     margin-bottom: 12px;
     transition: all 0.3s ease;
     cursor: pointer;
-    border: 1px solid #fc1efe;
+    border: 1px solid black;
     border-radius: 10px;
-}
-        
-.location-card:hover {
-    background-color: #220260;
 }
 
 .location-card h5 {
-    color: white;
+    color: black;
     margin-bottom: 8px;
     font-size: 1.1rem;
 }
 
 .location-card p {
     margin-bottom: 5px;
-    color: #aab5be;
+    color: black;
 }
 
 .btn-location {
-    background-color: #fc1efe;
-    border-color: #fc1efe;
-    color: white;
+    border-color: black;
+    color: black;
     margin-top: 10px;
+}
+
+.btn-location:hover {
+    background-color: var(--light_blue);
+    border-color: var(--light_blue);
+    color: black;
+    margin-top: 10px;
+}
+
+/* scroll */
+::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e8eaed;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--light_blue);
 }
