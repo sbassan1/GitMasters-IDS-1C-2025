@@ -5,11 +5,12 @@
     --black: #000000;
 
     /* modo oscuro */
-    --dark_purple: #05020f;
-    --dark_grey: #1e1e1e;
-    --grey: #A8AAB1;
     --almost_white: #e6e6e6;
     --purple: #fc1efe;
+    --dark_purple: #05020f;
+    --grey: #A8AAB1;
+    --dark_grey: #1e1e1e;
+    --dark_blue: #220260;
 }
 
 body {
@@ -20,37 +21,37 @@ body {
 
 .li-header-violet {
     font-size: 30px;
-    color: #fc1efe;
+    color: var(--purple);
 }
 
 .li-header-violet:hover {
-    color: #220260;
+    color: var(--dark_blue);
 }
 
 .btn-outline-violet {
     font-size: 20px;
-    color: #fc1efe;
-    border-color: #fc1efe;
+    color: var(--purple);
+    border-color: var(--purple);
     background-color: transparent;
 }
 
 .btn-outline-violet:hover {
     background-color: #1a001f;
-    color: #fc1efe;
-    border-color: #fc1efe;
+    color: var(--purple);
+    border-color: var(--purple);
 }
 
 .btn-full-violet {
     font-size: 20px;
-    background-color: #fc1efe;
-    border-color: #fc1efe;
-    color: white;
+    background-color: var(--purple);
+    border-color: var(--purple);
+    color: var(--white);
 }
 
 .btn-full-violet:hover {
-    background-color: #220260;
-    border-color: #220260;
-    color: white;
+    background-color: var(--dark_blue);
+    border-color: var(--dark_blue);
+    color: var(--white);
 }
 
 .custom-device-left {
@@ -180,7 +181,7 @@ footer {
 }
 
 ::-webkit-scrollbar-track {
-  background: #e8eaed;
+  background: var(--almost_white);
 }
 
 ::-webkit-scrollbar-thumb {
