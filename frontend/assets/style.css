@@ -1,47 +1,57 @@
 :root {
-  --light_blue: #acd8d7;
-  --white: #ffffff;
+    /* modo claro */
+    --light_blue: #ea80fc;
+    --white: #ffffff;
+    --black: #000000;
+
+    /* modo oscuro */
+    --almost_white: #e6e6e6;
+    --purple: #fc1efe;
+    --dark_purple: #05020f;
+    --grey: #A8AAB1;
+    --dark_grey: #1e1e1e;
+    --dark_blue: #220260;
 }
 
 body {
-    background-color: rgb(255, 255, 255);
+    background-color: var(--white);
     font-family: "Space Grotesk", sans-serif;
     font-style: normal;
 }
 
 .li-header-violet {
     font-size: 30px;
-    color: #fc1efe;
+    color: var(--purple);
 }
 
 .li-header-violet:hover {
-    color: #220260;
+    color: var(--dark_blue);
 }
 
 .btn-outline-violet {
     font-size: 20px;
-    color: #fc1efe;
-    border-color: #fc1efe;
-    background-color: transparent;
+    color: var(--white);
+    border-color: var(--light_blue);
+    background-color: var(--light_blue);
 }
 
 .btn-outline-violet:hover {
-    background-color: #1a001f;
-    color: #fc1efe;
-    border-color: #fc1efe;
+    background-color: var(--purple);
+    color: var(--white);
+    border-color: var(--light_blue);
 }
 
 .btn-full-violet {
     font-size: 20px;
-    background-color: #fc1efe;
-    border-color: #fc1efe;
-    color: white;
+    background-color: var(--light_blue);
+    border-color: var(--light_blue);
+    color: var(--white);
 }
 
 .btn-full-violet:hover {
-    background-color: #220260;
-    border-color: #220260;
-    color: white;
+    background-color: var(--purple);
+    border-color: var(--purple);
+    color: var(--white);
 }
 
 .custom-device-left {
@@ -64,6 +74,10 @@ body {
   transform: rotate(30deg);
   opacity: 0.8;
   z-index: 0;
+}
+
+.light-prod-box p, .light-prod-box h2, .dark-prod-box p, .dark-prod-box h2 {
+    color: black;
 }
 
 .foto-prod-1 {
@@ -94,13 +108,12 @@ footer {
   padding: 3rem;
 }
 
-/* header temporal */
-.li-header-black {
+.li-header {
     font-size: 20px;
     color: black;
 }
 
-.li-header-black:hover {
+.li-header:hover {
     color: var(--light_blue);
 }
 
@@ -114,7 +127,6 @@ footer {
   color: var(--light_blue);
 }
 
-/* sucursales temporal - cambiar color*/
 .title {
     color: black;
     padding: 1.5rem 0;
@@ -133,7 +145,7 @@ footer {
     padding: 15px;
 }
 
-.location-card {
+.location-card, .dark-prod-box, .light-prod-box {
     padding: 12px;
     margin-bottom: 12px;
     transition: all 0.3s ease;
@@ -173,9 +185,78 @@ footer {
 }
 
 ::-webkit-scrollbar-track {
-  background: #e8eaed;
+  background: var(--almost_white);
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--light_blue);
+}
+
+/* Estilos para modo oscuro */
+[data-bs-theme="dark"] {
+    background-color: var(--dark_purple);
+    color: var(--almost_white);
+}
+
+[data-bs-theme="dark"] .location-card {
+    border: 1px solid var(--dark_grey);
+}
+
+[data-bs-theme="dark"] .location-card h5, [data-bs-theme="dark"] .li-header, [data-bs-theme="dark"] .title, [data-bs-theme="dark"] .user-icon, [data-bs-theme="dark"] .light-prod-box p, [data-bs-theme="dark"] .light-prod-box h2, [data-bs-theme="dark"] .dark-prod-box p, [data-bs-theme="dark"] .dark-prod-box h2 {
+    color: var(--almost_white);
+}
+
+[data-bs-theme="dark"] .location-card p, [data-bs-theme="dark"] .btn-location {
+    border-color: var(--grey);
+    color: var(--grey);
+    margin-top: 10px;
+}
+
+[data-bs-theme="dark"] .btn-location:hover {
+    background-color: var(--purple);
+    border-color: var(--purple);
+    color: var(--almost_white);
+}
+
+[data-bs-theme="dark"] .li-header:hover, [data-bs-theme="dark"] .user-icon:hover {
+    color: var(--purple);
+}
+
+/* scroll modo oscuro */
+[data-bs-theme="dark"] ::-webkit-scrollbar-track {
+   background-color: var(--dark_grey);
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb {
+    background-color: var(--purple);
+}
+
+[data-bs-theme="dark"] .dark-prod-box {
+    background-color: black;
+}
+
+[data-bs-theme="dark"] .light-prod-box {
+    background-color: rgb(34, 0, 41);
+}
+
+[data-bs-theme="dark"] .btn-outline-violet {
+    color: var(--purple);
+    border-color: var(--purple);
+    background-color: transparent;
+}
+
+[data-bs-theme="dark"] .btn-outline-violet:hover {
+    background-color: #1a001f;
+    color: var(--purple);
+    border-color: var(--purple);
+}
+
+[data-bs-theme="dark"] .btn-full-violet {
+    background-color: var(--purple);
+    border-color: var(--purple);
+}
+
+[data-bs-theme="dark"] .btn-full-violet:hover {
+    background-color: var(--dark_blue);
+    border-color: var(--dark_blue);
 }
