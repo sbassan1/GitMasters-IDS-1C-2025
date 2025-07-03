@@ -1,6 +1,6 @@
 CREATE TABLE Sedes (
     id SERIAL PRIMARY KEY,
-    sede VARCHAR(30) NOT NULL UNIQUE, -- formato: 'Sede 1'
+    nombre VARCHAR(30) NOT NULL UNIQUE, -- formato: 'Sede 1'
     horarios VARCHAR(20) NOT NULL, -- formato: '08:00-18:00'
     dias_abiertos VARCHAR(30), -- formato: 'DDD-DDD-DDD-DDD ó (DDD-DDD) si son dias seguidos'
     direccion VARCHAR(50) NOT NULL,
