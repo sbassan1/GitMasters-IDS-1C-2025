@@ -75,9 +75,9 @@ router.get('/cliente/:clienteId', async (req, res) => {
     }
 });
 
-router.get('/metodo/:metodo_de_pago', async (req, res) => {
+router.get('/metodo/:metodo_pago', async (req, res) => {
     try {
-        const ventas = await ventasQuery.getVentasByMetodo(req.params.metodo_de_pago);
+        const ventas = await ventasQuery.getVentasByMetodo(req.params.metodo_pago);
 
         if (!ventas || ventas.length === 0) {
             return res.status(404).json({ message: 'No se encontraron ventas con ese método de pago.' });
@@ -93,13 +93,13 @@ router.get('/metodo/:metodo_de_pago', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { valor, fecha, cliente_id, metodo_de_pago } = req.body;
+        const { valor, fecha, id_usuario, metodo_pago } = req.body;
 
-        if (!valor || !fecha || !cliente_id || !metodo_de_pago) {
+        if (!valor || !fecha || !id_usuario || !metodo_pago) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
         }
 
-        const nuevaVenta = await ventasQuery.createVenta(valor, fecha, cliente_id, metodo_de_pago);
+        const nuevaVenta = await ventasQuery.createVenta(valor, fecha, id_usuario, metodo_pago);
         res.status(201).json(nuevaVenta);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -109,13 +109,13 @@ router.post('/', async (req, res) => {
 // >>>>>>>>>>> REQUESTS PUT <<<<<<<<<<
 router.put('/:id', async (req, res) => {
     try {
-        const { valor, fecha, cliente_id, metodo_de_pago } = req.body;
+        const { valor, fecha, id_usuario, metodo_pago } = req.body;
 
-        if (!valor || !fecha || !cliente_id || !metodo_de_pago) {
+        if (!valor || !fecha || !id_usuario || !metodo_pago) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
         }
 
-        const ventaActualizada = await ventasQuery.updateVenta(req.params.id, valor, fecha, cliente_id, metodo_de_pago);
+        const ventaActualizada = await ventasQuery.updateVenta(req.params.id, valor, fecha, id_usuario, metodo_pago);
         
         if (!ventaActualizada) {
             return res.status(404).json({ message: 'Venta no encontrada.' });

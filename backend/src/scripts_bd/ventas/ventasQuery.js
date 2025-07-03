@@ -42,33 +42,33 @@ async function getVentasByFecha(fecha) {
     }
 }
 
-async function getVentasByCliente(clienteId) {
+async function getVentasByCliente(id_usuario) {
     try {
-        const response = await dbClient.query('SELECT * FROM ventas v WHERE v.cliente_id = $1;', [clienteId]);
+        const response = await dbClient.query('SELECT * FROM ventas v WHERE v.id_usuario = $1;', [id_usuario]);
         return response.rows;
     } catch (error) {
-        console.error(`Error al obtener las ventas del cliente con ID ${clienteId}:`, error);
-        throw new Error(`No se pudieron obtener las ventas del cliente con ID ${clienteId}`);
+        console.error(`Error al obtener las ventas del cliente con ID ${id_usuario}:`, error);
+        throw new Error(`No se pudieron obtener las ventas del cliente con ID ${id_usuario}`);
     }
 }
 
-async function getVentasByMetodo(metodo_de_pago) {
+async function getVentasByMetodo(metodo_pago) {
     try {
-        const response = await dbClient.query('SELECT * FROM ventas v WHERE v.metodo_de_pago = $1;', [metodo_de_pago]);
+        const response = await dbClient.query('SELECT * FROM ventas v WHERE v.metodo_pago = $1;', [metodo_pago]);
         return response.rows;
     } catch (error) {
-        console.error(`Error al obtener las ventas con método de pago ${metodo_de_pago}:`, error);
-        throw new Error(`No se pudieron obtener las ventas con método de pago ${metodo_de_pago}`);
+        console.error(`Error al obtener las ventas con método de pago ${metodo_pago}:`, error);
+        throw new Error(`No se pudieron obtener las ventas con método de pago ${metodo_pago}`);
     }
 }
 
 // --- POST ---
 
-async function createVenta(valor, fecha, cliente_id, metodo_de_pago) {
+async function createVenta(valor, fecha, id_usuario, metodo_pago) {
     try {
         const result = await dbClient.query(
-            'INSERT INTO ventas (valor, fecha, cliente_id, metodo_de_pago) VALUES ($1, $2, $3, $4) RETURNING *;',
-            [valor, fecha, cliente_id, metodo_de_pago]
+            'INSERT INTO ventas (valor, fecha, id_usuario, metodo_pago) VALUES ($1, $2, $3, $4) RETURNING *;',
+            [valor, fecha, id_usuario, metodo_pago]
         );
         return await getVentaById(id);
     } catch (error) {
@@ -94,11 +94,11 @@ async function deleteVenta(id) {
 
 // --- PUT GENERAL ---
 
-async function updateVenta(id, valor, fecha, cliente_id, metodo_de_pago) {
+async function updateVenta(id, valor, fecha, id_usuario, metodo_pago) {
     try {
         const result = await dbClient.query(
-            'UPDATE ventas SET valor = $1, fecha = $2, cliente_id = $3, metodo_de_pago = $4 WHERE id = $5 RETURNING *;',
-            [valor, fecha, cliente_id, metodo_de_pago, id]
+            'UPDATE ventas SET valor = $1, fecha = $2, id_usuario = $3, metodo_pago = $4 WHERE id = $5 RETURNING *;',
+            [valor, fecha, id_usuario, metodo_pago, id]
         );
         if (result.rowCount === 0) {
             throw new Error(`No se encontró la venta con ID ${id}`);
