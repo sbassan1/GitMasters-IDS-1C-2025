@@ -12,9 +12,9 @@ VALUES
   ('María Pérez', 'maria.perez@email.com', 'maria789', '1988-03-17', '1990-05-12');
 
 
-INSERT INTO Sedes (horarios, dias_abiertos, direccion, dias_restock, telefono)
+INSERT INTO Sedes (nombre ,horarios, dias_abiertos, direccion, dias_restock, telefono)
 VALUES
-  ('08:00-18:00', 'LUN-MAR-MIE-JUE-VIE', 'Av. Siempre Viva 742', 'LUN,MIE,VIER', '11 5412-6738');
+  ('Sede Belgrano','08:00-18:00', 'LUN-MAR-MIE-JUE-VIE', 'Av. Siempre Viva 742', 'LUN,MIE,VIER', '11 5412-6738');
 
 
 -- ACCESORIOS
