@@ -171,11 +171,19 @@ footer {
     padding: 15px;
 }
 
-.location-card, .light-prod-box {
+.location-card {
     padding: 12px;
     margin-bottom: 12px;
     transition: all 0.3s ease;
     cursor: pointer;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.light-prod-box {
+    padding: 12px;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
     border: 1px solid black;
     border-radius: 10px;
 }
@@ -185,7 +193,6 @@ footer {
     margin-bottom: 12px;
     background-color: #a441b6;
     transition: all 0.3s ease;
-    cursor: pointer;
     border: 1px solid black;
     border-radius: 10px;
 }
