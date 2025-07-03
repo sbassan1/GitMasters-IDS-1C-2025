@@ -1,4 +1,4 @@
-const dbClient = require('../database');
+const dbClient = require('../../database');
 
 // --- GET ---
 

@@ -1,4 +1,8 @@
-const productosAPI = require('./scripts_bd/productosAPI'); // Importar
+const productosAPI = require('./scripts_bd/productos/productosAPI'); // Importar
+const usuariosAPI = require('./scripts_bd/usuarios/usuariosAPI'); // Importar
+const sedesAPI = require('./scripts_bd/sedes/sedesAPI'); // Importar
+const ventasAPI = require('./scripts_bd/ventas/ventasAPI'); // Importar
+const v_productosAPI = require('./scripts_bd/venta productos/v_productosAPI'); // Importar
 const express = require('express');
 
 
@@ -20,6 +24,10 @@ const dbClient = require('./database');
 app.use(express.json()); // Importante para recibir JSON
 
 app.use('/api/v1/productos', productosAPI);
+app.use('/api/v1/usuarios', usuariosAPI);
+app.use('/api/v1/sedes', sedesAPI);
+app.use('/api/v1/ventas', ventasAPI);
+app.use('/api/v1/ventas_productos', v_productosAPI);
 
 
 app.listen(port, () => {

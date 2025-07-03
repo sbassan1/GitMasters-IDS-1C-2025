@@ -1,8 +1,6 @@
-const dbClient = require('../database');
+const dbClient = require('../../database');
 
 // --- GET ---
-
-
 
 async function getAllProductos() {
     try {
@@ -46,11 +44,17 @@ async function getAllProductosTipo(tipo) {
 
 async function getAllProductosSedeId(sede_id) {
     try {
+        const sedeExists = await dbClient.query("SELECT id FROM Sedes WHERE id = $1;", [sede_id]);
+        
+        if (sedeExists.rowCount === 0) {
+            throw new Error(`No existe sede con ID ${sede_id}`);
+        }
+
         const response = await dbClient.query("SELECT * FROM Productos WHERE sede_id = $1;", [sede_id]);
         return response.rows;
     } catch (error) {
         console.error(`Error al obtener productos de sede ${sede_id}:`, error);
-        throw new Error(`No se pudieron obtener los productos de la sede ${sede_id}`);
+        throw error; 
     }
 }
 
@@ -58,6 +62,19 @@ async function getAllProductosSedeId(sede_id) {
 
 async function createProducto(nombre, descripcion, stock, precio_venta, tipo, imagen, sede_id) {
     try {
+        
+        const sedeExists = await dbClient.query("SELECT id FROM Sedes WHERE id = $1;", [sede_id]);
+        
+        if (sedeExists.rowCount === 0) {
+            throw new Error(`No existe sede con ID ${sede_id}`);
+        }
+
+        const nombreExists = await dbClient.query("SELECT id FROM Productos WHERE nombre = $1;", [nombre]);
+        
+        if (nombreExists.rowCount > 0) {
+            throw new Error(`Ya existe un producto con el nombre '${nombre}'`);
+        }
+
         await dbClient.query(
             `INSERT INTO Productos (nombre, descripcion, stock, precio_venta, tipo, imagen, sede_id)
              VALUES ($1, $2, $3, $4, $5, $6, $7);`,
@@ -66,7 +83,7 @@ async function createProducto(nombre, descripcion, stock, precio_venta, tipo, im
         return await getProductoNombre(nombre);
     } catch (error) {
         console.error("Error al crear producto:", error);
-        throw new Error("No se pudo crear el producto");
+        throw error; 
     }
 }
 
@@ -86,20 +103,35 @@ async function deleteProductoId(id) {
 
 async function updateProducto(id, nombre, descripcion, stock, precio_venta, tipo, imagen, sede_id) {
     try {
+        
+        const productoExists = await dbClient.query("SELECT id FROM Productos WHERE id = $1;", [id]);
+        
+        if (productoExists.rowCount === 0) {
+            throw new Error(`No existe producto con ID ${id}`);
+        }
+
+        const sedeExists = await dbClient.query("SELECT id FROM Sedes WHERE id = $1;", [sede_id]);
+        
+        if (sedeExists.rowCount === 0) {
+            throw new Error(`No existe sede con ID ${sede_id}`);
+        }
+
+        const nombreExists = await dbClient.query("SELECT id FROM Productos WHERE nombre = $1 AND id != $2;", [nombre, id]);
+        
+        if (nombreExists.rowCount > 0) {
+            throw new Error(`Ya existe otro producto con el nombre '${nombre}'`);
+        }
+
         const result = await dbClient.query(
             `UPDATE Productos SET nombre = $2, descripcion = $3, stock = $4, precio_venta = $5,
              tipo = $6, imagen = $7, sede_id = $8 WHERE id = $1;`,
             [id, nombre, descripcion, stock, precio_venta, tipo, imagen, sede_id]
         );
         
-        if (result.rowCount === 0) {
-            throw new Error(`No existe producto con ID ${id}`);
-        }
-        
         return await getProductoId(id);
     } catch (error) {
         console.error(`Error al actualizar producto con ID ${id}:`, error);
-        throw new Error(`No se pudo actualizar el producto con ID ${id}`);
+        throw error; 
     }
 }
 
@@ -107,107 +139,149 @@ async function updateProducto(id, nombre, descripcion, stock, precio_venta, tipo
 
 async function updateNombreProductoId(id, nombre) {
     try {
-        const result = await dbClient.query("UPDATE Productos SET nombre = $2 WHERE id = $1;", [id, nombre]);
+
+        const productoExists = await dbClient.query("SELECT id FROM Productos WHERE id = $1;", [id]);
         
-        if (result.rowCount === 0) {
+        if (productoExists.rowCount === 0) {
             throw new Error(`No existe producto con ID ${id}`);
         }
+
+        const nombreExists = await dbClient.query("SELECT id FROM Productos WHERE nombre = $1 AND id != $2;", [nombre, id]);
+        
+        if (nombreExists.rowCount > 0) {
+            throw new Error(`Ya existe otro producto con el nombre '${nombre}'`);
+        }
+
+        const result = await dbClient.query("UPDATE Productos SET nombre = $2 WHERE id = $1;", [id, nombre]);
         
         return await getProductoId(id);
 
     } catch (error) {
         console.error(`Error al actualizar nombre del producto ${id}:`, error);
-        throw new Error(`No se pudo actualizar el nombre del producto con ID ${id}`);
+        throw error; 
     }
 }
 
 async function updateDescripcionProductoId(id, descripcion) {
     try {
-        const result = await dbClient.query("UPDATE Productos SET descripcion = $2 WHERE id = $1;", [id, descripcion]);
+        const productoExists = await dbClient.query("SELECT id FROM Productos WHERE id = $1;", [id]);
         
-        if (result.rowCount === 0) {
+        if (productoExists.rowCount === 0) {
             throw new Error(`No existe producto con ID ${id}`);
         }
+
+        const result = await dbClient.query("UPDATE Productos SET descripcion = $2 WHERE id = $1;", [id, descripcion]);
         
         return await getProductoId(id);
     } catch (error) {
         console.error(`Error al actualizar descripción del producto ${id}:`, error);
-        throw new Error(`No se pudo actualizar la descripción del producto con ID ${id}`);
+        throw error; 
     }
 }
 
 async function updateStockProductoId(id, stock) {
     try {
-        const result = await dbClient.query("UPDATE Productos SET stock = $2 WHERE id = $1;", [id, stock]);
         
-        if (result.rowCount === 0) {
+        const productoExists = await dbClient.query("SELECT id FROM Productos WHERE id = $1;", [id]);
+        
+        if (productoExists.rowCount === 0) {
             throw new Error(`No existe producto con ID ${id}`);
         }
+
+        // Validar que el stock sea un número positivo
+        if (stock < 0) {
+            throw new Error(`El stock no puede ser negativo`);
+        }
+
+        const result = await dbClient.query("UPDATE Productos SET stock = $2 WHERE id = $1;", [id, stock]);
         
         return await getProductoId(id);
     } catch (error) {
         console.error(`Error al actualizar stock del producto ${id}:`, error);
-        throw new Error(`No se pudo actualizar el stock del producto con ID ${id}`);
+        throw error; 
     }
 }
 
 async function updatePrecioProductoId(id, precio_venta) {
     try {
-        const result = await dbClient.query("UPDATE Productos SET precio_venta = $2 WHERE id = $1;", [id, precio_venta]);
         
-        if (result.rowCount === 0) {
+        const productoExists = await dbClient.query("SELECT id FROM Productos WHERE id = $1;", [id]);
+        
+        if (productoExists.rowCount === 0) {
             throw new Error(`No existe producto con ID ${id}`);
         }
+
+        // Validar que el precio sea positivo
+        if (precio_venta <= 0) {
+            throw new Error(`El precio debe ser mayor que 0`);
+        }
+
+        const result = await dbClient.query("UPDATE Productos SET precio_venta = $2 WHERE id = $1;", [id, precio_venta]);
         
         return await getProductoId(id);
     } catch (error) {
         console.error(`Error al actualizar precio del producto ${id}:`, error);
-        throw new Error(`No se pudo actualizar el precio del producto con ID ${id}`);
+        throw error; 
     }
 }
 
 async function updateTipoProductoId(id, tipo) {
     try {
-        const result = await dbClient.query("UPDATE Productos SET tipo = $2 WHERE id = $1;", [id, tipo]);
         
-        if (result.rowCount === 0) {
+        const productoExists = await dbClient.query("SELECT id FROM Productos WHERE id = $1;", [id]);
+        
+        if (productoExists.rowCount === 0) {
             throw new Error(`No existe producto con ID ${id}`);
         }
+
+        const result = await dbClient.query("UPDATE Productos SET tipo = $2 WHERE id = $1;", [id, tipo]);
         
         return await getProductoId(id);
     } catch (error) {
         console.error(`Error al actualizar tipo del producto ${id}:`, error);
-        throw new Error(`No se pudo actualizar el tipo del producto con ID ${id}`);
+        throw error; 
     }
 }
 
 async function updateImagenUrlProductoId(id, imagen) {
     try {
-        const result = await dbClient.query("UPDATE Productos SET imagen = $2 WHERE id = $1;", [id, imagen]);
         
-        if (result.rowCount === 0) {
+        const productoExists = await dbClient.query("SELECT id FROM Productos WHERE id = $1;", [id]);
+        
+        if (productoExists.rowCount === 0) {
             throw new Error(`No existe producto con ID ${id}`);
         }
+
+        const result = await dbClient.query("UPDATE Productos SET imagen = $2 WHERE id = $1;", [id, imagen]);
         
         return await getProductoId(id);
     } catch (error) {
         console.error(`Error al actualizar imagen del producto ${id}:`, error);
-        throw new Error(`No se pudo actualizar la imagen del producto con ID ${id}`);
+        throw error; 
     }
 }
 
 async function updateSedeProductoId(id, sede_id) {
     try {
-        const result = await dbClient.query("UPDATE Productos SET sede_id = $2 WHERE id = $1;", [id, sede_id]);
         
-        if (result.rowCount === 0) {
+        const productoExists = await dbClient.query("SELECT id FROM Productos WHERE id = $1;", [id]);
+        
+        if (productoExists.rowCount === 0) {
             throw new Error(`No existe producto con ID ${id}`);
         }
+
+        const sedeExists = await dbClient.query("SELECT id FROM Sedes WHERE id = $1;", [sede_id]);
+        
+        if (sedeExists.rowCount === 0) {
+            throw new Error(`No existe sede con ID ${sede_id}`);
+        }
+
+        const result = await dbClient.query("UPDATE Productos SET sede_id = $2 WHERE id = $1;", [id, sede_id]);
         
         return await getProductoId(id);
     } catch (error) {
         console.error(`Error al actualizar sede del producto ${id}:`, error);
-        throw new Error(`No se pudo actualizar la sede del producto con ID ${id}`);
+        throw error; 
     }
 }
 

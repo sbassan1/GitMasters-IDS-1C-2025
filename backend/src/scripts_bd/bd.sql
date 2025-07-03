@@ -10,8 +10,8 @@ CREATE TABLE Sedes (
 
 CREATE TABLE Productos (
     id SERIAL PRIMARY KEY,
-    nombre VARCHAR(20),
-    descripcion VARCHAR(60),
+    nombre VARCHAR(20) NOT NULL,
+    descripcion VARCHAR(60) NOT NULL,
     stock INT NOT NULL DEFAULT 0,
     precio_venta INT NOT NULL,
     tipo VARCHAR(20) NOT NULL,
