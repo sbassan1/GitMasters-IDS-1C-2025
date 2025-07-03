@@ -157,6 +157,14 @@ footer {
     overflow: hidden;
 }
 
+.contact-card {
+    background-color: var(--light_violet);
+}
+
+.space-filler {
+    background-color: var(--white);
+}
+
 .locations-container {
     height: 650px;
     overflow-y: auto;
@@ -242,6 +250,14 @@ footer {
     border-color: var(--grey);
     color: var(--grey);
     margin-top: 10px;
+}
+
+[data-bs-theme="dark"] .contact-card {
+    background-color: var(--black);
+}
+
+[data-bs-theme="dark"] .space-filler {
+    background-color: var(--dark_blue);
 }
 
 [data-bs-theme="dark"] .btn-location:hover {

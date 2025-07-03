@@ -79,22 +79,22 @@
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh">
         <div class="row">
             <div class="col-sm-12">
-                <div class="card w-100" style="max-width: 600px;">
+                <div class="card w-100 contact-card" style="max-width: 600px;">
                     <div class="card-body">
                         <h3 class="text-center mb-4">Contacto</h3>
 
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Nombre y apellido" required>
+                            <input type="text" class="form-control space-filler" placeholder="Nombre y apellido" required>
                         </div>
 
                         <div class="input-group mb-3">
-                            <input type="email" class="form-control is-invalid" placeholder="Email" id="email" required>
+                            <input type="email" class="form-control is-invalid space-filler" placeholder="Email" id="email" required>
                             <div class="invalid-feedback">Ingresá un email válido.</div>
-                            <input type="text" class="form-control" placeholder="Teléfono" required>
+                            <input type="text" class="form-control space-filler" placeholder="Teléfono" required>
                         </div>
 
                         <div class="mb-4">
-                            <textarea class="form-control" placeholder="Mensaje" rows="4" required></textarea>
+                            <textarea class="form-control space-filler" placeholder="Mensaje" rows="4" required></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-full-violet"
@@ -115,15 +115,25 @@
         const toggleBtn = document.getElementById('toggleTheme');
         const icon = document.getElementById('themeIcon');
 
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.setAttribute('data-bs-theme', savedTheme);
+            icon.className = savedTheme === 'dark'
+                ? 'bi bi-brightness-high-fill user-icon'
+                : 'bi bi-moon-fill user-icon';
+        }
+
         toggleBtn.addEventListener('click', () => {
             const currentTheme = body.getAttribute('data-bs-theme');
             const isDark = currentTheme === 'dark';
+            const newTheme = isDark ? 'light' : 'dark';
 
-            body.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
+            body.setAttribute('data-bs-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
 
-            icon.className = isDark
-                ? 'bi bi-moon-fill user-icon' // modo claro
-                : 'bi bi-brightness-high-fill user-icon'; // modo oscuro
+            icon.className = newTheme === 'dark'
+                ? 'bi bi-brightness-high-fill user-icon'
+                : 'bi bi-moon-fill user-icon';
         });
     </script>
 </body>
