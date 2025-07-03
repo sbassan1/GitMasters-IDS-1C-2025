@@ -1,114 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <link rel="stylesheet" href="../assets/style.css">
-    <title>Producto</title>
-    <link rel="icon" href="../images/lizard_logo_icon.ico">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <link rel="stylesheet" href="../assets/style.css">
+  <title>Producto</title>
+  <link rel="icon" href="../images/lizard_logo_icon.ico">
 </head>
+
 <body>
 
   <body data-bs-theme="dark">
     <!--  Header -->
     <div class="container-fluid">
-        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-around mb-4 border-bottom"> 
-                <div class="col-md-3 mb-2 mb-md-0"> 
-                    <a href="main.html">
-                        <img src="../images/lizard_logo_icon.ico" alt="Sucursales" class="img-fluid rounded" style="width: 100px; height: 100px;">
-                    </a>
-                </div>
-                    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"> 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle px-4 li-header-black" href="#" id="dropdownMenuButton" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Productos</a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="perifericos.html">Accesorios</a></li>
-                            <li><a class="dropdown-item" href="componentes.html">Auriculares</a></li>
-                            <li><a class="dropdown-item" href="accesorios.html">Mouse</a></li>
-                            <li><a class="dropdown-item" href="accesorios.html">Teclados</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="sucursales.html" class="nav-link px-4 li-header-black">Sucursales</a></li> 
-                        <li><a href="contacto.html" class="nav-link px-4 li-header-black">Contacto</a></li> 
-                    </ul> 
-            <div class="col-md-3 text-end"> 
-                <div class="dropdown"> 
-                    <button id="toggleTheme" class="btn btn-link">
-                        <i id="themeIcon" class="bi bi-brightness-high-fill user-icon"></i>
-                    </button>
+      <header
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-around mb-4 border-bottom">
+        <div class="col-md-3 mb-2 mb-md-0">
+          <a href="main.html">
+            <img src="../images/lizard_logo_icon.ico" alt="Sucursales" class="img-fluid rounded"
+              style="width: 100px; height: 100px;">
+          </a>
+        </div>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle px-4 li-header-black" href="#" id="dropdownMenuButton" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Productos</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item" href="perifericos.html">Accesorios</a></li>
+              <li><a class="dropdown-item" href="componentes.html">Auriculares</a></li>
+              <li><a class="dropdown-item" href="accesorios.html">Mouse</a></li>
+              <li><a class="dropdown-item" href="accesorios.html">Teclados</a></li>
+            </ul>
+          </li>
+          <li><a href="sucursales.html" class="nav-link px-4 li-header-black">Sucursales</a></li>
+          <li><a href="contacto.html" class="nav-link px-4 li-header-black">Contacto</a></li>
+        </ul>
+        <div class="col-md-3 text-end">
+          <div class="dropdown">
+            <button id="toggleTheme" class="btn btn-link">
+              <i id="themeIcon" class="bi bi-brightness-high-fill user-icon"></i>
+            </button>
 
-                    <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person user-icon"></i>
-                    </button>
+            <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="bi bi-person user-icon"></i>
+            </button>
 
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#">Iniciar sesión</a></li>
-                        <li><a class="dropdown-item" href="#">Registrarse</a></li>
-                    </ul>
-                </div>
-            </div> 
-        </header>
-    </div> 
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item" href="#">Iniciar sesión</a></li>
+              <li><a class="dropdown-item" href="#">Registrarse</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+    </div>
 
-    <div class="p-4 p-md-5 h-100 d-flex justify-content-between"> 
-      <div class="card"> 
-        <svg aria-label="Placeholder: Image cap" class="bd-placeholder-img card-img-top" height="500" preserveAspectRatio="xMidYMid slice" role="img" width="600">
-          <rect width="100%" height="100%" style="background-image: url(../images/auri_blanco.png);"></rect></svg> 
-          <div class="card-body"> 
-            <h5 class="card-title" id="nombre"> </h5> 
-            <p class="card-text">Descripcion del producto.</p> 
-            <p class="card-text"><small class="text-body-secondary">Precio: $<span id="precio"></span></small></p> 
-            <a href="producto.html?id=1&nombre=Barracuda%20X%20Chrome&precio=150000" class="btn btn-full-violet" style="top: 1%;"  >Añadir al carro</a>
-          </div> 
-        </div> 
+    <!-- Contenedor del producto -->
+    <div class="container my-5"> 
+      <div class="card mx-auto w-50"> 
+        <img src="../images/auri_blanco.png" class="card-img-top img-producto mt-4" alt="Auriculares blancos">
+        <div class="card-body">
+          <h5 class="card-title" id="nombre"></h5>
+          <p class="card-text">Descripcion del producto.</p>
+          <p class="card-text"><small class="text-body-secondary">Precio: $<span id="precio"></span></small></p>
+          <p class="card-text"><small class="text-body-secondary">Stock: <span id="stock"></span></small></p>
+
+          <!-- Selector de cantidad -->
+          <div class="mt-4">
+            <label for="cantidad" class="form-label">Cantidad</label>
+            <input type="range" class="form-range" min="1" max="50" id="cantidad" value="1"
+              oninput="valorCantidad.value = this.value">
+            <output id="valorCantidad">1</output> unidades
+          </div>
+
+          <!-- Añadir al carro -->
+          <a href="producto.html?nombre=Barracuda%20X%20Chrome&precio=150000&stock=50"
+            class="btn btn-full-violet mt-3">Añadir al carro</a>
+        </div>
       </div>
+    </div>
 
-  <!--  CODIGO MOMENTANEO!!!  -->
-  <p>ID: <span id="id"></span></p>
+    <!--  CODIGO MOMENTANEO!!!  -->
+    <script>
+      // Función para obtener los parámetros de la URL
+      function obtenerParametros() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+          nombre: params.get("nombre"),
+          precio: params.get("precio"),
+          stock: params.get("stock")
+        };
+      }
 
-  <script>
-    // Función para obtener los parámetros de la URL
-    function obtenerParametros() {
-      const params = new URLSearchParams(window.location.search);
-      return {
-        id: params.get("id"),
-        nombre: params.get("nombre"),
-        precio: params.get("precio")
-      };
-    }
-
-    // Mostrar los datos en el HTML
-    const producto = obtenerParametros();
-    document.getElementById("id").textContent = producto.id;
-    document.getElementById("nombre").textContent = producto.nombre;
-    document.getElementById("precio").textContent = producto.precio;
-  </script>
-
-  <!-- Bootstrap iconos -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-
-  <!-- Bootstrap JS (incluye Popper) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const body = document.body;
-    const toggleBtn = document.getElementById('toggleTheme');
-    const icon = document.getElementById('themeIcon');
-
-    toggleBtn.addEventListener('click', () => {
-            const currentTheme = body.getAttribute('data-bs-theme');
-            const isDark = currentTheme === 'dark';
-
-            body.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
-
-            icon.className = isDark 
-                ? 'bi bi-moon-fill user-icon' // modo claro
-                : 'bi bi-brightness-high-fill user-icon'; // modo oscuro
-        });
+      // Mostrar los datos en el HTML
+      const producto = obtenerParametros();
+      document.getElementById("nombre").textContent = producto.nombre;
+      document.getElementById("precio").textContent = producto.precio;
+      document.getElementById("stock").textContent = producto.stock;
     </script>
-</body>
+
+    <!-- Bootstrap iconos -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- Bootstrap JS (incluye Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const body = document.body;
+      const toggleBtn = document.getElementById('toggleTheme');
+      const icon = document.getElementById('themeIcon');
+
+      toggleBtn.addEventListener('click', () => {
+        const currentTheme = body.getAttribute('data-bs-theme');
+        const isDark = currentTheme === 'dark';
+
+        body.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
+
+        icon.className = isDark
+          ? 'bi bi-moon-fill user-icon' // modo claro
+          : 'bi bi-brightness-high-fill user-icon'; // modo oscuro
+      });
+    </script>
+  </body>
+
 </html>

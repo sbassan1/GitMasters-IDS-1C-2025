@@ -105,6 +105,19 @@ body {
   height: 500px;
 }
 
+.img-producto {
+  width: 100%;
+  max-width: 600px;
+  height: 500px;
+  object-fit: cover;
+}
+
+.bd-placeholder-img {
+    background-image: url("../images/auri_negro.png");
+    width: auto;
+    height: auto;
+}
+
 footer {
   background-image: url("../images/teclado_footer.png");
 }
