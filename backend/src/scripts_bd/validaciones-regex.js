@@ -66,9 +66,56 @@ function validarDireccion(direccion) {
 }
 
 function validarNombre(nombre) {
-    const nombreRegex = /^Sede\b[\w\sÁÉÍÓÚáéíóúñÑ-]*$/;
+    const nombreRegex = /^[\w\sÁÉÍÓÚáéíóúñÑ-]*$/;
     if (!nombreRegex.test(nombre)) {
         return { ok: false, message: 'El nombre de la sede debe comenzar con "Sede" y contener letras, números, espacios, guiones y acentos.' };
+    }
+    return { ok: true };
+}
+
+function validarNumeroNatural(numero) {
+    const numeroRegex = /^\d+$/;
+    if (!numeroRegex.test(numero)) {
+        return { ok: false, message: 'El número debe ser un entero positivo.' };
+    }
+    return { ok: true };
+}
+
+function validarNumeroRacionalPositivo(numero) {
+    const numeroRegex = /^\d+(\.\d{1,2})?$/;
+    if (!numeroRegex.test(numero)) {
+        return { ok: false, message: 'El número debe ser un número racional positivo.' };
+    }
+    return { ok: true };
+}
+
+function validarEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+        return { ok: false, message: 'El formato del correo electrónico es incorrecto.' };
+    }
+    return { ok: true };
+}
+
+function validarContrasena(contrasena) {
+    const contrasenaRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,16}$/
+    if (!contrasenaRegex.test(contrasena)) {
+        return { ok: false, message: 'La contraseña debe tener entre 8 y 16 caracteres, al menos una letra mayúscula y un número.' };
+    }
+    return { ok: true };
+}
+
+function validarFecha(fecha) {
+    const fechaRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+    if (!fechaRegex.test(fecha)) {
+        return { ok: false, message: 'El formato de la fecha es incorrecto. Debe ser "AAAA-MM-DD".' };
+    }
+}
+
+function validarMetodoPago(metodo_pago) {
+    const metodosValidos = ['Efectivo', 'Crédito', 'Débito', 'Transferencia bancaria', 'QR', 'Mercado Pago'];
+    if (!metodosValidos.includes(metodo_pago)) {
+        return { ok: false, message: 'El método de pago debe ser uno de los siguientes: Efectivo, Crédito, Débito, Transferencia bancaria, QR o Mercado Pago.' };
     }
     return { ok: true };
 }
@@ -79,5 +126,11 @@ module.exports = {
     validarDiasAbiertos,
     validarDiasRestock,
     validarDireccion,
-    validarNombre
+    validarNombre,
+    validarNumeroNatural,
+    validarNumeroRacionalPositivo,
+    validarEmail,
+    validarContrasena,
+    validarFecha,
+    validarMetodoPago
 };
