@@ -1,6 +1,6 @@
 CREATE TABLE Sedes (
     id SERIAL PRIMARY KEY,
-    nombre VARCHAR(30) NOT NULL UNIQUE, -- formato: 'Sede 1'
+    nombre VARCHAR(50) NOT NULL UNIQUE, -- formato: 'Sede 1'
     horarios VARCHAR(20) NOT NULL, -- formato: '08:00-18:00'
     dias_abiertos VARCHAR(30), -- formato: 'DDD-DDD-DDD-DDD ó (DDD-DDD) si son dias seguidos'
     direccion VARCHAR(50) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE Sedes (
 
 CREATE TABLE Productos (
     id SERIAL PRIMARY KEY,
-    nombre VARCHAR(20) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
     descripcion VARCHAR(60) NOT NULL,
     stock INT NOT NULL DEFAULT 0,
     precio_venta INT NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE Productos (
 
 CREATE TABLE Usuarios (
     id SERIAL PRIMARY KEY,
-    nombre VARCHAR(30) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     contrasena VARCHAR(50) NOT NULL,
     cumpleanos DATE,

@@ -2,6 +2,20 @@ const express = require('express');
 const ventasQuery = require('./ventasQuery.js');
 
 const router = express.Router();
+
+// >>>>>>>>>>> FUNCIONES DE VALIDACION - REGEX <<<<<<<<<<
+
+const { 
+    validarNumeroRacionalPositivo, 
+    validarMetodoPago, 
+    validarFecha,
+    validarNumeroNatural 
+} = require('../utility/validaciones-regex.js');
+
+// >>>>>>>>>>> VERIFICACIONES DE EXISTENCIA <<<<<<<<<<
+
+const { existeUsuario } = require('../utility/verificaciones.js');
+
 // >>>>>>>>>>> REQUESTS GET <<<<<<<<<<
 
 router.get('/', async (req, res) => {
@@ -99,6 +113,30 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
         }
 
+        const validacionValor = validarNumeroRacionalPositivo(valor);
+        if (!validacionValor.ok) {
+            return res.status(400).json({ message: validacionValor.message });
+        }
+
+        const validacionFecha = validarFecha(fecha);
+        if (!validacionFecha.ok) {
+            return res.status(400).json({ message: validacionFecha.message });
+        }
+
+        const validacionMetodoPago = validarMetodoPago(metodo_pago);
+        if (!validacionMetodoPago.ok) {
+            return res.status(400).json({ message: validacionMetodoPago.message });
+        }
+
+        const validacionIdUsuario = validarNumeroNatural(id_usuario);
+        if (!validacionIdUsuario.ok) {
+            return res.status(400).json({ message: validacionIdUsuario.message });
+        }
+
+        if (!await existeUsuario(id_usuario)) { // Verifica si el usuario existe
+            return res.status(404).json({ message: 'Usuario no encontrado.' });
+        }
+
         const nuevaVenta = await ventasQuery.createVenta(valor, fecha, id_usuario, metodo_pago);
         res.status(201).json(nuevaVenta);
     } catch (error) {
@@ -113,6 +151,30 @@ router.put('/:id', async (req, res) => {
 
         if (!valor || !fecha || !id_usuario || !metodo_pago) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
+        }
+
+        const validacionValor = validarNumeroRacionalPositivo(valor);
+        if (!validacionValor.ok) {
+            return res.status(400).json({ message: validacionValor.message });
+        }
+
+        const validacionFecha = validarFecha(fecha);
+        if (!validacionFecha.ok) {
+            return res.status(400).json({ message: validacionFecha.message });
+        }
+
+        const validacionMetodoPago = validarMetodoPago(metodo_pago);
+        if (!validacionMetodoPago.ok) {
+            return res.status(400).json({ message: validacionMetodoPago.message });
+        }
+
+        const validacionIdUsuario = validarNumeroNatural(id_usuario);
+        if (!validacionIdUsuario.ok) {
+            return res.status(400).json({ message: validacionIdUsuario.message });
+        }
+
+        if (!await existeUsuario(id_usuario)) { // Verifica si el usuario existe
+            return res.status(404).json({ message: 'Usuario no encontrado.' });
         }
 
         const ventaActualizada = await ventasQuery.updateVenta(req.params.id, valor, fecha, id_usuario, metodo_pago);

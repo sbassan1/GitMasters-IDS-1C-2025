@@ -2,6 +2,18 @@ const express = require('express');
 const sedesQuery = require('./sedesQuery.js');
 
 const router = express.Router();
+
+// >>>>>>>>>>> FUNCIONES DE VALIDACION - REGEX <<<<<<<<<<
+
+const { 
+    validarTelefono, 
+    validarHorarios, 
+    validarDiasAbiertos, 
+    validarDiasRestock, 
+    validarDireccion, 
+    validarNombre 
+} = require('../utility/validaciones-regex.js');
+
 // >>>>>>>>>>> REQUESTS GET <<<<<<<<<<
 
 router.get('/', async (req, res) => {
@@ -125,6 +137,36 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
         }
 
+        const validacionTelefono = validarTelefono(telefono);
+        if (!validacionTelefono.ok) {
+            return res.status(400).json({ message: validacionTelefono.message });
+        }
+
+        const validacionHorarios = validarHorarios(horarios);
+        if (!validacionHorarios.ok) {
+            return res.status(400).json({ message: validacionHorarios.message });
+        }
+
+        const validacionDiasAbiertos = validarDiasAbiertos(dias_abiertos);
+        if (!validacionDiasAbiertos.ok) {
+            return res.status(400).json({ message: validacionDiasAbiertos.message });
+        }
+
+        const validacionDiasRestock = validarDiasRestock(dias_restock);
+        if (!validacionDiasRestock.ok) {
+            return res.status(400).json({ message: validacionDiasRestock.message });
+        }
+
+        const validacionDireccion = validarDireccion(direccion);
+        if (!validacionDireccion.ok) {
+            return res.status(400).json({ message: validacionDireccion.message });
+        }
+
+        const validacionNombre = validarNombre(nombre);
+        if (!validacionNombre.ok) {
+            return res.status(400).json({ message: validacionNombre.message });
+        }
+
         const nuevaSede = await sedesQuery.createSede(nombre, horarios, dias_abiertos, direccion, dias_restock, telefono);
         res.status(201).json(nuevaSede);
     } catch (error) {
@@ -141,6 +183,36 @@ router.put('/:id', async (req, res) => {
 
         if (!nombre || !horarios || !dias_abiertos || !direccion || !dias_restock || !telefono) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
+        }
+
+        const validacionTelefono = validarTelefono(telefono);
+        if (!validacionTelefono.ok) {
+            return res.status(400).json({ message: validacionTelefono.message });
+        }
+
+        const validacionHorarios = validarHorarios(horarios);
+        if (!validacionHorarios.ok) {
+            return res.status(400).json({ message: validacionHorarios.message });
+        }
+
+        const validacionDiasAbiertos = validarDiasAbiertos(dias_abiertos);
+        if (!validacionDiasAbiertos.ok) {
+            return res.status(400).json({ message: validacionDiasAbiertos.message });
+        }
+
+        const validacionDiasRestock = validarDiasRestock(dias_restock);
+        if (!validacionDiasRestock.ok) {
+            return res.status(400).json({ message: validacionDiasRestock.message });
+        }
+
+        const validacionDireccion = validarDireccion(direccion);
+        if (!validacionDireccion.ok) {
+            return res.status(400).json({ message: validacionDireccion.message });
+        }
+
+        const validacionNombre = validarNombre(nombre);
+        if (!validacionNombre.ok) {
+            return res.status(400).json({ message: validacionNombre.message });
         }
 
         const sedeActualizada = await sedesQuery.updateSede(req.params.id, nombre, horarios, dias_abiertos, direccion, dias_restock, telefono);
@@ -165,6 +237,11 @@ router.put('/nombre/:id', async (req, res) => {
             return res.status(400).json({ message: 'Falta el nombre.' });
         }
 
+        const validacionNombre = validarNombre(nombre);
+        if (!validacionNombre.ok) {
+            return res.status(400).json({ message: validacionNombre.message });
+        }
+        
         const sedeActualizada = await sedesQuery.updateSedeNombre(req.params.id, nombre);
         
         if (!sedeActualizada) {
@@ -183,6 +260,11 @@ router.put('/horarios/:id', async (req, res) => {
 
         if (!horarios) {
             return res.status(400).json({ message: 'Faltan los horarios.' });
+        }
+
+        const validacionHorarios = validarHorarios(horarios);
+        if (!validacionHorarios.ok) {
+            return res.status(400).json({ message: validacionHorarios.message });
         }
 
         const sedeActualizada = await sedesQuery.updateSedeHorarios(req.params.id, horarios);
@@ -205,6 +287,11 @@ router.put('/dias_abiertos/:id', async (req, res) => {
             return res.status(400).json({ message: 'Faltan los días abiertos.' });
         }
 
+        const validacionDiasAbiertos = validarDiasAbiertos(dias_abiertos);
+        if (!validacionDiasAbiertos.ok) {
+            return res.status(400).json({ message: validacionDiasAbiertos.message });
+        }
+
         const sedeActualizada = await sedesQuery.updateSedeDiasAbiertos(req.params.id, dias_abiertos);
         
         if (!sedeActualizada) {
@@ -223,6 +310,11 @@ router.put('/direccion/:id', async (req, res) => {
 
         if (!direccion) {
             return res.status(400).json({ message: 'Falta la dirección.' });
+        }
+
+        const validacionDireccion = validarDireccion(direccion);
+        if (!validacionDireccion.ok) {
+            return res.status(400).json({ message: validacionDireccion.message });
         }
 
         const sedeActualizada = await sedesQuery.updateSedeDireccion(req.params.id, direccion);
@@ -245,6 +337,11 @@ router.put('/dias_restock/:id', async (req, res) => {
             return res.status(400).json({ message: 'Faltan los días de restock.' });
         }
 
+        const validacionDiasRestock = validarDiasRestock(dias_restock);
+        if (!validacionDiasRestock.ok) {
+            return res.status(400).json({ message: validacionDiasRestock.message });
+        }
+
         const sedeActualizada = await sedesQuery.updateSedeDiasRestock(req.params.id, dias_restock);
         
         if (!sedeActualizada) {
@@ -263,6 +360,11 @@ router.put('/telefono/:id', async (req, res) => {
 
         if (!telefono) {
             return res.status(400).json({ message: 'Falta el teléfono.' });
+        }
+
+        const validacionTelefono = validarTelefono(telefono);
+        if (!validacionTelefono.ok) {
+            return res.status(400).json({ message: validacionTelefono.message });
         }
 
         const sedeActualizada = await sedesQuery.updateSedeTelefono(req.params.id, telefono);

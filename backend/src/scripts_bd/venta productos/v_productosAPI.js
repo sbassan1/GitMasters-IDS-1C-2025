@@ -2,6 +2,17 @@ const express = require('express');
 const venta_productosQuery = require('./v_productosQuery.js');
 
 const router = express.Router();
+
+// >>>>>>>>>>> FUNCIONES DE VALIDACION - REGEX <<<<<<<<<<
+
+const { 
+    validarNumeroNatural 
+} = require('../utility/validaciones-regex.js');
+
+// >>>>>>>>>>> VERIFICACIONES DE EXISTENCIA <<<<<<<<<<
+
+const { existeProducto, existeVenta } = require('../utility/verificaciones.js');
+
 // >>>>>>>>>>> REQUESTS GET <<<<<<<<<<
 
 router.get('/', async (req, res) => {
@@ -80,6 +91,29 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
         }
 
+        const validacionCantidad = validarNumeroNatural(cantidad);
+        if (!validacionCantidad.ok) {
+            return res.status(400).json({ message: validacionCantidad.message });
+        }
+
+        const validacionIdVenta = validarNumeroNatural(id_venta);
+        if (!validacionIdVenta.ok) {
+            return res.status(400).json({ message: validacionIdVenta.message });
+        }
+
+        const validacionIdProducto = validarNumeroNatural(id_producto);
+        if (!validacionIdProducto.ok) {
+            return res.status(400).json({ message: validacionIdProducto.message });
+        }
+
+        if (!await existeVenta(id_venta)) {
+            return res.status(404).json({ message: 'Venta no encontrada.' });
+        }
+
+        if (!await existeProducto(id_producto)) {
+            return res.status(404).json({ message: 'Producto no encontrado.' });
+        }
+
         const nuevaVentaProducto = await venta_productosQuery.createVenta_Producto(id_venta, id_producto, cantidad);
         res.status(201).json(nuevaVentaProducto);
     } catch (error) {
@@ -95,6 +129,33 @@ router.put('/:id', async (req, res) => {
 
         if (!venta_productoActualizada) {
             return res.status(404).json({ message: 'Producto de venta no encontrado.' });
+        }
+
+        if (!id_venta || !id_producto || !cantidad) {
+            return res.status(400).json({ message: 'Faltan datos requeridos.' });
+        }
+
+        const validacionCantidad = validarNumeroNatural(cantidad);
+        if (!validacionCantidad.ok) {
+            return res.status(400).json({ message: validacionCantidad.message });
+        }
+
+        const validacionIdVenta = validarNumeroNatural(id_venta);
+        if (!validacionIdVenta.ok) {
+            return res.status(400).json({ message: validacionIdVenta.message });
+        }
+
+        const validacionIdProducto = validarNumeroNatural(id_producto);
+        if (!validacionIdProducto.ok) {
+            return res.status(400).json({ message: validacionIdProducto.message });
+        }
+
+        if (!await existeVenta(id_venta)) {
+            return res.status(404).json({ message: 'Venta no encontrada.' });
+        }
+
+        if (!await existeProducto(id_producto)) {
+            return res.status(404).json({ message: 'Producto no encontrado.' });
         }
 
         res.json(venta_productoActualizada);
