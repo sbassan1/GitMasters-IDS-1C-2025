@@ -1,45 +1,37 @@
+-- Insertar sedes
+INSERT INTO Sedes (nombre, horarios, dias_abiertos, direccion, dias_restock, telefono)
+VALUES 
+  ('Sede Central', '08:00-18:00', 'LUN-MAR-MIE-JUE-VIE', 'Av. Siempre Viva 123', 'LUN,MIE,VIE', '11 5412-6738'),
+  ('Sucursal Oeste', '09:00-17:00', 'LUN-MIE-VIE', 'Calle Falsa 456', 'MAR,JUE', '11 5222-1234');
 
--- ESTE USUARIO VA A SER EL ADMIN!
-INSERT INTO Usuarios (nombre, email, contrasena, cumpleanos, fecha_inicio)
-VALUES
-  ('Admin', 'admin@admin.com', 'admin', '2025-07-2', '2025-07-2')
-
-
-INSERT INTO Usuarios (nombre, email, contrasena, cumpleanos, fecha_inicio)
-VALUES
-  ('Ana Torres', 'ana.torres@email.com', 'ana123', '1990-05-12', '1990-05-12'),
-  ('Luis Gómez', 'luis.gomez@email.com', 'luis456', '1985-11-23', '1990-05-12'),
-  ('María Pérez', 'maria.perez@email.com', 'maria789', '1988-03-17', '1990-05-12');
-
-
-INSERT INTO Sedes (horarios, dias_abiertos, direccion, dias_restock, telefono)
-VALUES
-  ('08:00-18:00', 'LUN-MAR-MIE-JUE-VIE', 'Av. Siempre Viva 742', 'LUN,MIE,VIER', '11 5412-6738');
-
+-- Insertar productos
 INSERT INTO Productos (nombre, descripcion, stock, precio_venta, tipo, imagen, sede_id)
 VALUES
-  ('Café', 'Café molido premium', 100, 1500, 'Bebida', 'cafe.jpg', 1),
-  ('Té Verde', 'Té verde orgánico', 80, 1200, 'Bebida', 'teverde.jpg', 1),
-  ('Galletas', 'Galletas de avena', 50, 900, 'Snack', 'galletas.jpg', 1),
-  ('Jugo', 'Jugo natural de naranja', 60, 1300, 'Bebida', 'jugo.jpg', 1),
-  ('Chocolate', 'Tableta de chocolate amargo', 40, 1600, 'Dulce', 'chocolate.jpg', 1);
+  ('Ryzen 5 5600', 'Procesador 6 núcleos AM4', 10, 95000, 'CPU', 'ryzen5600.jpg', 1),
+  ('RTX 4060', 'GPU NVIDIA 8GB', 5, 320000, 'GPU', 'rtx4060.jpg', 1),
+  ('SSD 1TB', 'Kingston NVMe', 20, 45000, 'Almacenamiento', 'ssd1tb.jpg', 2),
+  ('Gabinete RGB', 'Gabinete con vidrio templado', 7, 60000, 'Gabinete', 'gabinete.jpg', 2),
+  ('Fuente 750W', 'Fuente certificada 80+', 15, 52000, 'Fuente', 'fuente750w.jpg', 1);
 
+-- Insertar usuarios
+INSERT INTO Usuarios (nombre, email, contrasena, cumpleanos, fecha_inicio)
+VALUES
+  ('Juan Pérez', 'juanp@mail.com', '1234', '1990-05-12', '2024-06-01'),
+  ('Ana Gómez', 'ana@mail.com', 'abcd', '1985-09-22', '2024-06-05'),
+  ('Carlos Ruiz', 'carlos@mail.com', 'pass', '2000-03-15', '2024-06-10');
 
+-- Insertar ventas
 INSERT INTO Ventas (valor, fecha, id_usuario, metodo_pago)
 VALUES
-  (3700, '2025-06-29', 1, 'Tarjeta'), -- Ana Torres
-  (2500, '2025-06-30', 2, 'Efectivo'); -- Luis Gómez
+  (370000, '2024-06-20', 1, 'Tarjeta'),
+  (107000, '2024-06-22', 2, 'Efectivo'),
+  (145000, '2024-06-23', 3, 'Transferencia');
 
-
--- Venta 1 (Ana Torres)
+-- Insertar productos en ventas
 INSERT INTO Venta_Productos (id_venta, id_producto, cantidad)
 VALUES
-  (1, 1, 1), -- Café
-  (1, 2, 1), -- Té Verde
-  (1, 5, 1); -- Chocolate
-
--- Venta 2 (Luis Gómez)
-INSERT INTO Venta_Productos (id_venta, id_producto, cantidad)
-VALUES
-  (2, 3, 1), -- Galletas
-  (2, 4, 1); -- Jugo
+  (1, 1, 1),  -- Ryzen 5 5600
+  (1, 2, 1),  -- RTX 4060
+  (2, 4, 1),  -- Gabinete
+  (2, 5, 1),  -- Fuente
+  (3, 3, 2);  -- SSD 1TB (x2)
