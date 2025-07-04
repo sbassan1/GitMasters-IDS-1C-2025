@@ -132,6 +132,17 @@ function validarMetodoPago(metodo_pago) {
     return { ok: true };
 }
 
+function validarDescripcion(descripcion) {
+    const descripcionRegex = /^[\w\s.,-]+$/;
+    if (!descripcionRegex.test(descripcion)) {
+        return { ok: false, message: 'La descripción debe contener letras, números, espacios, puntos, comas y guiones.' };
+    }
+    if (descripcion.length > 60) {
+        return { ok: false, message: 'La descripción no puede exceder los 60 caracteres.' };
+    }
+    return { ok: true };
+}
+
 module.exports = {
     validarTelefono,
     validarHorarios,
@@ -144,5 +155,6 @@ module.exports = {
     validarEmail,
     validarContrasena,
     validarFecha,
-    validarMetodoPago
+    validarMetodoPago,
+    validarDescripcion
 };

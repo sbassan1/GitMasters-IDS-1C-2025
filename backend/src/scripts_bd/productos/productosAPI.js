@@ -2,6 +2,19 @@ const express = require('express');
 const productosQuery = require('./productosQuery.js');
 
 const router = express.Router();
+
+// >>>>>>>>>>> FUNCIONES DE VALIDACION - REGEX <<<<<<<<<<
+const {
+    validarNombre,
+    validarNumeroRacionalPositivo,
+    validarNumeroNatural,
+    validarDescripcion
+} = require('../utility/validaciones-regex.js');
+
+// >>>>>>>>>>> VERIFICACIONES DE EXISTENCIA <<<<<<<<<<
+const {
+    existeSede
+} = require('../utility/verificaciones.js');
 // >>>>>>>>>>> REQUESTS DE TIPO GET <<<<<<<<<<<
 
 router.get('/', async (req, res) => {
@@ -86,6 +99,35 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
         }
 
+        const validacionNombre = validarNombre(nombre);
+        if (!validacionNombre.ok) {
+            return res.status(400).json({ message: validacionNombre.message });
+        }
+
+        const validacionDescripcion = validarDescripcion(descripcion);
+        if (!validacionDescripcion.ok) {
+            return res.status(400).json({ message: validacionDescripcion.message });
+        }
+
+        const validacionStock = validarNumeroNatural(stock);
+        if (!validacionStock.ok) {
+            return res.status(400).json({ message: validacionStock.message });
+        }
+
+        const validacionPrecioVenta = validarNumeroRacionalPositivo(precio_venta);
+        if (!validacionPrecioVenta.ok) {
+            return res.status(400).json({ message: validacionPrecioVenta.message });
+        }
+
+        const validacionSedeId = validarNumeroNatural(sede_id);
+        if (!validacionSedeId.ok) {
+            return res.status(400).json({ message: validacionSedeId.message });
+        }
+
+        if (!await existeSede(sede_id)) { // Verifica si la sede existe
+            return res.status(404).json({ message: 'Sede no encontrada.' });
+        }
+
         const nuevoProducto = await productosQuery.createProducto(nombre, descripcion, stock, precio_venta, tipo, imagen, sede_id );
         res.status(201).json(nuevoProducto);
     } catch (error) {
@@ -103,10 +145,39 @@ router.put('/:id', async (req, res) => {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
         }
 
+        const validacionNombre = validarNombre(nombre);
+        if (!validacionNombre.ok) {
+            return res.status(400).json({ message: validacionNombre.message });
+        }
+
+        const validacionDescripcion = validarDescripcion(descripcion);
+        if (!validacionDescripcion.ok) {
+            return res.status(400).json({ message: validacionDescripcion.message });
+        }
+
+        const validacionStock = validarNumeroNatural(stock);
+        if (!validacionStock.ok) {
+            return res.status(400).json({ message: validacionStock.message });
+        }
+
+        const validacionPrecioVenta = validarNumeroRacionalPositivo(precio_venta);
+        if (!validacionPrecioVenta.ok) {
+            return res.status(400).json({ message: validacionPrecioVenta.message });
+        }
+
+        const validacionSedeId = validarNumeroNatural(sede_id);
+        if (!validacionSedeId.ok) {
+            return res.status(400).json({ message: validacionSedeId.message });
+        }
+
         const productoActualizado = await productosQuery.updateProducto(req.params.id, nombre, descripcion, stock, precio_venta, tipo, imagen, sede_id);
 
         if (!productoActualizado) {
             return res.status(404).json({ message: 'Producto no encontrado.' });
+        }
+
+        if (!await existeSede(sede_id)) { // Verifica si la sede existe
+            return res.status(404).json({ message: 'Sede no encontrada.' });
         }
 
         res.json(productoActualizado);
@@ -123,6 +194,11 @@ router.put('/nombre/:id', async (req, res) => {
 
         if (!nombre) {
             return res.status(400).json({ message: 'Falta el nombre.' });
+        }
+
+        const validacionNombre = validarNombre(nombre);
+        if (!validacionNombre.ok) {
+            return res.status(400).json({ message: validacionNombre.message });
         }
 
         const productoActualizado = await productosQuery.updateNombreProductoId(req.params.id, nombre);
@@ -144,6 +220,11 @@ router.put('/descripcion/:id', async (req, res) => {
         if (!descripcion) {
             return res.status(400).json({ message: 'Falta la descripcion.' });
         }
+        
+        const validacionDescripcion = validarDescripcion(descripcion);
+        if (!validacionDescripcion.ok) {
+            return res.status(400).json({ message: validacionDescripcion.message });
+        }
 
         const productoActualizado = await productosQuery.updateDescripcionProductoId(req.params.id, descripcion);
 
@@ -164,6 +245,11 @@ router.put('/stock/:id', async (req, res) => {
         if (!stock) {
             return res.status(400).json({ message: 'Falta el stock.' });
         }
+        
+        const validacionStock = validarNumeroNatural(stock);
+        if (!validacionStock.ok) {
+            return res.status(400).json({ message: validacionStock.message });
+        }
 
         const productoActualizado = await productosQuery.updateStockProductoId(req.params.id, stock);
 
@@ -183,6 +269,12 @@ router.put('/precio/:id', async (req, res) => {
 
         if (!precio) {
             return res.status(400).json({ message: 'Falta el precio.' });
+        }
+
+        
+        const validacionPrecioVenta = validarNumeroRacionalPositivo(precio_venta);
+        if (!validacionPrecioVenta.ok) {
+            return res.status(400).json({ message: validacionPrecioVenta.message });
         }
 
         const productoActualizado = await productosQuery.updatePrecioProductoId(req.params.id, precio);
@@ -243,6 +335,15 @@ router.put('/sede/:id', async (req, res) => {
 
         if (!sede) {
             return res.status(400).json({ message: 'Falta la sede.' });
+        }
+        
+        const validacionSedeId = validarNumeroNatural(sede_id);
+        if (!validacionSedeId.ok) {
+            return res.status(400).json({ message: validacionSedeId.message });
+        }
+
+        if (!await existeSede(sede_id)) { // Verifica si la sede existe
+            return res.status(404).json({ message: 'Sede no encontrada.' });
         }
 
         const productoActualizado = await productosQuery.updateSedeProductoId(req.params.id, sede);
