@@ -12,9 +12,9 @@ const {
 } = require('../utility/validaciones-regex.js');
 
 // >>>>>>>>>>> VERIFICACIONES DE EXISTENCIA <<<<<<<<<<
-const {
-    existeSede
-} = require('../utility/verificaciones.js');
+
+const { existeSede } = require('../utility/verificaciones.js');
+
 // >>>>>>>>>>> REQUESTS DE TIPO GET <<<<<<<<<<<
 
 router.get('/', async (req, res) => {

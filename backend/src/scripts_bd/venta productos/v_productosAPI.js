@@ -9,6 +9,10 @@ const {
     validarNumeroNatural 
 } = require('../utility/validaciones-regex.js');
 
+// >>>>>>>>>>> VERIFICACIONES DE EXISTENCIA <<<<<<<<<<
+
+const { existeProducto, existeVenta } = require('../utility/verificaciones.js');
+
 // >>>>>>>>>>> REQUESTS GET <<<<<<<<<<
 
 router.get('/', async (req, res) => {
@@ -102,6 +106,14 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ message: validacionIdProducto.message });
         }
 
+        if (!await existeVenta(id_venta)) {
+            return res.status(404).json({ message: 'Venta no encontrada.' });
+        }
+
+        if (!await existeProducto(id_producto)) {
+            return res.status(404).json({ message: 'Producto no encontrado.' });
+        }
+
         const nuevaVentaProducto = await venta_productosQuery.createVenta_Producto(id_venta, id_producto, cantidad);
         res.status(201).json(nuevaVentaProducto);
     } catch (error) {
@@ -138,6 +150,13 @@ router.put('/:id', async (req, res) => {
             return res.status(400).json({ message: validacionIdProducto.message });
         }
 
+        if (!await existeVenta(id_venta)) {
+            return res.status(404).json({ message: 'Venta no encontrada.' });
+        }
+
+        if (!await existeProducto(id_producto)) {
+            return res.status(404).json({ message: 'Producto no encontrado.' });
+        }
 
         res.json(venta_productoActualizada);
     } catch (error) {

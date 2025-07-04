@@ -12,6 +12,10 @@ const {
     validarNumeroNatural 
 } = require('../utility/validaciones-regex.js');
 
+// >>>>>>>>>>> VERIFICACIONES DE EXISTENCIA <<<<<<<<<<
+
+const { existeUsuario } = require('../utility/verificaciones.js');
+
 // >>>>>>>>>>> REQUESTS GET <<<<<<<<<<
 
 router.get('/', async (req, res) => {
@@ -129,6 +133,10 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ message: validacionIdUsuario.message });
         }
 
+        if (!await existeUsuario(id_usuario)) { // Verifica si el usuario existe
+            return res.status(404).json({ message: 'Usuario no encontrado.' });
+        }
+
         const nuevaVenta = await ventasQuery.createVenta(valor, fecha, id_usuario, metodo_pago);
         res.status(201).json(nuevaVenta);
     } catch (error) {
@@ -163,6 +171,10 @@ router.put('/:id', async (req, res) => {
         const validacionIdUsuario = validarNumeroNatural(id_usuario);
         if (!validacionIdUsuario.ok) {
             return res.status(400).json({ message: validacionIdUsuario.message });
+        }
+
+        if (!await existeUsuario(id_usuario)) { // Verifica si el usuario existe
+            return res.status(404).json({ message: 'Usuario no encontrado.' });
         }
 
         const ventaActualizada = await ventasQuery.updateVenta(req.params.id, valor, fecha, id_usuario, metodo_pago);
