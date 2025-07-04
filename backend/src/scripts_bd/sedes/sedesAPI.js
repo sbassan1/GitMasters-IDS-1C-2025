@@ -125,6 +125,11 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
         }
 
+        const telefonoRegex = /^(11|15)-\d{4}-\d{4}$/;
+        if (!telefonoRegex.test(telefono)) {
+            return res.status(400).json({ message: 'El formato del teléfono es incorrecto. Debe ser "11-xxxx-xxxx" o "15-xxxx-xxxx".' });
+        }
+
         const nuevaSede = await sedesQuery.createSede(nombre, horarios, dias_abiertos, direccion, dias_restock, telefono);
         res.status(201).json(nuevaSede);
     } catch (error) {
@@ -141,6 +146,11 @@ router.put('/:id', async (req, res) => {
 
         if (!nombre || !horarios || !dias_abiertos || !direccion || !dias_restock || !telefono) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
+        }
+
+        const telefonoRegex = /^(11|15)-\d{4}-\d{4}$/;
+        if (!telefonoRegex.test(telefono)) {
+            return res.status(400).json({ message: 'El formato del teléfono es incorrecto. Debe ser "11-xxxx-xxxx" o "15-xxxx-xxxx".' });
         }
 
         const sedeActualizada = await sedesQuery.updateSede(req.params.id, nombre, horarios, dias_abiertos, direccion, dias_restock, telefono);
@@ -263,6 +273,11 @@ router.put('/telefono/:id', async (req, res) => {
 
         if (!telefono) {
             return res.status(400).json({ message: 'Falta el teléfono.' });
+        }
+
+        const telefonoRegex = /^(11|15)-\d{4}-\d{4}$/;
+        if (!telefonoRegex.test(telefono)) {
+            return res.status(400).json({ message: 'El formato del teléfono es incorrecto. Debe ser "11-xxxx-xxxx" o "15-xxxx-xxxx".' });
         }
 
         const sedeActualizada = await sedesQuery.updateSedeTelefono(req.params.id, telefono);
