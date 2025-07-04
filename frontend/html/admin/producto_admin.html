@@ -62,27 +62,37 @@
 
     <!-- Contenedor del producto -->
     <div class="container my-5">
-      <div class="card mx-auto w-50 bg-background-main">
-        <img src="../../images/auri_blanco.png" class="card-img-top img-producto mt-4" alt="Auriculares blancos">
-        <div class="card-body">
-          <h5 class="card-title" id="nombre"></h5>
-          <p class="card-text">Descripcion del producto.</p>
-          <p class="card-text"><small class="text-body-secondary">Precio: $<span id="precio"></span></small></p>
-          <p class="card-text"><small class="text-body-secondary">Stock: <span id="stock"></span></small></p>
+        <div class="mx-auto p-3">
+            <div class="row g-0" style="justify-content: space-between !important;">
+            <!-- Imagen del producto -->
+            <div class="col-md-5 text-center">
+                <img src="../../images/auri_blanco.png" class="img-fluid rounded-start img-producto" alt="Auriculares blancos" style="object-fit: contain;">
+            </div>
+        
+            <!-- Detalles del producto -->
+            <div class="col-md-7" style="max-width: 600px;">
+                <div class="card-body mt-5">
+                    <h3 class="mb-4">Auriculares Barracuda X</h3>
+                    
+                    <textarea class="form-control space-filler mb-3" rows="4" required> Auriculares inalámbricos con sonido envolvente y batería de larga duración.</textarea>
 
-          <!-- Selector de cantidad -->
-          <div class="mt-4">
-            <label for="cantidad" class="form-label">Cantidad</label>
-            <input type="range" class="form-range" min="1" max="50" id="cantidad" value="1"
-              oninput="valorCantidad.value = this.value">
-            <output id="valorCantidad">1</output> unidades
-          </div>
+                    <div class="mb-3 d-flex align-items-center gap-2">
+                      <label for="precio" class="form-label mb-0">Precio: $</label>
+                      <input type="number" class="form-control product-detail w-auto" id="precio" value="150.000" style="max-width: 170px;">
+                    </div>
 
-          <!-- Añadir al carro -->
-          <a href="producto.html?nombre=Barracuda%20X%20Chrome&precio=150000&stock=50"
-            class="btn btn-full-violet mt-3">Añadir al carro</a>
+                    <div class="mb-3 d-flex align-items-center gap-2">
+                      <label class="form-label mb-0">Stock disponible: </label>
+                      <input type="number" class="form-control product-detail w-auto" id="stock" value="50" style="max-width: 100px;">
+                    </div>
+    
+                    <!-- Añadir al carro -->
+                    <a href="producto.html?nombre=Barracuda%20X%20Chrome&precio=150000&stock=50"
+                        class="btn btn-full-violet mt-5" style="width: 100% !important;">Editar</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <!--  CODIGO MOMENTANEO!!!  -->
