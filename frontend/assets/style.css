@@ -221,6 +221,32 @@ footer {
     margin-top: 10px;
 }
 
+.boton-menos {
+  border-top: 1px solid #ced4da;
+  border-bottom: 1px solid #ced4da;
+  border-left: 1px solid #ced4da;
+  border-right: none;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.input-cantidad {
+  border-top: 1px solid #ced4da;
+  border-bottom: 1px solid #ced4da;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+}
+
+.boton-mas {
+  border-top: 1px solid #ced4da;
+  border-bottom: 1px solid #ced4da;
+  border-right: 1px solid #ced4da;
+  border-left: none;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
 .product-detail {
     background: none;
     border: 1px solid #ced4da;
