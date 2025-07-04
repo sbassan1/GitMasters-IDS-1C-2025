@@ -158,7 +158,7 @@ footer {
 }
 
 .contact-card {
-    background-color: var(--light_violet);
+    background-color: transparent;
 }
 
 .space-filler {
@@ -290,9 +290,9 @@ footer {
     margin-top: 10px;
 }
 
-[data-bs-theme="dark"] .contact-card {
+/* [data-bs-theme="dark"] .contact-card {
     background-color: var(--black);
-}
+} */
 
 [data-bs-theme="dark"] .space-filler {
     background-color: var(--dark_blue);
@@ -345,4 +345,25 @@ footer {
 [data-bs-theme="dark"] .btn-full-violet:hover {
     background-color: var(--dark_blue);
     border-color: var(--dark_blue);
+}
+
+[data-bs-theme="dark"] .boton-menos {
+    border-top: 1px solid var(--dark_grey);
+    border-bottom: 1px solid var(--dark_grey);
+    border-left: 1px solid var(--dark_grey);
+}
+
+[data-bs-theme="dark"] .boton-mas {
+    border-top: 1px solid var(--dark_grey);
+    border-bottom: 1px solid var(--dark_grey);
+    border-right: 1px solid var(--dark_grey);
+}
+
+[data-bs-theme="dark"] .input-cantidad {
+  border-top: 1px solid var(--dark_grey);
+  border-bottom: 1px solid var(--dark_grey);
+}
+
+[data-bs-theme="dark"] .product-detail{
+    border: 1px solid var(--dark_grey);
 }
