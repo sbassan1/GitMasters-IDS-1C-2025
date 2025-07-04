@@ -17,7 +17,7 @@ const { existeProducto, existeVenta } = require('../utility/verificaciones.js');
 
 // >>>>>>>>>>> REQUESTS GET <<<<<<<<<<
 
-router.get('/', async (req, renos) => {
+router.get('/', async (req, res) => {
     try {
         const v_productos = await venta_productosQuery.getAllVentas_Productos();
 
@@ -124,8 +124,11 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ message: "La cantidad a comprar es superior al stock."})
         }
 
+        const venta = await ventasQuery.getVentaById(id_venta);
+        const valorVentaTot = venta["valor"] + (valorProd*cantidad);
+
         const nuevaVentaProducto = await venta_productosQuery.createVenta_Producto(id_venta, id_producto, cantidad);
-        const cambioVentaValor = await ventasQuery.updateVentaValor(id_venta, valorProd*cantidad);
+        const cambioVentaValor = await ventasQuery.updateVentaValor(id_venta, valorVentaTot);
         const cambioProductoStock = await productosQuery.updateStockProductoId(id_producto, stock-cantidad);
 
         res.status(201).json(nuevaVentaProducto);
