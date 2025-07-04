@@ -43,13 +43,13 @@ body {
 .btn-outline-violet:hover {
     background-color: var(--purple);
     color: var(--white);
-    border-color: var(--light_blue);
+    border-color: var(--light_violet);
 }
 
 .btn-full-violet {
     font-size: 20px;
-    background-color: var(--light_blue);
-    border-color: var(--light_blue);
+    background-color: var(--light_violet);
+    border-color: var(--light_violet);
     color: var(--white);
 }
 
@@ -132,7 +132,7 @@ footer {
 }
 
 .li-header:hover {
-    color: var(--light_blue);
+    color: var(--light_violet);
 }
 
 .user-icon {
@@ -142,7 +142,7 @@ footer {
 }
 
 .user-icon:hover {
-  color: var(--light_blue);
+  color: var(--light_violet);
 }
 
 .title {
@@ -215,8 +215,8 @@ footer {
 }
 
 .btn-location:hover {
-    background-color: var(--light_blue);
-    border-color: var(--light_blue);
+    background-color: var(--light_violet);
+    border-color: var(--light_violet);
     color: black;
     margin-top: 10px;
 }
@@ -232,7 +232,7 @@ footer {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--light_blue);
+  background: var(--light_violet);
 }
 
 /* Estilos para modo oscuro */
