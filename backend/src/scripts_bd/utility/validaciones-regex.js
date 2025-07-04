@@ -126,6 +126,9 @@ function validarMetodoPago(metodo_pago) {
     if (!metodosValidos.includes(metodo_pago)) {
         return { ok: false, message: 'El método de pago debe ser uno de los siguientes: Efectivo, Crédito, Débito, Transferencia bancaria, QR o Mercado Pago.' };
     }
+    if (metodo_pago.length > 30) {
+        return { ok: false, message: 'El método de pago no puede exceder los 30 caracteres.' };
+    }
     return { ok: true };
 }
 
