@@ -4,7 +4,7 @@ const sedesQuery = require('../sedes/sedesQuery.js');
 const usuariosQuery = require('../usuarios/usuariosQuery.js');
 
 async function existeProducto(id_producto) {
-    const producto = await productosQuery.getProductoById(id_producto);
+    const producto = await productosQuery.getProductoId(id_producto);
     return !!producto;
 }
 

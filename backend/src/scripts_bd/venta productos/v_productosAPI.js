@@ -1,5 +1,7 @@
 const express = require('express');
 const venta_productosQuery = require('./v_productosQuery.js');
+const productosQuery = require('../productos/productosQuery.js');
+const ventasQuery = require('../ventas/ventasQuery.js');
 
 const router = express.Router();
 
@@ -15,7 +17,7 @@ const { existeProducto, existeVenta } = require('../utility/verificaciones.js');
 
 // >>>>>>>>>>> REQUESTS GET <<<<<<<<<<
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, renos) => {
     try {
         const v_productos = await venta_productosQuery.getAllVentas_Productos();
 
@@ -114,7 +116,18 @@ router.post('/', async (req, res) => {
             return res.status(404).json({ message: 'Producto no encontrado.' });
         }
 
+        const producto_compra = await productosQuery.getProductoId(id_producto);
+        const stock = producto_compra["stock"];
+        const valorProd = producto_compra["precio_venta"];
+
+        if (cantidad > stock) {
+            return res.status(400).json({ message: "La cantidad a comprar es superior al stock."})
+        }
+
         const nuevaVentaProducto = await venta_productosQuery.createVenta_Producto(id_venta, id_producto, cantidad);
+        const cambioVentaValor = await ventasQuery.updateVentaValor(id_venta, valorProd*cantidad);
+        const cambioProductoStock = await productosQuery.updateStockProductoId(id_producto, stock-cantidad);
+
         res.status(201).json(nuevaVentaProducto);
     } catch (error) {
         res.status(500).json({ error: error.message });

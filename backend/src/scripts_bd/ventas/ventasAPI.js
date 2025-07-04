@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
     try {
         const ventas = await ventasQuery.getAllVentas();
 
-        if (!usuarios || ventas.length === 0) {
+        if (!ventas || ventas.length === 0) {
             return res.status(404).json({ message: 'No se encontraron ventas.' });
         }
 

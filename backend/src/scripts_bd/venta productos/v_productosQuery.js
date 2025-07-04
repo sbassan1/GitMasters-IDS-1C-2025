@@ -3,7 +3,7 @@ const dbClient = require('../../database');
 
 async function getAllVentas_Productos() {
   try {
-       const response = await dbClient.query('SELECT * FROM v_productos vp;');
+       const response = await dbClient.query('SELECT * FROM Venta_Productos vp;');
        return response.rows;
   } catch (error) {
        console.error('Error al obtener ventas de productos:', error);
@@ -13,7 +13,7 @@ async function getAllVentas_Productos() {
 
 async function getVenta_ProductoById(id) {
   try {
-       const response = await dbClient.query('SELECT * FROM v_productos WHERE id = $1;', [id]);
+       const response = await dbClient.query('SELECT * FROM Venta_Productos WHERE id = $1;', [id]);
        return response.rows[0] || null;
   } catch (error) {
        console.error('Error al obtener venta de producto por ID:', error);
@@ -23,7 +23,7 @@ async function getVenta_ProductoById(id) {
 
 async function getVenta_ProductoByIdProducto(id_producto) {
   try {
-       const response = await dbClient.query('SELECT * FROM v_productos WHERE id_producto = $1;', [id_producto]);
+       const response = await dbClient.query('SELECT * FROM Venta_Productos WHERE id_producto = $1;', [id_producto]);
        return response.rows[0] || null;
   } catch (error) {
        console.error('Error al obtener venta de producto por ID de producto:', error);
@@ -33,7 +33,7 @@ async function getVenta_ProductoByIdProducto(id_producto) {
 
 async function getVenta_ProductoByIdVenta(id_venta) {
     try {
-        const response = await dbClient.query('SELECT * FROM v_productos WHERE id_venta = $1;', [id_venta]);
+        const response = await dbClient.query('SELECT * FROM Venta_Productos WHERE id_venta = $1;', [id_venta]);
         return response.rows[0] || null;
     } catch (error) {
         console.error('Error al obtener venta de producto por ID de venta:', error);
@@ -43,7 +43,7 @@ async function getVenta_ProductoByIdVenta(id_venta) {
 
 async function getVenta_ProductoByCantidad(cantidad) {
   try {
-       const response = await dbClient.query('SELECT * FROM v_productos WHERE cantidad = $1;', [cantidad]);
+       const response = await dbClient.query('SELECT * FROM Venta_Productos WHERE cantidad = $1;', [cantidad]);
        return response.rows;
   } catch (error) {
        console.error('Error al obtener venta de producto por cantidad:', error);
@@ -56,7 +56,7 @@ async function getVenta_ProductoByCantidad(cantidad) {
 async function createVenta_Producto(id_venta, id_producto, cantidad) {
   try {
        await dbClient.query(
-        'INSERT INTO v_productos (id_venta, id_producto, cantidad) VALUES ($1, $2, $3);',
+        'INSERT INTO Venta_Productos (id_venta, id_producto, cantidad) VALUES ($1, $2, $3);',
         [id_venta, id_producto, cantidad]
     );
     return await getVenta_ProductoByIdProducto(id_producto);
@@ -70,7 +70,7 @@ async function createVenta_Producto(id_venta, id_producto, cantidad) {
 
 async function deleteVenta_Producto(id) {
   try {
-       const response = await dbClient.query('DELETE FROM v_productos WHERE id = $1 RETURNING *;', [id]);
+       const response = await dbClient.query('DELETE FROM Venta_Productos WHERE id = $1 RETURNING *;', [id]);
        return response.rows[0] || null;
   } catch (error) {
        console.error('Error al eliminar venta de producto:', error);
@@ -83,7 +83,7 @@ async function deleteVenta_Producto(id) {
 async function updateVenta_Producto(id, id_venta, id_producto, cantidad) {
   try {
        const response = await dbClient.query(
-        'UPDATE v_productos SET id_venta = $1, id_producto = $2, cantidad = $3 WHERE id = $4 RETURNING *;',
+        'UPDATE Venta_Productos SET id_venta = $1, id_producto = $2, cantidad = $3 WHERE id = $4 RETURNING *;',
         [id_venta, id_producto, cantidad, id]
     );
     return response.rows[0] || null;
