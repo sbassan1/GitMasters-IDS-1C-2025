@@ -7,7 +7,7 @@ const router = express.Router();
 
 const { 
     validarNumeroNatural 
-} = require('../validaciones-regex.js');
+} = require('../utility/validaciones-regex.js');
 
 // >>>>>>>>>>> REQUESTS GET <<<<<<<<<<
 

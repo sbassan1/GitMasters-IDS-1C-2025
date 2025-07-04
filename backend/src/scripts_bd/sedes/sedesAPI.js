@@ -12,7 +12,7 @@ const {
     validarDiasRestock, 
     validarDireccion, 
     validarNombre 
-} = require('../validaciones-regex.js');
+} = require('../utility/validaciones-regex.js');
 
 // >>>>>>>>>>> REQUESTS GET <<<<<<<<<<
 

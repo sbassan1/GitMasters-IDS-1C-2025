@@ -10,7 +10,7 @@ const {
     validarMetodoPago, 
     validarFecha,
     validarNumeroNatural 
-} = require('../validaciones-regex.js');
+} = require('../utility/validaciones-regex.js');
 
 // >>>>>>>>>>> REQUESTS GET <<<<<<<<<<
 

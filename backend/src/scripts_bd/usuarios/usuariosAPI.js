@@ -8,7 +8,8 @@ const {
     validarEmail,
     validarContrasena,
     validarFecha
-} = require('../validaciones-regex.js');
+} = require('../utility/validaciones-regex.js');
+
 // >>>>>>>>>>> REQUESTS GET <<<<<<<<<<
 
 router.get('/', async (req, res) =>{
