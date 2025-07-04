@@ -11,6 +11,9 @@ function validarHorarios(horarios) {
     if (!horariosRegex.test(horarios)) {
         return { ok: false, message: 'El formato de horarios es incorrecto. Debe ser "hh:mm-hh:mm".' };
     }
+    if (horarios.length !== 11) {
+        return { ok: false, message: 'Los horarios deben tener una longitud de 11 caracteres.' };
+    }
     return { ok: true };
 }
 
@@ -70,6 +73,9 @@ function validarNombre(nombre) {
     if (!nombreRegex.test(nombre)) {
         return { ok: false, message: 'El nombre de la sede debe comenzar con "Sede" y contener letras, números, espacios, guiones y acentos.' };
     }
+    if (nombre.length > 50) {
+        return { ok: false, message: 'El nombre de la sede no puede exceder los 50 caracteres.' };
+    }
     return { ok: true };
 }
 
@@ -93,6 +99,9 @@ function validarEmail(email) {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
         return { ok: false, message: 'El formato del correo electrónico es incorrecto.' };
+    }
+    if (email.length > 50) {
+        return { ok: false, message: 'El correo electrónico no puede exceder los 50 caracteres.' };
     }
     return { ok: true };
 }
