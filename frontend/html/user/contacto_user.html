@@ -16,11 +16,11 @@
 
 <body data-bs-theme="dark">
     <!--  Header -->
-   <div class="container-fluid">
+    <div class="container-fluid">
         <header
             class="d-flex flex-wrap align-items-center justify-content-center justify-content-around mb-4 border-bottom">
             <div class="col-md-3 mb-2 mb-md-0">
-                <a href="main.html">
+                <a href="main_user.html">
                     <img src="../../images/lizard_logo_icon.ico" alt="Inicio" class="img-fluid rounded"
                         style="width: 100px; height: 100px;">
                 </a>
@@ -31,14 +31,14 @@
                         role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Productos</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="perifericos.html">Accesorios</a></li>
-                        <li><a class="dropdown-item" href="componentes.html">Auriculares</a></li>
-                        <li><a class="dropdown-item" href="accesorios.html">Mouse</a></li>
-                        <li><a class="dropdown-item" href="accesorios.html">Teclados</a></li>
+                        <li><a class="dropdown-item" href="productos_user.html">Accesorios</a></li>
+                        <li><a class="dropdown-item" href="productos_user.html">Auriculares</a></li>
+                        <li><a class="dropdown-item" href="productos_user.html">Mouse</a></li>
+                        <li><a class="dropdown-item" href="productos_user.html">Teclados</a></li>
                     </ul>
                 </li>
-                <li><a href="sucursales.html" class="nav-link px-4 li-header-black">Sucursales</a></li>
-                <li><a href="contacto.html" class="nav-link px-4 li-header-black">Contacto</a></li>
+                <li><a href="sucursales_user.html" class="nav-link px-4 li-header-black">Sucursales</a></li>
+                <li><a href="contacto_user.html" class="nav-link px-4 li-header-black">Contacto</a></li>
             </ul>
             <div class="col-md-3 text-end">
 
@@ -75,78 +75,30 @@
         </header>
     </div>
 
-    <!-- Titulo -->
-    <div class="title text-center">
-        <h1>Nuestras Sucursales</h1>
-        <p class="lead">Encuentra la sucursal más cercana a tu ubicación</p>
-    </div>
-
-    <!-- Sedes -->
-    <div class="container-fluid" style="max-width: 80%;">
+    <!-- Contacto -->
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh">
         <div class="row">
-            <!-- Listado -->
-            <div class="col-md-4 mb-4">
-                <div class="locations-container">
-                    <!-- <div class="search-box">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Buscar sucursal...">
-                            <button class="btn btn-primary" type="button">Buscar</button>
-                        </div>
-                    </div> -->
+            <div class="col-sm-12">
+                <div class="card w-100 contact-card" style="max-width: 600px;">
+                    <div class="card-body">
+                        <h3 class="text-center mb-4">Contacto</h3>
 
-                    <!-- Listado de Sucursales -->
-                    <div class="location-list">
-                        <div class="location-card">
-                            <h5>Sucursal Central</h5>
-                            <p><i class="bi bi-geo-alt"></i> Av. Principal 1234, Ciudad</p>
-                            <p><i class="bi bi-telephone"></i> (011) 1234-5678</p>
-                            <p><i class="bi bi-clock"></i> Lunes a Viernes: 9:00 - 20:00</p>
-                            <button class="btn btn-location btn-sm">Ver en mapa</button>
+                        <div class="mb-3">
+                            <input type="text" class="form-control space-filler" placeholder="Nombre y apellido" required>
                         </div>
 
-                        <div class="location-card">
-                            <h5>Sucursal Norte</h5>
-                            <p><i class="bi bi-geo-alt"></i> Av. Principal 1234, Ciudad</p>
-                            <p><i class="bi bi-telephone"></i> (011) 1234-5678</p>
-                            <p><i class="bi bi-clock"></i> Lunes a Viernes: 9:00 - 20:00</p>
-                            <button class="btn btn-location btn-sm">Ver en mapa</button>
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control is-invalid space-filler" placeholder="Email" id="email" required>
+                            <div class="invalid-feedback">Ingresá un email válido.</div>
+                            <input type="text" class="form-control space-filler" placeholder="Teléfono" required>
                         </div>
 
-                        <div class="location-card">
-                            <h5>Sucursal Sur</h5>
-                            <p><i class="bi bi-geo-alt"></i> Av. Principal 1234, Ciudad</p>
-                            <p><i class="bi bi-telephone"></i> (011) 1234-5678</p>
-                            <p><i class="bi bi-clock"></i> Lunes a Viernes: 9:00 - 20:00</p>
-                            <button class="btn btn-location btn-sm">Ver en mapa</button>
+                        <div class="mb-4">
+                            <textarea class="form-control space-filler" placeholder="Mensaje" rows="4" required></textarea>
                         </div>
 
-                        <div class="location-card">
-                            <h5>Sucursal Este</h5>
-                            <p><i class="bi bi-geo-alt"></i> Av. Principal 1234, Ciudad</p>
-                            <p><i class="bi bi-telephone"></i> (011) 1234-5678</p>
-                            <p><i class="bi bi-clock"></i> Lunes a Viernes: 9:00 - 20:00</p>
-                            <button class="btn btn-location btn-sm">Ver en mapa</button>
-                        </div>
-
-                        <div class="location-card">
-                            <h5>Sucursal Oeste</h5>
-                            <p><i class="bi bi-geo-alt"></i> Av. Principal 1234, Ciudad</p>
-                            <p><i class="bi bi-telephone"></i> (011) 1234-5678</p>
-                            <p><i class="bi bi-clock"></i> Lunes a Viernes: 9:00 - 20:00</p>
-                            <button class="btn btn-location btn-sm">Ver en mapa</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mapa -->
-            <div class="col-md-8 mb-4">
-                <div class="map-container">
-                    <div class="ratio ratio-4x3">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.999040543419!2d2.292292615674394!3d48.858373079287246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66fc7f3e8b289%3A0x9c26b77cb1c38d91!2sTorre%20Eiffel!5e0!3m2!1ses-419!2sar!4v1615395607260!5m2!1ses-419!2sar"
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-                        </iframe>
+                        <button type="submit" class="btn btn-full-violet"
+                            style="width: 100% !important;">Enviar</button>
                     </div>
                 </div>
             </div>
