@@ -16,7 +16,7 @@ CREATE TABLE Productos (
     precio_venta INT NOT NULL,
     tipo VARCHAR(20) NOT NULL,
     imagen VARCHAR(100),
-    sede_id INT REFERENCES Sedes(id)
+    sede_id INT REFERENCES Sedes(id) ON DELETE SET NULL
 );
 
 CREATE TABLE Usuarios (
@@ -32,14 +32,13 @@ CREATE TABLE Ventas (
     id SERIAL PRIMARY KEY,
     valor INT NOT NULL DEFAULT 0,
     fecha DATE NOT NULL,
-    id_usuario INT REFERENCES Usuarios(id),
+    id_usuario INT REFERENCES Usuarios(id) ON DELETE SET NULL,
     metodo_pago VARCHAR(20)  
 );
 
 CREATE TABLE Venta_Productos (
     id SERIAL PRIMARY KEY,
     id_venta INT REFERENCES Ventas(id) ON DELETE CASCADE,
-    id_producto INT REFERENCES Productos(id),
+    id_producto INT REFERENCES Productos(id) ON DELETE SET NULL,
     cantidad INT NOT NULL
 );
-
