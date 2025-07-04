@@ -40,12 +40,19 @@
                 <li><a href="sucursales_admin.html" class="nav-link px-4 li-header-black">Sucursales</a></li>
             </ul>
             <div class="col-md-3 text-end">
-
                 <div class="dropdown">
-
                     <button id="toggleTheme" class="btn btn-link">
                         <i id="themeIcon" class="bi bi-brightness-high-fill user-icon"></i>
                     </button>
+                    
+                    <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-person user-icon"></i>
+                    </button>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                    </ul>
                 </div>
             </div>
         </header>
