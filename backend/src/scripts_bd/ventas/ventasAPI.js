@@ -109,7 +109,7 @@ router.post('/', async (req, res) => {
     try {
         const { valor, fecha, id_usuario, metodo_pago } = req.body;
 
-        if (!valor || !fecha || !id_usuario || !metodo_pago) {
+        if (valor === null || valor === undefined || !fecha || !id_usuario || !metodo_pago) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
         }
 
@@ -149,7 +149,7 @@ router.put('/:id', async (req, res) => {
     try {
         const { valor, fecha, id_usuario, metodo_pago } = req.body;
 
-        if (!valor || !fecha || !id_usuario || !metodo_pago) {
+        if (valor===null || valor===undefined || !fecha || !id_usuario || !metodo_pago) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
         }
 

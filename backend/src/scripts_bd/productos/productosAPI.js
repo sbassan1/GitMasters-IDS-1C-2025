@@ -95,7 +95,7 @@ router.post('/', async (req, res) => {
     try {
         const { nombre, descripcion, stock, precio_venta, tipo, imagen, sede_id } = req.body;
 
-        if (!nombre || !descripcion || !stock || !precio_venta || !tipo || !imagen || !sede_id ) {
+        if (!nombre || !descripcion || stock===null || stock===undefined || precio_venta===null || precio_venta===undefined || !tipo || !imagen || !sede_id ) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
         }
 
@@ -141,7 +141,7 @@ router.put('/:id', async (req, res) => {
     try {
         const { nombre, descripcion, stock, precio_venta, tipo, imagen, sede_id } = req.body;
 
-        if (!nombre || !descripcion || !stock || !precio_venta || !tipo || !imagen || !sede_id) {
+        if (!nombre || !descripcion || stock===null || stock===undefined || precio_venta===null || precio_venta===undefined || !tipo || !imagen || !sede_id) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
         }
 
@@ -242,7 +242,7 @@ router.put('/stock/:id', async (req, res) => {
     try {
         const { stock } = req.body;
 
-        if (!stock) {
+        if (stock===null || stock===undefined) {
             return res.status(400).json({ message: 'Falta el stock.' });
         }
         
@@ -265,9 +265,9 @@ router.put('/stock/:id', async (req, res) => {
 
 router.put('/precio/:id', async (req, res) => {
     try {
-        const { precio } = req.body;
+        const { precio_venta } = req.body;
 
-        if (!precio) {
+        if (precio_venta===null || precio_venta===undefined) {
             return res.status(400).json({ message: 'Falta el precio.' });
         }
 
@@ -277,7 +277,7 @@ router.put('/precio/:id', async (req, res) => {
             return res.status(400).json({ message: validacionPrecioVenta.message });
         }
 
-        const productoActualizado = await productosQuery.updatePrecioProductoId(req.params.id, precio);
+        const productoActualizado = await productosQuery.updatePrecioProductoId(req.params.id, precio_venta);
 
         if (!productoActualizado) {
             return res.status(404).json({ message: 'Producto no encontrado.' });
@@ -331,9 +331,9 @@ router.put('/imagen/:id', async (req, res) => {
 
 router.put('/sede/:id', async (req, res) => {
     try {
-        const { sede } = req.body;
+        const { sede_id } = req.body;
 
-        if (!sede) {
+        if (!sede_id) {
             return res.status(400).json({ message: 'Falta la sede.' });
         }
         
@@ -346,7 +346,7 @@ router.put('/sede/:id', async (req, res) => {
             return res.status(404).json({ message: 'Sede no encontrada.' });
         }
 
-        const productoActualizado = await productosQuery.updateSedeProductoId(req.params.id, sede);
+        const productoActualizado = await productosQuery.updateSedeProductoId(req.params.id, sede_id);
 
         if (!productoActualizado) {
             return res.status(404).json({ message: 'Producto no encontrado.' });
