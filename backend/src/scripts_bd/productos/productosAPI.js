@@ -358,5 +358,31 @@ router.put('/sede/:id', async (req, res) => {
     }
 });
 
+// >>>>>>>>>>> REQUESTS ELIM <<<<<<<<<<<
+
+router.delete('/id/:id', async (req, res) => {
+    try {
+        const idElim = req.params.id;
+        
+        if(!idElim) {
+            return res.status(400).json( { message: 'Falta el id del producto a eliminar'});
+        }
+
+        const prod = await productosQuery.getProductoId(req.params.id);
+        if (!prod) {
+            return res.status(404).json({ error: "La id del producto no corresponde a ninguno." });
+        }
+        const eliminarProd = await productosQuery.deleteProductoId(idElim); 
+
+        if (!eliminarProd) {
+            return res.status(500).json(( { message: 'El producto no fue eliminado por un error del servidor. Contacte un admin.'}))
+        }
+
+        return res.status(200).json(prod);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}); 
+
 // IMPORTANTE PARA QUE FUNCIONE
 module.exports = router;

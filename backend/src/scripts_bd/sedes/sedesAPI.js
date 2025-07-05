@@ -379,5 +379,32 @@ router.put('/telefono/:id', async (req, res) => {
     }
 });
 
+// >>>>>>>>>>> REQUESTS DELETE <<<<<<<<<<
+
+
+router.delete('/id/:id', async (req, res) => {
+    try {
+        const idElim = req.params.id;
+        
+        if(!idElim) {
+            return res.status(400).json( { message: 'Falta el id de la sede a eliminar'});
+        }
+
+        const sede = await sedesQuery.getSedeById(req.params.id);
+        if (!sede) {
+            return res.status(404).json({ error: "La id del producto no corresponde a ninguno." });
+        }
+        const eliminarSede = await sedesQuery.deleteSedeByNombre(sede["nombre"]); 
+
+        if (!eliminarSede) {
+            return res.status(500).json(( { message: 'La sede no fue eliminada por un error del servidor. Contacte un admin.'}))
+        }
+
+        return res.status(200).json(sede);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}); 
+
 
 module.exports = router;
