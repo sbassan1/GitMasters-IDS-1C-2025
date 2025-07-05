@@ -116,10 +116,24 @@ function validarContrasena(contrasena) {
 
 function validarFecha(fecha) {
     const fechaRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+    
     if (!fechaRegex.test(fecha)) {
         return { ok: false, message: 'El formato de la fecha es incorrecto. Debe ser "AAAA-MM-DD".' };
     }
+    
+    const [year, month, day] = fecha.split('-').map(Number);
+    
+    const date = new Date(year, month - 1, day);
+    
+    if (date.getFullYear() !== year || 
+        date.getMonth() !== month - 1 ||
+        date.getDate() !== day) {
+        return { ok: false, message: 'La fecha ingresada no es válida.' };
+    }
+    
+    return { ok: true, message: 'Fecha válida' };
 }
+
 
 function validarMetodoPago(metodo_pago) {
     const metodosValidos = ['Efectivo', 'Crédito', 'Débito', 'Transferencia bancaria', 'QR', 'Mercado Pago'];

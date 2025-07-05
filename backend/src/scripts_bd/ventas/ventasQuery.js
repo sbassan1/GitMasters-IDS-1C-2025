@@ -67,7 +67,7 @@ async function getVentasByMetodo(metodo_pago) {
 async function createVenta(valor, fecha, id_usuario, metodo_pago) {
     try {
         const result = await dbClient.query(
-            'INSERT INTO ventas (valor, fecha, id_usuario, metodo_pago) VALUES ($1, $2, $3, $4) RETURNING *;',
+            'INSERT INTO ventas (valor, fecha, id_usuario, metodo_pago) VALUES ($1, $2, $3, $4) RETURNING *',
             [valor, fecha, id_usuario, metodo_pago]
         );
         return result.rows[0];;
