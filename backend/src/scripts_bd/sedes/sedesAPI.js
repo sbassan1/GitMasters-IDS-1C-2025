@@ -382,19 +382,19 @@ router.put('/telefono/:id', async (req, res) => {
 // >>>>>>>>>>> REQUESTS DELETE <<<<<<<<<<
 
 
-router.delete('/id/:id', async (req, res) => {
+router.delete('/nombre/:nombre', async (req, res) => {
     try {
-        const idElim = req.params.id;
+        const nombreElim = req.params.nombre;
         
-        if(!idElim) {
-            return res.status(400).json( { message: 'Falta el id de la sede a eliminar'});
+        if(!nombreElim) {
+            return res.status(400).json( { message: 'Falta el nombre de la sede a eliminar'});
         }
 
-        const sede = await sedesQuery.getSedeById(req.params.id);
+        const sede = await sedesQuery.getSedeByNombre(nombreElim);
         if (!sede) {
-            return res.status(404).json({ error: "La id del producto no corresponde a ninguno." });
+            return res.status(404).json({ error: "El nombre del producto no corresponde a ninguno." });
         }
-        const eliminarSede = await sedesQuery.deleteSedeByNombre(sede["nombre"]); 
+        const eliminarSede = await sedesQuery.deleteSedeByNombre(nombreElim); 
 
         if (!eliminarSede) {
             return res.status(500).json(( { message: 'La sede no fue eliminada por un error del servidor. Contacte un admin.'}))
