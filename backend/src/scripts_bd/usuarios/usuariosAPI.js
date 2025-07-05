@@ -97,6 +97,20 @@ router.get('/inicio/:fecha_inicio', async (req, res) => {
     }
 });
 
+// GET /api/v1/productos/usuarios/123/compras PARA VER TODAS LAS COMPRAS
+router.get('/:id/compras', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const ventas = await usuariosQuery.getComprasUsuario(userId);
+    if (ventas.length === 0) {
+      return res.status(404).json({ message: 'No se encontraron compras para ese usuario.' });
+    }
+    res.json(ventas);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // >>>>>>>>>>> REQUESTS POST <<<<<<<<<<
 
 router.post('/', async (req, res) => {
@@ -293,13 +307,25 @@ router.put('/contrasena/:id', async (req, res) => {
 
 router.delete('/email/:email', async (req, res) => {
     try {
-        const usuarioEliminado = await usuariosQuery.deleteUsuarioByEmail(req.params.email);
+
+        const emailElim = req.params.email;
+
+        if(!emailElim) {
+            return res.status(400).json( { message: 'Falta el mail del usuario a eliminar'});
+        }
+
+        const usuario = await usuariosQuery.getUsuarioByEmail(emailElim);
+        if(!usuario) {
+            return res.status(404).json({ error: "El email del usuario no corresponde a ninguno." });
+        }
+
+        const usuarioEliminado = await usuariosQuery.deleteUsuarioByEmail(emailElim);
 
         if (!usuarioEliminado) {
             return res.status(404).json({ message: 'Usuario no encontrado.' });
         }
 
-        res.json({ message: 'Usuario eliminado exitosamente.' });
+        return res.status(200).json({message: 'Usuario Eliminado'});
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
