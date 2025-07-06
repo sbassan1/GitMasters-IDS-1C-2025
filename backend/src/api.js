@@ -30,6 +30,42 @@ app.use('/api/v1/ventas', ventasAPI);
 app.use('/api/v1/ventas_productos', v_productosAPI);
 
 
+const pool = require('./database.js');
+
+const resetDB = async (req, res) => {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+        await client.query('DELETE FROM Venta_Productos');
+        await client.query('ALTER SEQUENCE venta_productos_id_seq RESTART WITH 1');
+
+        await client.query('DELETE FROM Ventas');
+        await client.query('ALTER SEQUENCE ventas_id_seq RESTART WITH 1');
+
+        await client.query('DELETE FROM Productos WHERE id > 22');
+        await client.query('ALTER SEQUENCE productos_id_seq RESTART WITH 23');
+
+        await client.query('DELETE FROM Sedes WHERE id > 3');
+        await client.query('ALTER SEQUENCE sedes_id_seq RESTART WITH 4');
+
+        await client.query('DELETE FROM Usuarios WHERE id > 1');
+        await client.query('ALTER SEQUENCE usuarios_id_seq RESTART WITH 2');
+
+        await client.query('COMMIT');
+        res.status(200).json({ message: 'Base de datos restablecida correctamente.' });
+    } catch (err) {
+        await client.query('ROLLBACK');
+        console.error('Error al resetear la base de datos:', err);
+        res.status(500).json({ error: 'Error al restablecer la base de datos.' });
+    } finally {
+        client.release();
+    }
+};
+
+app.post('/api/v1/reset-db', resetDB);
+
+
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

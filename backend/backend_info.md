@@ -410,4 +410,6 @@ la informacion del servidor para su uso en dbeaver:
         }
 
 
+## REQUEST PARA REESTABLECER LA BASE CON LOS VALORES PREDETERMINADOS DEL COMIENZO : http://localhost:3000/api/v1/reset-db
+
 ---
