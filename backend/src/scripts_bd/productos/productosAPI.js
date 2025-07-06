@@ -68,7 +68,7 @@ router.get('/tipo/:tipo', async (req,res) => {
             return res.status(404).json({ error: "No hay productos de ese tipo" });
         }
         
-        res.json(prod);
+        res.json(prod); 
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
