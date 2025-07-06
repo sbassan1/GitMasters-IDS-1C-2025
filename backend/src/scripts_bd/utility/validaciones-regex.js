@@ -58,7 +58,7 @@ function validarDiasRestock(dias_restock) {
 }
 
 function validarDireccion(direccion) {
-    const direccionRegex = /^[\w\s\.,#-]+$/;
+    const direccionRegex = /^[\w\s\.,#\-ÁÉÍÓÚÑáéíóúñ]+$/;
     if (!direccionRegex.test(direccion)) {
         return { ok: false, message: 'El formato de la dirección es incorrecto. Debe contener letras, números, espacios, puntos, comas y guiones.' };
     }
@@ -67,6 +67,7 @@ function validarDireccion(direccion) {
     }
     return { ok: true };
 }
+
 
 function validarNombre(nombre) {
     const nombreRegex = /^[\w\sÁÉÍÓÚáéíóúñÑ-]*$/;
