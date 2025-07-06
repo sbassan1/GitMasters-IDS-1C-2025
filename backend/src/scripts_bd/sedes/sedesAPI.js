@@ -60,7 +60,7 @@ router.get('/nombre/:nombre', async (req, res) => {
 
 router.get('/horarios/:horarios', async (req, res) => {
     try {
-        const sedes = await sedesQuery.getSedeByHorarios(req.params.horarios);
+        const sedes = await sedesQuery.getSedebyHorarios(req.params.horarios);
 
         if (!sedes || sedes.length === 0) {
             return res.status(404).json({ message: 'No se encontraron sedes con esos horarios.' });
