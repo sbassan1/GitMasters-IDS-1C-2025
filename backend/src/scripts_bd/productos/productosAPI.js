@@ -2,6 +2,19 @@ const express = require('express');
 const productosQuery = require('./productosQuery.js');
 
 const router = express.Router();
+
+// >>>>>>>>>>> FUNCIONES DE VALIDACION - REGEX <<<<<<<<<<
+const {
+    validarNombre,
+    validarNumeroRacionalPositivo,
+    validarNumeroNatural,
+    validarDescripcion
+} = require('../utility/validaciones-regex.js');
+
+// >>>>>>>>>>> VERIFICACIONES DE EXISTENCIA <<<<<<<<<<
+
+const { existeSede } = require('../utility/verificaciones.js');
+
 // >>>>>>>>>>> REQUESTS DE TIPO GET <<<<<<<<<<<
 
 router.get('/', async (req, res) => {
@@ -82,8 +95,37 @@ router.post('/', async (req, res) => {
     try {
         const { nombre, descripcion, stock, precio_venta, tipo, imagen, sede_id } = req.body;
 
-        if (!nombre || !descripcion || !stock || !precio_venta || !tipo || !imagen || !sede_id ) {
+        if (!nombre || !descripcion || stock===null || stock===undefined || precio_venta===null || precio_venta===undefined || !tipo || !imagen || !sede_id ) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
+        }
+
+        const validacionNombre = validarNombre(nombre);
+        if (!validacionNombre.ok) {
+            return res.status(400).json({ message: validacionNombre.message });
+        }
+
+        const validacionDescripcion = validarDescripcion(descripcion);
+        if (!validacionDescripcion.ok) {
+            return res.status(400).json({ message: validacionDescripcion.message });
+        }
+
+        const validacionStock = validarNumeroNatural(stock);
+        if (!validacionStock.ok) {
+            return res.status(400).json({ message: validacionStock.message });
+        }
+
+        const validacionPrecioVenta = validarNumeroRacionalPositivo(precio_venta);
+        if (!validacionPrecioVenta.ok) {
+            return res.status(400).json({ message: validacionPrecioVenta.message });
+        }
+
+        const validacionSedeId = validarNumeroNatural(sede_id);
+        if (!validacionSedeId.ok) {
+            return res.status(400).json({ message: validacionSedeId.message });
+        }
+
+        if (!await existeSede(sede_id)) { // Verifica si la sede existe
+            return res.status(404).json({ message: 'Sede no encontrada.' });
         }
 
         const nuevoProducto = await productosQuery.createProducto(nombre, descripcion, stock, precio_venta, tipo, imagen, sede_id );
@@ -99,14 +141,43 @@ router.put('/:id', async (req, res) => {
     try {
         const { nombre, descripcion, stock, precio_venta, tipo, imagen, sede_id } = req.body;
 
-        if (!nombre || !descripcion || !stock || !precio_venta || !tipo || !imagen || !sede_id) {
+        if (!nombre || !descripcion || stock===null || stock===undefined || precio_venta===null || precio_venta===undefined || !tipo || !imagen || !sede_id) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
+        }
+
+        const validacionNombre = validarNombre(nombre);
+        if (!validacionNombre.ok) {
+            return res.status(400).json({ message: validacionNombre.message });
+        }
+
+        const validacionDescripcion = validarDescripcion(descripcion);
+        if (!validacionDescripcion.ok) {
+            return res.status(400).json({ message: validacionDescripcion.message });
+        }
+
+        const validacionStock = validarNumeroNatural(stock);
+        if (!validacionStock.ok) {
+            return res.status(400).json({ message: validacionStock.message });
+        }
+
+        const validacionPrecioVenta = validarNumeroRacionalPositivo(precio_venta);
+        if (!validacionPrecioVenta.ok) {
+            return res.status(400).json({ message: validacionPrecioVenta.message });
+        }
+
+        const validacionSedeId = validarNumeroNatural(sede_id);
+        if (!validacionSedeId.ok) {
+            return res.status(400).json({ message: validacionSedeId.message });
         }
 
         const productoActualizado = await productosQuery.updateProducto(req.params.id, nombre, descripcion, stock, precio_venta, tipo, imagen, sede_id);
 
         if (!productoActualizado) {
             return res.status(404).json({ message: 'Producto no encontrado.' });
+        }
+
+        if (!await existeSede(sede_id)) { // Verifica si la sede existe
+            return res.status(404).json({ message: 'Sede no encontrada.' });
         }
 
         res.json(productoActualizado);
@@ -123,6 +194,11 @@ router.put('/nombre/:id', async (req, res) => {
 
         if (!nombre) {
             return res.status(400).json({ message: 'Falta el nombre.' });
+        }
+
+        const validacionNombre = validarNombre(nombre);
+        if (!validacionNombre.ok) {
+            return res.status(400).json({ message: validacionNombre.message });
         }
 
         const productoActualizado = await productosQuery.updateNombreProductoId(req.params.id, nombre);
@@ -144,6 +220,11 @@ router.put('/descripcion/:id', async (req, res) => {
         if (!descripcion) {
             return res.status(400).json({ message: 'Falta la descripcion.' });
         }
+        
+        const validacionDescripcion = validarDescripcion(descripcion);
+        if (!validacionDescripcion.ok) {
+            return res.status(400).json({ message: validacionDescripcion.message });
+        }
 
         const productoActualizado = await productosQuery.updateDescripcionProductoId(req.params.id, descripcion);
 
@@ -161,8 +242,13 @@ router.put('/stock/:id', async (req, res) => {
     try {
         const { stock } = req.body;
 
-        if (!stock) {
+        if (stock===null || stock===undefined) {
             return res.status(400).json({ message: 'Falta el stock.' });
+        }
+        
+        const validacionStock = validarNumeroNatural(stock);
+        if (!validacionStock.ok) {
+            return res.status(400).json({ message: validacionStock.message });
         }
 
         const productoActualizado = await productosQuery.updateStockProductoId(req.params.id, stock);
@@ -179,13 +265,19 @@ router.put('/stock/:id', async (req, res) => {
 
 router.put('/precio/:id', async (req, res) => {
     try {
-        const { precio } = req.body;
+        const { precio_venta } = req.body;
 
-        if (!precio) {
+        if (precio_venta===null || precio_venta===undefined) {
             return res.status(400).json({ message: 'Falta el precio.' });
         }
 
-        const productoActualizado = await productosQuery.updatePrecioProductoId(req.params.id, precio);
+        
+        const validacionPrecioVenta = validarNumeroRacionalPositivo(precio_venta);
+        if (!validacionPrecioVenta.ok) {
+            return res.status(400).json({ message: validacionPrecioVenta.message });
+        }
+
+        const productoActualizado = await productosQuery.updatePrecioProductoId(req.params.id, precio_venta);
 
         if (!productoActualizado) {
             return res.status(404).json({ message: 'Producto no encontrado.' });
@@ -239,13 +331,22 @@ router.put('/imagen/:id', async (req, res) => {
 
 router.put('/sede/:id', async (req, res) => {
     try {
-        const { sede } = req.body;
+        const { sede_id } = req.body;
 
-        if (!sede) {
+        if (!sede_id) {
             return res.status(400).json({ message: 'Falta la sede.' });
         }
+        
+        const validacionSedeId = validarNumeroNatural(sede_id);
+        if (!validacionSedeId.ok) {
+            return res.status(400).json({ message: validacionSedeId.message });
+        }
 
-        const productoActualizado = await productosQuery.updateSedeProductoId(req.params.id, sede);
+        if (!await existeSede(sede_id)) { // Verifica si la sede existe
+            return res.status(404).json({ message: 'Sede no encontrada.' });
+        }
+
+        const productoActualizado = await productosQuery.updateSedeProductoId(req.params.id, sede_id);
 
         if (!productoActualizado) {
             return res.status(404).json({ message: 'Producto no encontrado.' });
@@ -256,6 +357,32 @@ router.put('/sede/:id', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+// >>>>>>>>>>> REQUESTS ELIM <<<<<<<<<<<
+
+router.delete('/id/:id', async (req, res) => {
+    try {
+        const idElim = req.params.id;
+        
+        if(!idElim) {
+            return res.status(400).json( { message: 'Falta el id del producto a eliminar'});
+        }
+
+        const prod = await productosQuery.getProductoId(req.params.id);
+        if (!prod) {
+            return res.status(404).json({ error: "La id del producto no corresponde a ninguno." });
+        }
+        const eliminarProd = await productosQuery.deleteProductoId(idElim); 
+
+        if (!eliminarProd) {
+            return res.status(500).json(( { message: 'El producto no fue eliminado por un error del servidor. Contacte un admin.'}))
+        }
+
+        return res.status(200).json(prod);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}); 
 
 // IMPORTANTE PARA QUE FUNCIONE
 module.exports = router;

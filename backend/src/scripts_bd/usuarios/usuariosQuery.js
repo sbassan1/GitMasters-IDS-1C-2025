@@ -62,6 +62,32 @@ async function getUsuariosByInicio(fecha_inicio) {
     }
 }
 
+async function getComprasUsuario(id_usuario) {
+   try {
+       const response = await dbClient.query(`
+          SELECT
+               v.id           AS venta_id,
+               v.fecha        AS fecha_venta,
+               v.valor        AS valor_total,
+               vp.id_producto AS producto_id,
+               p.nombre       AS nombre_producto,
+               vp.cantidad    AS cantidad_vendida
+          FROM Ventas v
+          JOIN Venta_Productos vp 
+          ON v.id = vp.id_venta
+          LEFT JOIN Productos p
+          ON vp.id_producto = p.id
+          WHERE v.id_usuario = $1
+          ORDER BY v.fecha DESC, v.id;
+          `, [id_usuario]);
+
+     return response.rows;
+   } catch (error) {
+       console.error('Error al obtener todas las compras de usuario:', error);
+       throw new Error('No se pudo obtener las compras del usuario');
+   }     
+}
+
 // --- POST ---
 
 async function createUsuario(nombre, email, contrasena, cumpleanos, fecha_inicio) {
@@ -82,7 +108,7 @@ async function createUsuario(nombre, email, contrasena, cumpleanos, fecha_inicio
 
 async function deleteUsuarioByEmail(email) {
     try {
-        const result = await dbClient.query('DELETE FROM usuarios WHERE mail = $1;', [email]);
+        const result = await dbClient.query('DELETE FROM Usuarios WHERE email = $1;', [email]);
         return result.rowCount > 0;
     } catch (error) {
         console.error(`Error al eliminar el usuario con email ${email}:`, error);
@@ -185,6 +211,7 @@ module.exports = {
     getUsuarioByNombre,
     getUsuariosByCumpleanos,
     getUsuariosByInicio,
+    getComprasUsuario,
     createUsuario,
     deleteUsuarioByEmail,
     updateUsuario,

@@ -67,10 +67,10 @@ async function getVentasByMetodo(metodo_pago) {
 async function createVenta(valor, fecha, id_usuario, metodo_pago) {
     try {
         const result = await dbClient.query(
-            'INSERT INTO ventas (valor, fecha, id_usuario, metodo_pago) VALUES ($1, $2, $3, $4) RETURNING *;',
+            'INSERT INTO ventas (valor, fecha, id_usuario, metodo_pago) VALUES ($1, $2, $3, $4) RETURNING *',
             [valor, fecha, id_usuario, metodo_pago]
         );
-        return await getVentaById(id);
+        return result.rows[0];;
     } catch (error) {
         console.error('Error al crear la venta:', error);
         throw new Error('No se pudo crear la venta');
@@ -110,6 +110,23 @@ async function updateVenta(id, valor, fecha, id_usuario, metodo_pago) {
     }
 }
 
+async function updateVentaValor(id, valor) {
+    try {
+        const result = await dbClient.query(
+            'UPDATE ventas SET valor = $2 WHERE id = $1 RETURNING *;',
+            [id, valor]
+        );
+        if (result.rowCount === 0) {
+            throw new Error(`No se encontró la venta con ID ${id}`);
+        }
+        return result.rows[0]; ;
+    } catch (error) {
+        console.error(`Error al actualizar el valor de la venta con ID ${id}:`, error);
+        throw new Error(`No se pudo actualizar la venta con ID ${id}`);
+    }
+}
+
+
 module.exports = {
     getAllVentas,
     getVentaById,
@@ -119,5 +136,6 @@ module.exports = {
     getVentasByMetodo,
     createVenta,
     deleteVenta,
-    updateVenta
+    updateVenta,
+    updateVentaValor
 };

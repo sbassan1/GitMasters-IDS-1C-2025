@@ -2,6 +2,14 @@ const express = require('express');
 const usuariosQuery = require('./usuariosQuery.js');
 
 const router = express.Router();
+// >>>>>>>>>>>> VALIDACIONES <<<<<<<<<<
+const {
+    validarNombre,
+    validarEmail,
+    validarContrasena,
+    validarFecha
+} = require('../utility/validaciones-regex.js');
+
 // >>>>>>>>>>> REQUESTS GET <<<<<<<<<<
 
 router.get('/', async (req, res) =>{
@@ -89,6 +97,20 @@ router.get('/inicio/:fecha_inicio', async (req, res) => {
     }
 });
 
+// GET /api/v1/productos/usuarios/123/compras PARA VER TODAS LAS COMPRAS
+router.get('/:id/compras', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const ventas = await usuariosQuery.getComprasUsuario(userId);
+    if (ventas.length === 0) {
+      return res.status(404).json({ message: 'No se encontraron compras para ese usuario.' });
+    }
+    res.json(ventas);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // >>>>>>>>>>> REQUESTS POST <<<<<<<<<<
 
 router.post('/', async (req, res) => {
@@ -97,6 +119,31 @@ router.post('/', async (req, res) => {
 
         if (!nombre || !email || !contrasena || !cumpleanos || !fecha_inicio) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
+        }
+
+        const validacionNomnbre = validarNombre(nombre);
+        if (!validacionNomnbre.ok) {
+            return res.status(400).json({ message: validacionNomnbre.message });
+        }
+
+        const validacionEmail = validarEmail(email);
+        if (!validacionEmail.ok) {
+            return res.status(400).json({ message: validacionEmail.message });
+        }
+
+        const validacionContrasena = validarContrasena(contrasena);
+        if (!validacionContrasena.ok) {
+            return res.status(400).json({ message: validacionContrasena.message });
+        }
+
+        const validacionCumpleanos = validarFecha(cumpleanos);
+        if (!validacionCumpleanos.ok) {
+            return res.status(400).json({ message: validacionCumpleanos.message });
+        }
+
+        const validacionFechaInicio = validarFecha(fecha_inicio);
+        if (!validacionFechaInicio.ok) {
+            return res.status(400).json({ message: validacionFechaInicio.message });
         }
 
         const nuevoUsuario = await usuariosQuery.createUsuario(nombre, email, contrasena, cumpleanos, fecha_inicio);
@@ -115,6 +162,31 @@ router.put('/:id', async (req, res) => {
 
         if (!nombre || !email || !contrasena || !cumpleanos || !fecha_inicio) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
+        }
+
+        const validacionNomnbre = validarNombre(nombre);
+        if (!validacionNomnbre.ok) {
+            return res.status(400).json({ message: validacionNomnbre.message });
+        }
+
+        const validacionEmail = validarEmail(email);
+        if (!validacionEmail.ok) {
+            return res.status(400).json({ message: validacionEmail.message });
+        }
+
+        const validacionContrasena = validarContrasena(contrasena);
+        if (!validacionContrasena.ok) {
+            return res.status(400).json({ message: validacionContrasena.message });
+        }
+
+        const validacionCumpleanos = validarFecha(cumpleanos);
+        if (!validacionCumpleanos.ok) {
+            return res.status(400).json({ message: validacionCumpleanos.message });
+        }
+
+        const validacionFechaInicio = validarFecha(fecha_inicio);
+        if (!validacionFechaInicio.ok) {
+            return res.status(400).json({ message: validacionFechaInicio.message });
         }
 
         const usuarioActualizado = await usuariosQuery.updateUsuario(req.params.id, nombre, email, contrasena, cumpleanos, fecha_inicio);
@@ -138,6 +210,11 @@ router.put('/email/:id', async (req, res) => {
         if (!email) {
             return res.status(400).json({ message: 'Falta el email.' });
         }
+        
+        const validacionEmail = validarEmail(email);
+        if (!validacionEmail.ok) {
+            return res.status(400).json({ message: validacionEmail.message });
+        }
 
         const usuarioActualizado = await usuariosQuery.updateUsuarioEmail(req.params.id, email);
 
@@ -157,6 +234,11 @@ router.put('/nombre/:id', async (req, res) => {
 
         if (!nombre) {
             return res.status(400).json({ message: 'Falta el nombre.' });
+        }
+        
+        const validacionNomnbre = validarNombre(nombre);
+        if (!validacionNomnbre.ok) {
+            return res.status(400).json({ message: validacionNomnbre.message });
         }
 
         const usuarioActualizado = await usuariosQuery.updateUsuarioNombre(req.params.id, nombre);
@@ -178,6 +260,11 @@ router.put('/cumpleanos/:id', async (req, res) => {
         if (!cumpleanos) {
             return res.status(400).json({ message: 'Falta la fecha de cumpleaños.' });
         }
+        
+        const validacionCumpleanos = validarFecha(cumpleanos);
+        if (!validacionCumpleanos.ok) {
+            return res.status(400).json({ message: validacionCumpleanos.message });
+        }
 
         const usuarioActualizado = await usuariosQuery.updateUsuarioCumpleanos(req.params.id, cumpleanos);
 
@@ -198,6 +285,11 @@ router.put('/contrasena/:id', async (req, res) => {
         if (!contrasena) {
             return res.status(400).json({message: 'Ingrese una contraseña.'});
         }
+        
+        const validacionContrasena = validarContrasena(contrasena);
+        if (!validacionContrasena.ok) {
+            return res.status(400).json({ message: validacionContrasena.message });
+        }
 
         const usuarioActualizado = await usuariosQuery.updateUsuarioContrasena(req.params.id, contrasena);
 
@@ -215,13 +307,25 @@ router.put('/contrasena/:id', async (req, res) => {
 
 router.delete('/email/:email', async (req, res) => {
     try {
-        const usuarioEliminado = await usuariosQuery.deleteUsuarioByEmail(req.params.email);
+
+        const emailElim = req.params.email;
+
+        if(!emailElim) {
+            return res.status(400).json( { message: 'Falta el mail del usuario a eliminar'});
+        }
+
+        const usuario = await usuariosQuery.getUsuarioByEmail(emailElim);
+        if(!usuario) {
+            return res.status(404).json({ error: "El email del usuario no corresponde a ninguno." });
+        }
+
+        const usuarioEliminado = await usuariosQuery.deleteUsuarioByEmail(emailElim);
 
         if (!usuarioEliminado) {
             return res.status(404).json({ message: 'Usuario no encontrado.' });
         }
 
-        res.json({ message: 'Usuario eliminado exitosamente.' });
+        return res.status(200).json({message: 'Usuario Eliminado'});
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

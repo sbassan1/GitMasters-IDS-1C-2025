@@ -2,13 +2,27 @@ const express = require('express');
 const ventasQuery = require('./ventasQuery.js');
 
 const router = express.Router();
+
+// >>>>>>>>>>> FUNCIONES DE VALIDACION - REGEX <<<<<<<<<<
+
+const { 
+    validarNumeroRacionalPositivo, 
+    validarMetodoPago, 
+    validarFecha,
+    validarNumeroNatural 
+} = require('../utility/validaciones-regex.js');
+
+// >>>>>>>>>>> VERIFICACIONES DE EXISTENCIA <<<<<<<<<<
+
+const { existeUsuario } = require('../utility/verificaciones.js');
+
 // >>>>>>>>>>> REQUESTS GET <<<<<<<<<<
 
 router.get('/', async (req, res) => {
     try {
         const ventas = await ventasQuery.getAllVentas();
 
-        if (!usuarios || ventas.length === 0) {
+        if (!ventas || ventas.length === 0) {
             return res.status(404).json({ message: 'No se encontraron ventas.' });
         }
 
@@ -95,8 +109,32 @@ router.post('/', async (req, res) => {
     try {
         const { valor, fecha, id_usuario, metodo_pago } = req.body;
 
-        if (!valor || !fecha || !id_usuario || !metodo_pago) {
+        if (valor === null || valor === undefined || !fecha || !id_usuario || !metodo_pago) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
+        }
+
+        const validacionValor = validarNumeroRacionalPositivo(valor);
+        if (!validacionValor.ok) {
+            return res.status(400).json({ message: validacionValor.message });
+        }
+
+        const validacionFecha = validarFecha(fecha);
+        if (!validacionFecha.ok) {
+            return res.status(400).json({ message: validacionFecha.message });
+        }
+
+        const validacionMetodoPago = validarMetodoPago(metodo_pago);
+        if (!validacionMetodoPago.ok) {
+            return res.status(400).json({ message: validacionMetodoPago.message });
+        }
+
+        const validacionIdUsuario = validarNumeroNatural(id_usuario);
+        if (!validacionIdUsuario.ok) {
+            return res.status(400).json({ message: validacionIdUsuario.message });
+        }
+
+        if (!await existeUsuario(id_usuario)) { // Verifica si el usuario existe
+            return res.status(404).json({ message: 'Usuario no encontrado.' });
         }
 
         const nuevaVenta = await ventasQuery.createVenta(valor, fecha, id_usuario, metodo_pago);
@@ -111,8 +149,32 @@ router.put('/:id', async (req, res) => {
     try {
         const { valor, fecha, id_usuario, metodo_pago } = req.body;
 
-        if (!valor || !fecha || !id_usuario || !metodo_pago) {
+        if (valor===null || valor===undefined || !fecha || !id_usuario || !metodo_pago) {
             return res.status(400).json({ message: 'Faltan datos requeridos.' });
+        }
+
+        const validacionValor = validarNumeroRacionalPositivo(valor);
+        if (!validacionValor.ok) {
+            return res.status(400).json({ message: validacionValor.message });
+        }
+
+        const validacionFecha = validarFecha(fecha);
+        if (!validacionFecha.ok) {
+            return res.status(400).json({ message: validacionFecha.message });
+        }
+
+        const validacionMetodoPago = validarMetodoPago(metodo_pago);
+        if (!validacionMetodoPago.ok) {
+            return res.status(400).json({ message: validacionMetodoPago.message });
+        }
+
+        const validacionIdUsuario = validarNumeroNatural(id_usuario);
+        if (!validacionIdUsuario.ok) {
+            return res.status(400).json({ message: validacionIdUsuario.message });
+        }
+
+        if (!await existeUsuario(id_usuario)) { // Verifica si el usuario existe
+            return res.status(404).json({ message: 'Usuario no encontrado.' });
         }
 
         const ventaActualizada = await ventasQuery.updateVenta(req.params.id, valor, fecha, id_usuario, metodo_pago);
