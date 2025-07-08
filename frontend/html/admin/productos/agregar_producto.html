@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../../assets/style.css">
+    <title>Agregar Producto - Admin</title>
+    <link rel="icon" href="../../../images/lizard_logo_icon.ico">
+</head>
+
+<body data-bs-theme="dark">
+   <!--  Header Admin -->
+    <div class="container-fluid">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-around mb-4 border-bottom">
+            <div class="col-md-3 mb-2 mb-md-0">
+                <a href="../main_admin.html">
+                    <img src="../../../images/lizard_logo_icon.ico" alt="Inicio" class="img-fluid rounded"
+                        style="width: 100px; height: 100px;">
+                </a>
+            </div>
+            <div class="col-md-3 text-end">
+                <div class="dropdown">
+                    <button id="toggleTheme" class="btn btn-link">
+                        <i id="themeIcon" class="bi bi-brightness-high-fill user-icon"></i>
+                    </button>
+
+                    <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-person user-icon"></i>
+                    </button>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <!-- Formulario de Agregar -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card dark-prod-box">
+                    <div class="card-body ">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3>Agregar Nuevo Producto</h3>
+                            <a href="productos_admin.html" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left me-2"></i>Volver
+                            </a>
+                        </div>
+
+                        <!-- Mensajes -->
+                        <div id="mensaje" class="alert d-none" role="alert"></div>
+
+                        <form id="agregarProductoForm">
+                            <div class="row">
+                                <!-- Vista previa de imagen -->
+                                <div class="col-md-4 mb-4">
+                                    <div class="text-center">
+                                        <img id="imagenPreview" src="/placeholder.svg?height=200&width=200" 
+                                             class="img-fluid rounded border" style="max-height: 200px; object-fit: cover;" 
+                                             alt="Vista previa">
+                                        <div class="mt-2">
+                                            <label for="imagen" class="btn btn-full-violet btn-sm">
+                                                <i class="bi bi-camera me-1"></i>Seleccionar Imagen
+                                            </label>
+                                            <input type="file" class="d-none" id="imagen" accept="image/*" required>
+                                        </div>
+                                        <small class="text-muted d-block mt-1">Formatos: JPG, PNG, GIF (Max: 5MB)</small>
+                                        <div class="invalid-feedback" id="imagenError"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Formulario -->
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="nombre" class="form-label">Nombre del Producto *</label>
+                                            <input type="text" class="form-control product-detail" id="nombre" maxlength="50" required>
+                                            <div class="invalid-feedback" id="nombreError"></div>
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <label for="tipo" class="form-label">Tipo *</label>
+                                            <select class="form-select product-detail" id="tipo" required>
+                                                <option value="" class="dark-prod-box">Seleccionar tipo</option>
+                                                <option value="accesorio" class="dark-prod-box">Accesorio</option>
+                                                <option value="auriculares" class="dark-prod-box">Auriculares</option>
+                                                <option value="mouse" class="dark-prod-box">Mouse</option>
+                                                <option value="teclado" class="dark-prod-box">Teclado</option>
+                                            </select>
+                                            <div class="invalid-feedback" id="tipoError"></div>
+                                        </div>
+
+                                        <div class="col-12 mb-3">
+                                            <label for="descripcion" class="form-label">Descripción *</label>
+                                            <textarea class="form-control product-detail" id="descripcion" rows="3" 
+                                                      maxlength="60" required></textarea>
+                                            <div class="form-text">Máximo 60 caracteres</div>
+                                            <div class="invalid-feedback" id="descripcionError"></div>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label for="precio" class="form-label">Precio *</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" class="form-control product-detail" id="precio" 
+                                                       min="1" step="1" required>
+                                            </div>
+                                            <div class="invalid-feedback" id="precioError"></div>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label for="stock" class="form-label">Stock *</label>
+                                            <input type="number" class="form-control product-detail" id="stock" 
+                                                   min="0" step="1" required>
+                                            <div class="invalid-feedback" id="stockError"></div>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label for="sede" class="form-label">Sede *</label>
+                                            <select class="form-select product-detail" id="sede" required>
+                                                <option value="" class="dark-prod-box">Cargando sedes...</option>
+                                            </select>
+                                            <div class="invalid-feedback" id="sedeError"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <div class="d-flex gap-2 justify-content-end">
+                                        <a href="productos_admin.html" class="btn btn-secondary">Cancelar</a>
+                                        <button type="submit" class="btn btn-full-violet" id="guardarBtn">
+                                            <span id="guardarSpinner" class="spinner-border spinner-border-sm d-none me-2"></span>
+                                            Crear Producto
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap iconos -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Scripts -->
+    <script src="../../../scripts-front/modoOscuroClaro.js"></script>
+    <script src="../../../scripts-front/agregarProducto.js"></script>
+</body>
+
+</html>

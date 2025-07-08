@@ -10,41 +10,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="stylesheet" href="../../assets/style.css">
-    <title>Lizard Admin</title>
+    <title>Panel Admin - Lizard</title>
     <link rel="icon" href="../../images/lizard_logo_icon.ico">
 </head>
 
 <body data-bs-theme="dark">
-    <!--  Header -->
+    <!--  Header Admin -->
     <div class="container-fluid">
-        <header
-            class="d-flex flex-wrap align-items-center justify-content-center justify-content-around mb-4 border-bottom">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-around mb-4 border-bottom">
             <div class="col-md-3 mb-2 mb-md-0">
                 <a href="main_admin.html">
                     <img src="../../images/lizard_logo_icon.ico" alt="Inicio" class="img-fluid rounded"
                         style="width: 100px; height: 100px;">
                 </a>
             </div>
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle px-4 li-header-black" href="#" id="dropdownMenuButton"
-                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Productos</a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="productos_admin.html">Accesorios</a></li>
-                        <li><a class="dropdown-item" href="productos_admin.html">Auriculares</a></li>
-                        <li><a class="dropdown-item" href="productos_admin.html">Mouse</a></li>
-                        <li><a class="dropdown-item" href="productos_admin.html">Teclados</a></li>
-                    </ul>
-                </li>
-                <li><a href="sucursales_admin.html" class="nav-link px-4 li-header-black">Sucursales</a></li>
-            </ul>
             <div class="col-md-3 text-end">
                 <div class="dropdown">
                     <button id="toggleTheme" class="btn btn-link">
                         <i id="themeIcon" class="bi bi-brightness-high-fill user-icon"></i>
                     </button>
-                    
+
                     <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <i class="bi bi-person user-icon"></i>
@@ -58,135 +43,57 @@
         </header>
     </div>
 
-    <!--  Foto producto principal -->
-    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-background-main text-white">
-        <div class="col-md-6 p-lg-5 mx-auto my-5">
-            <h1 class="display-3 fw-bold">RAZER BARRACUDA X CHROME</h1>
-            <h3 class="fw-normal mb-3">Desde lo que buscas, hasta lo que necesitas</h3>
+    <!-- Panel de Administración -->
+    <div class="container my-5">
+        <div class="row dark">
+            <div class="col-12 text-center mb-5">
+                <h1 class="display-4">Panel de Administración</h1>
+            </div>
         </div>
-        <div>
-            <a class="btn btn-full-violet">
-                Cambiar producto</a>
+
+        <div class="row g-3 justify-content-center"> 
+            <!-- Productos -->
+            <div class="col-md-6 col-lg-3">
+                <div class="light-prod-box card h-100 text-center">
+                    <div class="card-body d-flex flex-column">
+                        <i class="bi bi-dropbox mb-3" style="font-size: 80px;"></i>
+                        <h5 class="card-title">Productos</h5>
+                        <a href="productos/productos_admin.html" class="btn btn-full-violet mt-auto">Modificar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ventas -->
+            <div class="col-md-6 col-lg-3">
+                <div class="light-prod-box card h-100 text-center">
+                    <div class="card-body d-flex flex-column">
+                        <i class="bi bi-receipt-cutoff mb-3" style="font-size: 80px;"></i>
+                        <h5 class="card-title">Ventas</h5>
+                        <a href="ventas_admin.html" class="btn btn-full-violet mt-auto">Ver Ventas</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sedes -->
+            <div class="col-md-6 col-lg-3">
+                <div class="light-prod-box card h-100 text-center">
+                    <div class="card-body d-flex flex-column">
+                        <i class="bi bi-shop mb-3" style="font-size: 80px;"></i>
+                        <h5 class="card-title">Sedes</h5>
+                        <a href="sedes_admin.html" class="btn btn-full-violet mt-auto">Modificar</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <img src="../../images/auri_blanco.png" class="custom-device-left d-none d-md-block" alt="Left Headset">
-        <img src="../../images/auri_negro.png" class="custom-device-right d-none d-md-block" alt="Right Headset">
     </div>
-
-    <!--  Fotos  4 productos -->
-    <div class="container my-4">
-
-        <div class="row mb-4">
-            <!-- Producto 1 -->
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                <div
-                    class="dark-prod-box text-white text-center p-4 p-md-5 h-100 d-flex flex-column justify-content-between">
-                    <div>
-                        <h2 class="display-5">Mouse Bungee Razer V3</h2>
-                        <p class="lead">La abrazadera para cables del Razer Mouse Bungee V3 cuenta con un recubrimiento
-                            de caucho y está diseñada para adaptarse a la mayoría de los cables de ratón de goma, tela y
-                            trenzados. El brazo de resorte permite el movimiento sin trabas del ratón al mantener el
-                            cable por encima de la superficie del ratón.</p>
-                        <div class="mx-auto mb-4">
-                            <img src="../../images/bungee_mouse_razer.png" class="img-fluid foto-prod-1"
-                                alt="Mouse Bungee">
-                        </div>
-                    </div>
-                    <div>
-                        <a class="btn btn-full-violet">Cambiar producto</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Producto 2 -->
-            <div class="col-lg-6">
-                <div
-                    class="light-prod-box text-white text-center p-4 p-md-5 h-100 d-flex flex-column justify-content-between">
-                    <div>
-                        <h2 class="display-5">Stream Deck Redragon SS550</h2>
-                        <p class="lead">Una herramienta con las soluciones perfectas para el trabajo, el entretenimiento
-                            y el juego 3.0, la Streamcraft es una botonera (o stream deck) diseñada para tener un
-                            control súper rápido e intuitivo de la PC, con atajos y plugins súper útiles para el
-                            streaming y otras actividades de la nueva era.</p>
-                        <div class="mx-auto mb-4">
-                            <img src="../../images/stream_deck.png" class="img-fluid foto-prod-2" alt="Stream Deck">
-                        </div>
-                    </div>
-                    <div>
-                        <a class="btn btn-outline-violet">Cambiar producto</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mb-4">
-            <!-- Producto 3 -->
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                <div
-                    class="light-prod-box text-white text-center p-4 p-md-5 h-100 d-flex flex-column justify-content-between">
-                    <div>
-                        <h2 class="display-5">Mouse K1ng Pro Redragon</h2>
-                        <p class="lead">100% enfocado en el rendimiento, el K1ng Pro es un ratón tope de gama para los
-                            jugadores más competitivos. Ultra liviano, pequeño y ergonómico, doble conexión inalámbrica,
-                            más cable de paracord, sensor premium Pixart 3395, switches súper resistentes: 50 millones
-                            de clics.</p>
-                        <div class="mx-auto mb-4">
-                            <img src="../../images/mouse_kingpro.png" class="img-fluid foto-prod-3" alt="Mouse K1ng Pro">
-                        </div>
-                    </div>
-                    <div>
-                        <a class="btn btn-outline-violet">Cambiar producto</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Producto 4 -->
-            <div class="col-lg-6">
-                <div
-                    class="dark-prod-box text-white text-center p-4 p-md-5 h-100 d-flex flex-column justify-content-between">
-                    <div>
-                        <h2 class="display-5">Mousepad KDA League of Legends Logitech</h2>
-                        <p class="lead">Mousepad para juegos XL. Te ofrece más espacio para jugar más que nunca. Juega
-                            con libertad de configuración, sin limitaciones.</p>
-                        <div class="mx-auto mb-4">
-                            <img src="../../images/mousepad_kda.png" class="img-fluid foto-prod-4" alt="Mousepad KDA">
-                        </div>
-                    </div>
-                    <div>
-                        <a class="btn btn-full-violet">Cambiar producto</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <!-- Pie de pagina + Info -->
-    <footer>
-        <div class="text-secondary px-4 py-5 text-center">
-            <img src="../../images/lizard_logo.png" width="150px" height="150px">
-            <div class="py-5">
-                <h1 class="display-5 fw-bold text-white">Un poco sobre nuestra historia...</h1>
-                <div class="col-lg-6 mx-auto text-white">
-                    <p class="fs-5 mb-4" style="text-shadow: 2px 2px 4px rgba(0,0,0,3);">Somos una empresa de venta de
-                        Perifericos pensado por y para gamers.
-                        Arrancamos hace mas de 3 años en esta franquicia y estamos muy felices de como venimos,
-                        ya que la felicidad de nuestros compradores, tambien es la nuestra.
-                    </p>
-                </div>
-                <div>
-                    <a class="btn btn-full-violet">
-                    Cambiar información</a>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Bootstrap iconos -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
-    <!-- Bootstrap JS (incluye Popper) -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Script modo oscuro / claro -->
+    <!-- Scripts -->
     <script src="../../scripts-front/modoOscuroClaro.js"></script>
 </body>
 
