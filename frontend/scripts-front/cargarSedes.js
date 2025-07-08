@@ -1,247 +1,100 @@
-// Variables globales
-let todasLasSedes = []
+const locationList = document.querySelector(".location-list");
+const mapIframe = document.querySelector(".map-container iframe")
 
-// Elementos del DOM
-const sucursalesContainer = document.getElementById("sucursales-container")
-
-// Cargar sedes cuando se carga la página
-document.addEventListener("DOMContentLoaded", () => {
-  cargarSedes()
-})
-
-// Función para mostrar error
+// mostrar error
 function mostrarError(mensaje) {
-  sucursalesContainer.innerHTML = `
-        <div class="col-12">
-            <div class="alert alert-danger text-center" role="alert">
-                <i class="bi bi-exclamation-triangle me-2"></i>
-                <strong>Error:</strong> ${mensaje}
-                <div class="mt-3">
-                    <button class="btn btn-outline-danger" onclick="cargarSedes()">
-                        <i class="bi bi-arrow-clockwise me-1"></i>Reintentar
-                    </button>
-                </div>
-            </div>
+    locationList.innerHTML = `
+        <div class="alert alert-danger" role="alert">
+            <strong>Error:</strong> ${mensaje}
         </div>
     `
 }
 
-// Función para mostrar estado de carga
-function mostrarCargando() {
-  sucursalesContainer.innerHTML = `
-        <div class="col-12 text-center py-5">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Cargando sucursales...</span>
-            </div>
-            <p class="mt-2">Cargando sucursales...</p>
+//  crear una tarjeta de sede
+function crearTarjetaSede(sede) {  
+    return `
+        <div class="location-card">
+            <h5>${sede.nombre}</h5>
+            <p><i class="bi bi-geo-alt"></i> ${sede.direccion}</p>
+            <p><i class="bi bi-telephone"></i>${sede.telefono}</p>
+            <p><i class="bi bi-clock"></i>${sede.horarios}</p>
+            <p><i class="bi bi-calendar-check"></i> ${sede.dias_abiertos}</p>
+            <p class="text-muted small"><i class="bi bi-box-seam"></i> Restock: ${sede.dias_restock}</p>
+    
+            <button class="btn btn-primary btn-sm" onclick="verEnMapa('${sede.nombre}', '${sede.direccion}')">
+                <i class="bi bi-geo-alt me-1"></i>Ver en mapa
+            </button>
         </div>
     `
 }
 
-// Función para generar URL de Google Maps
-function generarUrlGoogleMaps(direccion, nombre) {
-  // Codificar la dirección para URL
-  const direccionCodificada = encodeURIComponent(`${nombre}, ${direccion}`)
-  return `https://www.google.com/maps/search/?api=1&query=${direccionCodificada}`
+// agregar pais a direccion
+function prepararDireccion(direccion) {
+    if (!direccion) {
+        return "";
+    }
+
+    let direccionDetallada = direccion.trim();
+
+    if (!direccionDetallada.toLowerCase().includes("argentina") && !direccionDetallada.toLowerCase().includes("buenos aires")) {
+        direccionDetallada += ", Buenos Aires, Argentina";
+    }
+
+    return direccionDetallada;
 }
 
-// Función para abrir Google Maps en nueva pestaña
-function abrirEnGoogleMaps(direccion, nombre) {
-  const url = generarUrlGoogleMaps(direccion, nombre)
-  window.open(url, "_blank")
+// actualizo el mapa con la direccion
+function actualizarMapa(direccion) {
+    const direccionDetallada = prepararDireccion(direccion);
+    const direccionEncoded = encodeURIComponent(direccionDetallada);
+
+    // crear url de maps con la direccion
+    const mapSrc = `https://maps.google.com/maps?q=${direccionEncoded}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
+    mapIframe.src = mapSrc;
+
+    console.log("direccion buscada:", direccionDetallada);
 }
 
-// Función para formatear días de la semana
-function formatearDias(dias) {
-  const diasMap = {
-    LUN: "Lun",
-    MAR: "Mar",
-    MIE: "Mié",
-    JUE: "Jue",
-    VIE: "Vie",
-    SAB: "Sáb",
-    DOM: "Dom",
-  }
+// cargar sedes desde api
+async function cargarSedes() {
+    try {  
+        const res = await fetch("http://localhost:3000/api/v1/sedes/");
+        const sedes = await res.json();
 
-  return dias
-    .split("-")
-    .map((dia) => diasMap[dia] || dia)
-    .join(" - ")
-}
-
-// Función para formatear días de restock
-function formatearDiasRestock(dias) {
-  const diasMap = {
-    LUN: "Lunes",
-    MAR: "Martes",
-    MIE: "Miércoles",
-    JUE: "Jueves",
-    VIE: "Viernes",
-    SAB: "Sábado",
-    DOM: "Domingo",
-  }
-
-  return dias
-    .split(",")
-    .map((dia) => diasMap[dia.trim()] || dia.trim())
-    .join(", ")
-}
-
-// Función para determinar el estado de la sucursal
-function obtenerEstadoSucursal(horarios) {
-  const ahora = new Date()
-  const horaActual = ahora.getHours()
-  const minutosActuales = ahora.getMinutes()
-  const tiempoActual = horaActual * 60 + minutosActuales
-
-  // Parsear horarios (formato: "08:00-18:00")
-  const [apertura, cierre] = horarios.split("-")
-  const [horaApertura, minutoApertura] = apertura.split(":").map(Number)
-  const [horaCierre, minutoCierre] = cierre.split(":").map(Number)
-
-  const tiempoApertura = horaApertura * 60 + minutoApertura
-  const tiempoCierre = horaCierre * 60 + minutoCierre
-
-  if (tiempoActual >= tiempoApertura && tiempoActual <= tiempoCierre) {
-    return { estado: "abierto", clase: "success", icono: "check-circle-fill" }
-  } else {
-    return { estado: "cerrado", clase: "danger", icono: "x-circle-fill" }
-  }
-}
-
-// Función para crear una tarjeta de sede
-function crearTarjetaSede(sede) {
-  const estadoInfo = obtenerEstadoSucursal(sede.horarios)
-  const diasFormateados = formatearDias(sede.dias_abiertos)
-  const restockFormateado = formatearDiasRestock(sede.dias_restock)
-
-  return `
-        <div class="col-lg-6 col-xl-4 mb-4">
-            <div class="card light-prod-box h-100">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">
-                        <i class="bi bi-shop me-2 text-primary"></i>
-                        ${sede.nombre}
-                    </h5>
-                    <span class="badge bg-${estadoInfo.clase}">
-                        <i class="bi bi-${estadoInfo.icono} me-1"></i>
-                        ${estadoInfo.estado.charAt(0).toUpperCase() + estadoInfo.estado.slice(1)}
-                    </span>
-                </div>
-                
-                <div class="card-body">
-                    <!-- Dirección -->
-                    <div class="mb-3">
-                        <div class="d-flex align-items-start">
-                            <i class="bi bi-geo-alt text-primary me-2 mt-1"></i>
-                            <div>
-                                <strong>Dirección</strong>
-                                <p class="mb-0 text-muted">${sede.direccion}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Teléfono -->
-                    <div class="mb-3">
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-telephone text-primary me-2"></i>
-                            <div>
-                                <strong>Teléfono</strong>
-                                <p class="mb-0">
-                                    <a href="tel:${sede.telefono.replace(/\s/g, "")}" class="text-decoration-none">
-                                        ${sede.telefono}
-                                    </a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Horarios -->
-                    <div class="mb-3">
-                        <div class="d-flex align-items-start">
-                            <i class="bi bi-clock text-primary me-2 mt-1"></i>
-                            <div class="w-100">
-                                <strong>Horarios</strong>
-                                <p class="mb-1">${sede.horarios}</p>
-                                <small class="text-muted">${diasFormateados}</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Restock -->
-                    <div class="mb-4">
-                        <div class="d-flex align-items-start">
-                            <i class="bi bi-box-seam text-primary me-2 mt-1"></i>
-                            <div>
-                                <strong>Restock</strong>
-                                <p class="mb-0 text-muted small">${restockFormateado}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Acciones -->
-                <div class="card-footer bg-transparent">
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-full-violet" onclick="abrirEnGoogleMaps('${sede.direccion}', '${sede.nombre}')">
-                            <i class="bi bi-map me-2"></i>Ver en Google Maps
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `
-}
-
-// Función para mostrar sucursales
-function mostrarSucursales(sedes) {
-  if (sedes.length === 0) {
-    sucursalesContainer.innerHTML = `
-            <div class="col-12">
-                <div class="alert alert-info text-center" role="alert">
+        if (!res.ok) {
+            console.log(res);
+        }
+  
+        if (!sedes || sedes.length === 0) {
+            locationList.innerHTML = `
+                <div class="alert alert-info" role="alert">
                     <i class="bi bi-info-circle me-2"></i>
                     No hay sucursales disponibles en este momento.
                 </div>
-            </div>
-        `
-    return
-  }
-
-  const tarjetas = sedes.map((sede) => crearTarjetaSede(sede))
-  sucursalesContainer.innerHTML = tarjetas.join("")
-}
-
-// Función principal para cargar sedes desde la API
-async function cargarSedes() {
-  try {
-    mostrarCargando()
-
-    const response = await fetch("http://localhost:3000/api/v1/sedes/")
-
-    if (!response.ok) {
-      throw new Error("Error al cargar sucursales")
-    }
-
-    const sedes = await response.json()
-
-    if (!sedes || sedes.length === 0) {
-      sucursalesContainer.innerHTML = `
-                <div class="col-12">
-                    <div class="alert alert-warning text-center" role="alert">
-                        <i class="bi bi-exclamation-triangle me-2"></i>
-                        No hay sucursales disponibles en este momento.
-                    </div>
-                </div>
             `
-      return
+            return;
+        }
+  
+        // html para todas las sedes
+        const sedesHTML = sedes.map((sede) => crearTarjetaSede(sede)).join("");
+        locationList.innerHTML = sedesHTML;
+  
+        console.log(sedes.length) // cantidad de sedes cargadas
+    } catch (error) {
+        console.error(error);
+        let mensajeError = "No se pudieron cargar las sucursales";
+        mostrarError(mensajeError);
+    }
+}
+
+window.verEnMapa = (direccion) => {
+    console.log(direccion);
+    if (!direccion) {
+        alert("Dirección no disponible");
+        return;
     }
 
-    todasLasSedes = sedes
-    mostrarSucursales(sedes)
-
-    console.log(`${sedes.length} sucursales cargadas exitosamente`)
-  } catch (error) {
-    console.error("Error al cargar sedes:", error)
-    mostrarError("No se pudieron cargar las sucursales. Verifica tu conexión e intenta nuevamente.")
-  }
+    actualizarMapa(direccion);
 }
+
+cargarSedes();
