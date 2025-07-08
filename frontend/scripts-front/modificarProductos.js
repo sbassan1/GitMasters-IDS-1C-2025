@@ -49,7 +49,8 @@ async function crearTarjetaProducto(producto) {
                     </p>
                     <div class="d-flex justify-content-center align-items-center mt-auto">
                         <div class="btn-group">
-                            <a href="producto_user.html?id=${producto.id}" class="btn btn-full-violet">Ver Producto</a>
+                            <a href="producto_user.html?id=${producto.id}" class="btn btn-full-violet mx-2">Modificar</a>
+                            <a href="producto_user.html?id=${producto.id}" class="btn btn-borrar mx-2">Borrar</a>
                         </div>
                     </div>
                 </div>
