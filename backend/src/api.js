@@ -3,6 +3,7 @@ const usuariosAPI = require("./scripts_bd/usuarios/usuariosAPI") // Importar
 const sedesAPI = require("./scripts_bd/sedes/sedesAPI") // Importar
 const ventasAPI = require("./scripts_bd/ventas/ventasAPI") // Importar
 const v_productosAPI = require("./scripts_bd/venta productos/v_productosAPI") // Importar
+
 const express = require("express")
 const cors = require("cors")
 const path = require("path")
@@ -82,6 +83,7 @@ app.get("/", (req, res) => {
 const dbClient = require("./database")
 
 // Prefijos de las API
+app.use(express.json()) // Importante para recibir JSON
 
 // Endpoint para subir imágenes organizadas por tipo
 app.post("/api/v1/upload-imagen", upload.single("imagen"), (req, res) => {
