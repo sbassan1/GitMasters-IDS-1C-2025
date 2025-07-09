@@ -12,14 +12,19 @@ const modalTitle = document.getElementById("nuevaSedeModalLabel");
 
 // edicion
 function cargarDatosEnModal(sede) {
-    console.log(sede)
     document.getElementById("sedeNombre").value = sede.nombre;
     document.getElementById("sedeTelefono").value = sede.telefono;
     document.getElementById("sedeDireccion").value = sede.direccion;
     document.getElementById("sedeHorarios").value = sede.horarios;
   
+    limpiarTodosLosCheckboxes();
+
     marcarDiasEnCheckboxes(sede.dias_abiertos, "abiertos");
     marcarDiasEnCheckboxes(sede.dias_restock, "restock");
+
+    setTimeout(() => {
+        controlarLimiteRestock();
+    }, 100)
 }
 
 function marcarDiasEnCheckboxes(diasString, tipo) {
@@ -71,6 +76,44 @@ window.editarSede = async (sedeId) => {
     } catch (error) {
         console.error("error editar sede:", error)
     }
+}
+
+// controlar cantidad de dias restock seleccionados
+function controlarLimiteRestock() {
+    const maxSeleccion = 3;
+    const checkboxesRestock = document.querySelectorAll('input[id^="restock"]');
+    const seleccionados = document.querySelectorAll('input[id^="restock"]:checked');
+  
+    if (seleccionados.length >= maxSeleccion) {
+        checkboxesRestock.forEach((checkbox) => {
+            if (!checkbox.checked) {
+                checkbox.disabled = true;
+            }
+        });
+    } else {
+        checkboxesRestock.forEach((checkbox) => {
+            checkbox.disabled = false;
+        })
+    }
+}
+
+function inicializarControlRestock() {
+    const checkboxesRestock = document.querySelectorAll('input[id^="restock"]')
+  
+    checkboxesRestock.forEach((checkbox) => {
+      checkbox.addEventListener("change", () => {
+        controlarLimiteRestock()
+      })
+    })
+  
+    controlarLimiteRestock();
+}
+
+function limpiarTodosLosCheckboxes() {
+    document.querySelectorAll('input[id^="dia"], input[id^="restock"]').forEach((cb) => {
+        cb.checked = false;
+        cb.disabled = false;
+    })
 }
 
 // crear
@@ -209,12 +252,17 @@ document.getElementById("nuevaSedeModal").addEventListener("show.bs.modal", () =
     if (!modoEdicion) {
         nuevaSedeForm.reset();
         limpiarErroresSede();
+        limpiarTodosLosCheckboxes();
   
         if (modalTitle) {
             modalTitle.innerHTML = 'Crear nueva sede'
         }
         crearSedeBtn.innerHTML = 'Crear sede';
     }
+
+    setTimeout(() => {
+        inicializarControlRestock();
+    }, 100);
 })
   
 document.getElementById("nuevaSedeModal").addEventListener("hidden.bs.modal", () => {
