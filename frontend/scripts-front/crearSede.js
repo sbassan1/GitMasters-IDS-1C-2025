@@ -59,7 +59,7 @@ window.editarSede = async (sedeId) => {
         sedeEditandoId = sedeId;
 
         if (modalTitle) {
-            modalTitle.innerHTML = '<i class="bi bi-pencil-square me-2"></i>Editar Sede'
+            modalTitle.innerHTML = `Editar Sede: ${sede.nombre}`;
         }
         crearSedeBtn.innerHTML = 'Editar Sede';
         
@@ -100,21 +100,24 @@ function formatearDiasSeleccionados(dias, campo) {
   
     const diasOrdenados = ["LUN", "MAR", "MIE", "JUE", "VIE", "SAB", "DOM"];
     const diasSeleccionados = dias.sort((a, b) => diasOrdenados.indexOf(a) - diasOrdenados.indexOf(b));
-  
-    if (JSON.stringify(diasSeleccionados) === JSON.stringify(["LUN", "MAR", "MIE", "JUE", "VIE"])) {
-        return "LUN-VIE";
-    }
-  
-    if (JSON.stringify(diasSeleccionados) === JSON.stringify(["LUN", "MAR", "MIE", "JUE", "VIE", "SAB"])) {
-        return "LUN-SAB";
-    }
-  
-    if (diasSeleccionados.length === 7) {
-        return "LUN-DOM";
-    }
+    console.log(dias)
 
     if (campo === "diasAbierto") {
-        return diasSeleccionados.join("-");
+        if (JSON.stringify(diasSeleccionados) === JSON.stringify(["LUN", "MAR", "MIE", "JUE", "VIE"])) {
+            return "LUN-VIE";
+        }
+      
+        if (JSON.stringify(diasSeleccionados) === JSON.stringify(["LUN", "MAR", "MIE", "JUE", "VIE", "SAB"])) {
+            return "LUN-SAB";
+        }
+      
+        if (diasSeleccionados.length === 7) {
+            return "LUN-DOM";
+        }
+    
+        if (campo === "diasAbierto") {
+            return diasSeleccionados.join("-");
+        }
     }
       
     if (campo === "diasRestock") {
@@ -208,7 +211,7 @@ document.getElementById("nuevaSedeModal").addEventListener("show.bs.modal", () =
         limpiarErroresSede();
   
         if (modalTitle) {
-            modalTitle.innerHTML = '<i class="bi bi-building-add me-2"></i>Crear Nueva Sede'
+            modalTitle.innerHTML = 'Crear nueva sede'
         }
         crearSedeBtn.innerHTML = 'Crear sede';
     }
@@ -280,7 +283,7 @@ function mostrarMensajeSede(mensaje, tipo) {
   
         setTimeout(() => {
             sedeMessage.classList.add("d-none")
-        }, 5000)
+        }, 2000)
     }
   }
 
@@ -301,7 +304,7 @@ async function guardarSede(sedeData) {
         const data = await res.json()
   
         if (res.ok) {
-            const mensaje = modoEdicion ? "Sede editada exitosamente" : "Sede creada exitosamente"
+            const mensaje = modoEdicion ? "Sede editada exitosamente" : "Sede creada exitosamente";
             mostrarMensajeSede(mensaje, "success");
   
             setTimeout(() => {
