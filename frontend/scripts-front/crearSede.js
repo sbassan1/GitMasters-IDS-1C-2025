@@ -1,9 +1,79 @@
-const locationList = document.querySelector(".location-list")
-const mapIframe = document.querySelector(".map-container iframe")
-const nuevaSedeForm = document.getElementById("nuevaSedeForm")
-const crearSedeBtn = document.getElementById("crearSedeBtn")
-const bootstrap = window.bootstrap
+const locationList = document.querySelector(".location-list");
+const mapIframe = document.querySelector(".map-container iframe");
+const nuevaSedeForm = document.getElementById("nuevaSedeForm");
+const crearSedeBtn = document.getElementById("crearSedeBtn");
+const bootstrap = window.bootstrap;
+
+// variables para edicion
+let modoEdicion = false;
+let sedeEditandoId = null;
+const sedeMessage = document.getElementById("sedeMessage")
+const modalTitle = document.getElementById("nuevaSedeModalLabel");
+
+// edicion
+function cargarDatosEnModal(sede) {
+    console.log(sede)
+    document.getElementById("sedeNombre").value = sede.nombre;
+    document.getElementById("sedeTelefono").value = sede.telefono;
+    document.getElementById("sedeDireccion").value = sede.direccion;
+    document.getElementById("sedeHorarios").value = sede.horarios;
   
+    marcarDiasEnCheckboxes(sede.dias_abiertos, "abiertos");
+    marcarDiasEnCheckboxes(sede.dias_restock, "restock");
+}
+
+function marcarDiasEnCheckboxes(diasString, tipo) {
+    console.log(diasString, tipo)
+    const prefijo = tipo === "abiertos" ? "dia" : "restock";
+    let diasArray = [];
+  
+    if (diasString.includes("LUN-VIE")) {
+        diasArray = ["LUN", "MAR", "MIE", "JUE", "VIE"];
+    } else if (diasString.includes("LUN-SAB")) {
+        diasArray = ["LUN", "MAR", "MIE", "JUE", "VIE", "SAB"];
+    } else if (diasString.includes("LUN-DOM")) {
+        diasArray = ["LUN", "MAR", "MIE", "JUE", "VIE", "SAB", "DOM"];
+    } else {
+        diasArray = diasString.split(/[,-]/).map((d) => d.trim())
+    }
+  
+    diasArray.forEach((dia) => {
+        const checkbox = document.querySelector(`input[id^="${prefijo}"][value="${dia}"]`)
+        if (checkbox) {
+            checkbox.checked = true
+        }
+    })
+}
+
+window.editarSede = async (sedeId) => {
+    try {
+        const res = await fetch(`http://localhost:3000/api/v1/sedes/id/${sedeId}`)
+  
+        if (!res.ok) {
+            console.log(res);
+        }
+  
+        const sede = await res.json();
+  
+        modoEdicion = true;
+        sedeEditandoId = sedeId;
+
+        if (modalTitle) {
+            modalTitle.innerHTML = '<i class="bi bi-pencil-square me-2"></i>Editar Sede'
+        }
+        crearSedeBtn.innerHTML = 'Editar Sede';
+        
+        cargarDatosEnModal(sede);
+  
+        // abrir modal
+        const modal = new bootstrap.Modal(document.getElementById("nuevaSedeModal"));
+        modal.show();
+    } catch (error) {
+        console.error("error editar sede:", error)
+    }
+}
+
+// crear
 function obtenerDiasSeleccionados(tipo = "abiertos") {
     let prefijo;
   
@@ -99,43 +169,6 @@ function validarFormularioSede(formData) {
   
     return esValido;
 }
-  
-async function crearNuevaSede(sedeData) {
-    try {
-        const res = await fetch("http://localhost:3000/api/v1/sedes/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(sedeData),
-        })
-  
-        const data = await res.json();
-  
-        if (res.ok) {
-            mostrarMensajeSede("Sede creada exitosamente", "success");
-            nuevaSedeForm.reset();
-  
-            setTimeout(() => {
-                cargarSedes()
-                bootstrap.Modal.getInstance(document.getElementById("nuevaSedeModal")).hide()
-            }, 1500)
-        } else {
-            let mensajeError = "Error al crear la sede";
-  
-            if (data.message) {
-                mensajeError = data.message;
-            } else if (data.error) {
-                mensajeError = data.error;
-            }
-  
-            mostrarMensajeSede(mensajeError, "danger");
-        }
-    } catch (error) {
-        console.error(error)
-        mostrarMensajeSede("Ha ocurrido un error. Inténtelo de nuevo más tarde", "danger")
-    }
-}
 
 nuevaSedeForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -162,7 +195,7 @@ nuevaSedeForm.addEventListener("submit", async (e) => {
     crearSedeBtn.disabled = true;
   
     try {
-        await crearNuevaSede(formData)
+        await guardarSede(formData)
     } finally {
         crearSedeBtn.disabled = false
     }
@@ -170,9 +203,21 @@ nuevaSedeForm.addEventListener("submit", async (e) => {
   
 // limpiar formulario
 document.getElementById("nuevaSedeModal").addEventListener("show.bs.modal", () => {
-    nuevaSedeForm.reset();
-    limpiarErroresSede();
+    if (!modoEdicion) {
+        nuevaSedeForm.reset();
+        limpiarErroresSede();
+  
+        if (modalTitle) {
+            modalTitle.innerHTML = '<i class="bi bi-building-add me-2"></i>Crear Nueva Sede'
+        }
+        crearSedeBtn.innerHTML = 'Crear sede';
+    }
 })
+  
+document.getElementById("nuevaSedeModal").addEventListener("hidden.bs.modal", () => {
+    modoEdicion = false;
+    sedeEditandoId = null;
+});
   
   
 function mostrarError(mensaje) {
@@ -185,8 +230,13 @@ function mostrarError(mensaje) {
 
 function crearTarjetaSede(sede) {  
     return `
-        <div class="location-card">
-            <h5>${sede.nombre}</h5>
+        <div class="location-card" data-sede-id="${sede.id}">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="mb-0">${sede.nombre}</h5>
+                <button class="btn btn-outline-primary btn-sm" onclick="editarSede('${sede.id}')" title="Editar sede">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
             <p><i class="bi bi-geo-alt"></i> ${sede.direccion}</p>
             <p><i class="bi bi-telephone"></i>${sede.telefono}</p>
             <p><i class="bi bi-clock"></i>${sede.horarios}</p>
@@ -221,6 +271,87 @@ async function cargarSedes() {
         mostrarError(mensajeError);
     }
 }
+
+function mostrarMensajeSede(mensaje, tipo) {
+    if (sedeMessage) {
+        sedeMessage.className = `alert alert-${tipo}`
+        sedeMessage.textContent = mensaje
+        sedeMessage.classList.remove("d-none")
+  
+        setTimeout(() => {
+            sedeMessage.classList.add("d-none")
+        }, 5000)
+    }
+  }
+
+async function guardarSede(sedeData) {
+    try {
+        // si mododEdicion es true, se hace un put con el id de la sede. sino, hace un post (creacion de sede)
+        const url = modoEdicion ? `http://localhost:3000/api/v1/sedes/${sedeEditandoId}` : "http://localhost:3000/api/v1/sedes/";
+        const method = modoEdicion ? "PUT" : "POST";
+  
+        const res = await fetch(url, {
+            method: method,
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(sedeData),
+        });
+
+        const data = await res.json()
+  
+        if (res.ok) {
+            const mensaje = modoEdicion ? "Sede editada exitosamente" : "Sede creada exitosamente"
+            mostrarMensajeSede(mensaje, "success");
+  
+            setTimeout(() => {
+                cargarSedes();
+                nuevaSedeForm.reset();
+                bootstrap.Modal.getInstance(document.getElementById("nuevaSedeModal")).hide();
+            }, 1500);
+        } else {
+            let mensajeError =  modoEdicion ? "Error al edirtar la sede" : "Error al crear la sede";
+
+            if (data.message) {
+                mensajeError = data.message;
+            } else if (data.error) {
+                mensajeError = data.error;
+            }
+
+            mostrarMensajeSede(mensajeError, "danger");
+      }
+    } catch (error) {
+        console.error(error)
+        mostrarMensajeSede("Ha ocurrido un error. Inténtelo de nuevo más tarde", "danger")
+    }
+}
+
+// agregar pais y provincia a direccion
+function prepararDireccion(direccion) {
+    if (!direccion) {
+        return "";
+    }
+
+    let direccionDetallada = direccion.trim();
+
+    if (!direccionDetallada.toLowerCase().includes("argentina") && !direccionDetallada.toLowerCase().includes("buenos aires")) {
+        direccionDetallada += ", Buenos Aires, Argentina";
+    }
+
+    return direccionDetallada;
+}
+
+function actualizarMapa(direccion) {
+    const direccionDetallada = prepararDireccion(direccion);
+    const direccionEncoded = encodeURIComponent(direccionDetallada);
+
+    // crear url de maps con la direccion
+    const mapSrc = `https://maps.google.com/maps?q=${direccionEncoded}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
+    mapIframe.src = mapSrc;
+
+    console.log("direccion buscada:", direccionDetallada);
+}
+
 
 window.verEnMapa = (direccion) => {
     console.log(direccion);
