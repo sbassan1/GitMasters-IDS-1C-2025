@@ -49,7 +49,7 @@ async function crearTarjetaProducto(producto) {
                     </p>
                     <div class="d-flex justify-content-center align-items-center mt-auto">
                         <div class="btn-group">
-                            <a href="producto_user.html?id=${producto.id}" class="btn btn-full-violet">Ver Producto</a>
+                            <button class="btn btn-borrar mx-2" onclick="confirmarBorrarProducto(${producto.id}, '${producto.nombre}')">Borrar</button>
                         </div>
                     </div>
                 </div>
@@ -57,6 +57,36 @@ async function crearTarjetaProducto(producto) {
         </div>
     `;
 }
+
+// Función para confirmar borrado de producto
+function confirmarBorrarProducto(id, nombre) {
+  if (confirm(`¿Estás seguro de que quieres eliminar el producto "${nombre}"?\n\nEsta acción no se puede deshacer.`)) {
+    borrarProducto(id)
+  }
+}
+
+// Función para borrar producto
+async function borrarProducto(id) {
+  try {
+    const response = await fetch(`http://localhost:3000/api/v1/productos/id/${id}`, {
+      method: "DELETE",
+    })
+
+    if (response.ok) {
+      mostrarMensaje("Producto eliminado exitosamente", "success")
+
+      // Recargar productos
+      await cargarProductos()
+    } else {
+      const error = await response.json()
+      mostrarMensaje(error.message || "Error al eliminar producto", "danger")
+    }
+  } catch (error) {
+    console.error("Error:", error)
+    mostrarMensaje("Error de conexión. No se pudo eliminar el producto.", "danger")
+  }
+}
+
 
 // Función para cargar todos los productos desde la API
 async function cargarProductos() {
