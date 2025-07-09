@@ -27,7 +27,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (usuario["contrasena"] === password) {
         sessionStorage.setItem("usuarioActual", JSON.stringify(usuario));
-        window.location.href = "../user/main_user.html";
+        
+        if(usuario[nombre] === "admin"){
+          window.location.href = "../admin/main_admin.html";
+        }else{
+          window.location.href = "../user/main_user.html";
+        }
+        
       } else {
         mensaje.textContent = "Contraseña incorrecta.";
         mensaje.className = "alert alert-danger";
