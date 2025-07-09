@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (usuario["contrasena"] === password) {
         sessionStorage.setItem("usuarioActual", JSON.stringify(usuario));
         
-        if(usuario[nombre] === "admin"){
+        if(email == 'admin@admin.com' ){
           window.location.href = "../admin/main_admin.html";
         }else{
           window.location.href = "../user/main_user.html";
