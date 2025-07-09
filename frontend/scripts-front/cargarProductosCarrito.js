@@ -3,11 +3,8 @@
  * Tiene que tener la imagen del producto, 
  */
 
-
-
 function cargarCarrito() {
-
-    const productosCarrito = JSON.parse(sessionStorage.getItem("carrito")) || [];
+    const productosCarrito = JSON.parse(sessionStorage.getItem('carrito')) || [];
     const listaCarrito = document.querySelector(".carrito-lista");
 
     listaCarrito.innerHTML = "";
@@ -53,4 +50,6 @@ function cargarCarrito() {
     }
 }
 
-cargarCarrito()
+document.addEventListener('DOMContentLoaded', () => {
+    cargarCarrito();
+});
