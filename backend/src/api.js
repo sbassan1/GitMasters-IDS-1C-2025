@@ -15,7 +15,7 @@ const port = 3000
 // Configurar CORS para permitir requests desde el frontend
 app.use(
   cors({
-    origin: ["http://localhost:5500", "http://127.0.0.1:5500", "http://localhost:3000", "http://127.0.0.1:3000"],
+    origin: ["http://localhost:5500", "http://127.0.0.1:5500", "http://localhost:3000", "http://127.0.0.1:3000", "http://127.0.0.1:3001"],
     credentials: true,
   }),
 )
@@ -73,6 +73,8 @@ const upload = multer({
   },
 })
 
+app.use(express.json()) // Importante para recibir JSON
+
 app.get("/", (req, res) => {
   res.send("Hello World!")
 })
@@ -80,8 +82,6 @@ app.get("/", (req, res) => {
 const dbClient = require("./database")
 
 // Prefijos de las API
-
-app.use(express.json()) // Importante para recibir JSON
 
 // Endpoint para subir imágenes organizadas por tipo
 app.post("/api/v1/upload-imagen", upload.single("imagen"), (req, res) => {
