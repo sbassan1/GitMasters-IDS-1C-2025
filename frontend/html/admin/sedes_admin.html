@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../assets/style.css">
+    <title>Lizard</title>
+    <link rel="icon" href="../../images/lizard_logo_icon.ico">
+</head>
+
+<body data-bs-theme="dark">
+    <!--  Header Admin -->
+    <div class="container-fluid">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-around mb-4 border-bottom">
+            <div class="col-md-3 mb-2 mb-md-0">
+                <a href="main_admin.html">
+                    <img src="../../images/lizard_logo_icon.ico" alt="Inicio" class="img-fluid rounded"
+                        style="width: 100px; height: 100px;">
+                </a>
+            </div>
+            <div class="col-md-3 text-end">
+                <div class="dropdown">
+                    <button id="toggleTheme" class="btn btn-link">
+                        <i id="themeIcon" class="bi bi-brightness-high-fill user-icon"></i>
+                    </button>
+
+                    <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-person user-icon"></i>
+                    </button>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <!-- Titulo -->
+    <div class="title text-center">
+        <h1>Nuestras Sucursales</h1>
+    </div>
+
+    <!-- Sedes -->
+    <div class="container-fluid" style="max-width: 80%;">
+        <div class="row">
+            <!-- Listado -->
+            <div class="col-md-4 mb-4">
+                <div class="locations-container">
+                    <button class="btn btn-full-violet btn-sm mb-1" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#nuevaSedeModal">Nueva sede</button>
+                    <!-- Listado de Sucursales -->
+                    <div class="location-list"></div>
+                </div>
+            </div>
+
+            <!-- Mapa -->
+            <div class="col-md-8 mb-4">
+                <div class="map-container">
+                    <div class="ratio ratio-4x3">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.469272774342!2d-58.37080352341071!3d-34.61757965823189!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcca98f0058631%3A0x98688c83fc192f2e!2sUBA%2C%20Facultad%20de%20Ingenier%C3%ADa%20-%20Sede%20Paseo%20Col%C3%B3n!5e0!3m2!1ses!2sar!4v1752088330949!5m2!1ses!2sarr"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="nuevaSedeModal" tabindex="-1" aria-labelledby="nuevaSedeModalLabel" aria-hidden="true">
+        <div id="sedeMessage" class="alert d-none" role="alert"></div>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="nuevaSedeModalLabel">Crear nueva sede</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+            <div class="modal-body">
+                <form id="nuevaSedeForm">
+                    <div class="row">
+                        <!-- Nombre de la sede -->
+                        <div class="col-md-6 mb-3">
+                            <label for="sedeNombre" class="form-label"></i>Nombre de la sede</label>
+                            <input type="text" class="form-control" id="sedeNombre" placeholder="Ej: Sede Centro" required>
+                        </div>
+
+                        <!-- Teléfono -->
+                        <div class="col-md-6 mb-3">
+                            <label for="sedeTelefono" class="form-label"><i class="bi bi-telephone me-1"></i>Teléfono</label>
+                            <input type="tel" class="form-control" id="sedeTelefono" placeholder="Ej: 11 1234-5678" required>
+                            <div class="invalid-feedback" id="sedeTelefonoError"></div>
+                        </div>
+
+                        <!-- Dirección -->
+                        <div class="mb-3">
+                            <label for="sedeDireccion" class="form-label"><i class="bi bi-geo-alt me-1"></i>Dirección</label>
+                            <input type="text" class="form-control" id="sedeDireccion" placeholder="Ej: Av. Rivadavia 1234, Buenos Aires" required>
+                        </div>
+
+                        <!-- Horarios -->
+                        <div class="mb-3">
+                            <label for="sedeHorarios" class="form-label"><i class="bi bi-clock me-1"></i>Horarios</label>
+                            <input type="text" class="form-control" id="sedeHorarios" placeholder="Ej: 09:00-20:00" required>
+                            <div class="form-text">Formato: HH:MM-HH:MM</div>
+                            <div class="invalid-feedback" id="sedeHorariosError"></div>
+                        </div>
+
+                        <!-- Días abiertos -->
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-calendar-check me-1"></i>Días abiertos</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="diaLunes" value="LUN">
+                                        <label class="form-check-label" for="diaLunes"></i>Lunes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="diaMartes" value="MAR">
+                                        <label class="form-check-label" for="diaMartes"></i>Martes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="diaMiercoles" value="MIE">
+                                        <label class="form-check-label" for="diaMiercoles"></i>Miércoles</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="diaJueves" value="JUE">
+                                        <label class="form-check-label" for="diaJueves"></i>Jueves</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="diaViernes" value="VIE">
+                                        <label class="form-check-label" for="diaViernes"></i>Viernes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="diaSabado" value="SAB">
+                                        <label class="form-check-label" for="diaSabado"></i>Sábado</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="diaDomingo" value="DOM">
+                                        <label class="form-check-label" for="diaDomingo"></i>Domingo</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback d-block" id="sedeDiasAbiertosError"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-box-seam me-1"></i>Días de restock</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="restockLunes" value="LUN">
+                                        <label class="form-check-label" for="restockLunes"></i>Lunes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="restockMartes" value="MAR">
+                                        <label class="form-check-label" for="restockMartes"></i>Martes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="restockMiercoles" value="MIE">
+                                        <label class="form-check-label" for="restockMiercoles"></i>Miércoles</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="restockJueves" value="JUE">
+                                        <label class="form-check-label" for="restockJueves"></i>Jueves</label></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="restockViernes" value="VIE">
+                                        <label class="form-check-label" for="restockViernes"></i>Viernes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="restockSabado" value="SAB">
+                                        <label class="form-check-label" for="restockSabado"></i>Sábado</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="restockDomingo" value="DOM">
+                                        <label class="form-check-label" for="restockDomingo"></i>Domingo</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback d-block" id="sedeDiasRestockError"></div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-borrar btn-sm mb-1" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-full-violet btn-sm mb-1" type="submit" form="nuevaSedeForm" id="crearSedeBtn">Crear sede</button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap iconos -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- Bootstrap JS (incluye Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script modo oscuro / claro -->
+    <script src="../../scripts-front/modoOscuroClaro.js"></script>
+
+    <script src="../../scripts-front/crearYEditarSede.js"></script>
+</body>
+
+</html>

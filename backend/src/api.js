@@ -74,6 +74,8 @@ const upload = multer({
   },
 })
 
+app.use(express.json()) // Importante para recibir JSON
+
 app.get("/", (req, res) => {
   res.send("Hello World!")
 })

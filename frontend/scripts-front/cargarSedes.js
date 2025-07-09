@@ -28,7 +28,7 @@ function crearTarjetaSede(sede) {
     `
 }
 
-// agregar pais a direccion
+// agregar pais y provincia a direccion
 function prepararDireccion(direccion) {
     if (!direccion) {
         return "";
