@@ -1,8 +1,28 @@
--- Insertar sedes
-INSERT INTO Sedes (nombre, horarios, dias_abiertos, direccion, dias_restock, telefono)
-VALUES 
-  ('Sede Central', '08:00-18:00', 'LUN-MAR-MIE-JUE-VIE', 'Av. Siempre Viva 123', 'LUN,MIE,VIE', '11 5412-6738'),
-  ('Sucursal Oeste', '09:00-17:00', 'LUN-MIE-VIE', 'Calle Falsa 456', 'MAR,JUE', '11 5222-1234');
+INSERT INTO Sedes (nombre, horarios, dias_abiertos, direccion, dias_restock, telefono) VALUES
+(
+  'Sede Paseo Colón',
+  '10:00-18:00',
+  'LUN-MAR-MIE-JUE-VIE',
+  'Av. Paseo Colón 850',
+  'LUN,JUE',
+  '11-4321-1234'
+),
+(
+  'Sede Palermo',
+  '10:00-19:00',
+  'LUN-MIE-JUE-VIE',
+  'Av. Santa Fe 3253',
+  'MAR,VIE',
+  '15-4876-9988'
+),
+(
+  'Sede Caballito',
+  '09:30-17:30',
+  'LUN-MAR-MIE-JUE',
+  'Av. Rivadavia 5050',
+  'LUN,JUE,SAB',
+  '11-4756-3312'
+);
 
 -- ESTE USUARIO VA A SER EL ADMIN!
 INSERT INTO Usuarios (nombre, email, contrasena, cumpleanos, fecha_inicio)

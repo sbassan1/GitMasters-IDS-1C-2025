@@ -3,6 +3,7 @@ const usuariosAPI = require("./scripts_bd/usuarios/usuariosAPI") // Importar
 const sedesAPI = require("./scripts_bd/sedes/sedesAPI") // Importar
 const ventasAPI = require("./scripts_bd/ventas/ventasAPI") // Importar
 const v_productosAPI = require("./scripts_bd/venta productos/v_productosAPI") // Importar
+
 const express = require("express")
 const cors = require("cors")
 const path = require("path")
@@ -13,7 +14,7 @@ const port = 3000
 // Configurar CORS para permitir requests desde el frontend
 app.use(
   cors({
-    origin: ["http://localhost:5500", "http://127.0.0.1:5500", "http://localhost:3000", "http://127.0.0.1:3000"],
+    origin: ["http://localhost:5500", "http://127.0.0.1:5500", "http://localhost:3000", "http://127.0.0.1:3000", "http://127.0.0.1:3001"],
     credentials: true,
   }),
 )
@@ -29,7 +30,6 @@ app.get("/", (req, res) => {
 const dbClient = require("./database")
 
 // Prefijos de las API
-
 app.use(express.json()) // Importante para recibir JSON
 
 app.use("/api/v1/productos", productosAPI)
