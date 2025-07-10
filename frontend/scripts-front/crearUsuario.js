@@ -1,3 +1,5 @@
+const siteURL = "https://gitmasters-ids-1c-2025.onrender.com/"
+
 const registerForm = document.getElementById("registerForm")
 const registerBtn = document.getElementById("registerBtn")
 const registerSpinner = document.getElementById("registerSpinner")
@@ -87,7 +89,7 @@ function mostrarMensaje(mensaje, tipo) {
 // registro de usuario con api
 async function registrarUsuario(userData) {
     try {
-        const res = await fetch("http://localhost:3000/api/v1/usuarios/", {
+        const res = await fetch(siteURL+"api/v1/usuarios/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

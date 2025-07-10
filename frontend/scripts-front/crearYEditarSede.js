@@ -1,3 +1,5 @@
+const siteURL = "https://gitmasters-ids-1c-2025.onrender.com/"
+
 const locationList = document.querySelector(".location-list");
 const mapIframe = document.querySelector(".map-container iframe");
 const nuevaSedeForm = document.getElementById("nuevaSedeForm");
@@ -256,7 +258,7 @@ function crearTarjetaSede(sede) {
 // cargar sedes desde api
 async function cargarSedes() {
     try {  
-        const res = await fetch("http://localhost:3000/api/v1/sedes/");
+        const res = await fetch(siteURL+"api/v1/sedes/");
         const sedes = await res.json();
 
         if (!res.ok) {
@@ -290,7 +292,7 @@ function mostrarMensajeSede(mensaje, tipo) {
 async function guardarSede(sedeData) {
     try {
         // si mododEdicion es true, se hace un put con el id de la sede. sino, hace un post (creacion de sede)
-        const url = modoEdicion ? `http://localhost:3000/api/v1/sedes/${sedeEditandoId}` : "http://localhost:3000/api/v1/sedes/";
+        const url = modoEdicion ? `http://localhost:3000/api/v1/sedes/${sedeEditandoId}` : siteURL+"api/v1/sedes/";
         const method = modoEdicion ? "PUT" : "POST";
   
         const res = await fetch(url, {

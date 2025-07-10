@@ -1,3 +1,4 @@
+const siteURL = "https://gitmasters-ids-1c-2025.onrender.com/"
 
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("loginForm").addEventListener("submit", async function (e) {
@@ -32,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if(email == 'admin@admin.com' ){
           window.location.href = "../admin/main_admin.html";
         }else{
-          window.location.href = "../user/main_user.html";
+          window.location.href = "../user/index.html";
         }
         
       } else {

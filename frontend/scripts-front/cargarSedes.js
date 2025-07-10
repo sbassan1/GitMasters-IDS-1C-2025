@@ -1,3 +1,5 @@
+const siteURL = "https://gitmasters-ids-1c-2025.onrender.com/"
+
 const locationList = document.querySelector(".location-list");
 const mapIframe = document.querySelector(".map-container iframe")
 
@@ -58,7 +60,7 @@ function actualizarMapa(direccion) {
 // cargar sedes desde api
 async function cargarSedes() {
     try {  
-        const res = await fetch("http://localhost:3000/api/v1/sedes/");
+        const res = await fetch(siteURL+"api/v1/sedes/");
         const sedes = await res.json();
 
         if (!res.ok) {

@@ -1,3 +1,5 @@
+const siteURL = "https://gitmasters-ids-1c-2025.onrender.com/"
+
 const boton = document.getElementById('btn-comprar-carrito');
 const productosCarrito = JSON.parse(sessionStorage.getItem("carrito")) || [];
 const usuario = JSON.parse(sessionStorage.getItem("usuarioActual"));
@@ -58,7 +60,7 @@ async function comprarCarrito() {
 
 async function crearVentaProducto(dataProductoCesta) {
     try{
-        const res = await fetch("http://localhost:3000/api/v1/ventas_productos/", {
+        const res = await fetch(siteURL+"api/v1/ventas_productos/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -88,7 +90,7 @@ async function crearVentaProducto(dataProductoCesta) {
  */
 async function crearVenta(dataVenta) {
     try{
-        const res = await fetch("http://localhost:3000/api/v1/ventas/", {
+        const res = await fetch(siteURL+"api/v1/ventas/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

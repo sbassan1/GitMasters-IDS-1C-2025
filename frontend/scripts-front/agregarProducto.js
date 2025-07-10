@@ -1,3 +1,6 @@
+const siteURL = "https://gitmasters-ids-1c-2025.onrender.com/"
+
+
 // Variables globales
 let imagenSubida = null
 
@@ -20,7 +23,7 @@ async function cargarSedes() {
   const sedeSelect = document.getElementById("sede")
 
   try {
-    const response = await fetch("http://localhost:3000/api/v1/sedes/")
+    const response = await fetch(siteURL+"api/v1/sedes/")
 
     if (!response.ok) {
       throw new Error("Error al cargar sedes")
@@ -200,7 +203,7 @@ async function subirImagen(archivo) {
   formData.set("imagen", archivo); // Asegura que la imagen sea la correcta
 
   try {
-    const response = await fetch("http://localhost:3000/api/v1/upload-imagen", {
+    const response = await fetch(siteURL+"api/v1/upload-imagen", {
       method: "POST",
       body: formData,
     });
@@ -221,7 +224,7 @@ async function subirImagen(archivo) {
 // Crear producto
 async function crearProducto(datosProducto) {
   try {
-    const response = await fetch("http://localhost:3000/api/v1/productos/", {
+    const response = await fetch(siteURL+"api/v1/productos/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
