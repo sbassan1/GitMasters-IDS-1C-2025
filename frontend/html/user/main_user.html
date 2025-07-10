@@ -31,6 +31,7 @@
             </ul>
 
             <div class="col-md-3 text-end">
+                <div id="saludo-usuario"></div>
                 <div class="dropdown">
                     <button id="toggleTheme" class="btn btn-link">
                         <i id="themeIcon" class="bi bi-brightness-high-fill user-icon"></i>
@@ -184,7 +185,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Script modo oscuro / claro -->
-        <script src="../../scripts-front/modoOscuroClaro.js"></script>
+    <script src="../../scripts-front/modoOscuroClaro.js"></script>
+
+    <script>
+        const textoUsuario = document.getElementById('saludo-usuario')
+        const usuario = JSON.parse(sessionStorage.getItem("usuarioActual"));
+
+        if(!usuario){
+            textoUsuario.textContent = "Sesión no iniciada, ingresa aquí!"
+        }else{
+            textoUsuario.textContent = `Bienvenido, ${usuario.nombre}`;
+        }
+    </script>
+
 </body>
 
 </html>
