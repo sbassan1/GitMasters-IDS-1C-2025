@@ -1,3 +1,49 @@
+CREATE TABLE Sedes (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL UNIQUE, -- formato: 'Sede 1'
+    horarios VARCHAR(20) NOT NULL, -- formato: '08:00-18:00'
+    dias_abiertos VARCHAR(30), -- formato: 'DDD-DDD-DDD-DDD ó (DDD-DDD) si son dias seguidos'
+    direccion VARCHAR(50) NOT NULL,
+    dias_restock VARCHAR(30) NOT NULL, -- formato: 'D,D,D,D,D'
+    telefono VARCHAR(40) NOT NULL -- 11 5412-6738
+);
+
+CREATE TABLE Productos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    descripcion VARCHAR(60) NOT NULL,
+    stock INT NOT NULL DEFAULT 0,
+    precio_venta INT NOT NULL,
+    tipo VARCHAR(20) NOT NULL,
+    imagen VARCHAR(100),
+    sede_id INT REFERENCES Sedes(id) ON DELETE SET NULL
+);
+
+CREATE TABLE Usuarios (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    contrasena VARCHAR(50) NOT NULL,
+    cumpleanos DATE,
+    fecha_inicio DATE NOT NULL
+);
+
+CREATE TABLE Ventas (
+    id SERIAL PRIMARY KEY,
+    valor INT NOT NULL DEFAULT 0,
+    fecha DATE NOT NULL,
+    id_usuario INT REFERENCES Usuarios(id) ON DELETE SET NULL,
+    metodo_pago VARCHAR(20)  
+);
+
+CREATE TABLE Venta_Productos (
+    id SERIAL PRIMARY KEY,
+    id_venta INT REFERENCES Ventas(id) ON DELETE CASCADE,
+    id_producto INT REFERENCES Productos(id) ON DELETE SET NULL,
+    cantidad INT NOT NULL
+);
+
+
 INSERT INTO Sedes (nombre, horarios, dias_abiertos, direccion, dias_restock, telefono) VALUES
 (
   'Sede Paseo Colón',
@@ -75,4 +121,3 @@ INSERT INTO Productos (nombre, descripcion, stock, precio_venta, tipo, imagen, s
 ('K70 Pro Mini', 'Teclado mecánico compacto Corsair K70 Pro Mini RGB', 30, 58000, 'teclado', 'backend/src/assets/teclado/teclado-k70 pro mini-corsair.jpg', 1),
 ('Kumara', 'Teclado mecánico gaming Redragon Kumara retroiluminado', 50, 25000, 'teclado', 'backend/src/assets/teclado/teclado-kumara-redragon.png', 1),
 ('Pro RGB', 'Teclado mecánico gaming Logitech Pro RGB para esports', 35, 48000, 'teclado', 'backend/src/assets/teclado/teclado-pro rgb-logitech.jpg', 1);
-
