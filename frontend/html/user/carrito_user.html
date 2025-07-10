@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../assets/style.css">
+    <title>Lizard</title>
+    <link rel="icon" href="../../images/lizard_logo_icon.ico">
+</head>
+
+<body>
+
+    <body data-bs-theme="dark">
+        <!--  Header -->
+        <div class="container-fluid">
+            <header
+            class="d-flex flex-wrap align-items-center justify-content-center justify-content-around mb-4 border-bottom">
+            <div class="col-md-3 mb-2 mb-md-0">
+                <a href="main_user.html">
+                    <img src="../../images/lizard_logo_icon.ico" alt="Inicio" class="img-fluid rounded"
+                        style="width: 100px; height: 100px;">
+                </a>
+            </div>
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="productos_user.html" class="nav-link px-4 li-header-black">Productos</a></li>
+                <li><a href="sucursales_user.html" class="nav-link px-4 li-header-black">Sucursales</a></li>
+            </ul>
+
+            <div class="col-md-3 text-end">
+                <div class="dropdown">
+                    <div id="saludo-usuario"></div>
+                    <button id="toggleTheme" class="btn btn-link">
+                        <i id="themeIcon" class="bi bi-brightness-high-fill user-icon"></i>
+                    </button>
+
+                    <button class="btn btn-link" type="button" id="dropdownCart" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-cart user-icon"></i>
+                    </button>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownCart">
+                        <li><a class="dropdown-item" href="./carrito_user.html">Mi Carrito</a></li>
+                    </ul>
+
+                    <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-person user-icon"></i>
+                    </button>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="../autenticacion/login.html">Iniciar sesión</a></li>
+                        <li><a class="dropdown-item" href="../autenticacion/register.html">Registrarse</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        </div>
+
+
+        <!-- Container de productos en la cesta -->
+        <div class="container mt-5">
+            <!-- Mensaje y botón -->
+            <div id="mensaje" class="alert d-none mt-5" role="alert"></div>
+
+            <h4> Mi carrito</h4>
+                <div class="row w-100">
+                    <!-- Listado de productos -->
+                    <div class="col-md-8">
+                        <ul class="list-group carrito-lista w-100">
+                            <!-- Producto -->
+                            <li class="list-group-item d-flex justify-content-between p-4 align-items-center producto-carrito">
+                                <div class="d-flex align-items-center">
+                                    <img src="" alt="Producto" class="img-thumbnail me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                                    <div>
+                                        <h6 class="mb-1">Nombre del Producto</h6>
+                                        <small class="text-muted">Cantidad: 2</small>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-danger eliminar-producto">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card p-3">
+                            <h5 class="mb-3">Detalles de compra</h5>
+          
+                            <!-- Selector de forma de pago -->
+                            <div class="mb-3">
+                                <label for="formaPago" class="form-label">Forma de pago</label>
+                                <select id="forma-pago" class="form-select w-80" aria-label="Forma de pago">
+                                    <option value="Efectivo" selected>Efectivo</option>
+                                    <option value="Crédito">Crédito</option>
+                                    <option value="Débito">Débito</option>
+                                    <option value="QR">QR</option>
+                                </select>
+                            </div>
+
+                            <!-- Cupón de descuento -->
+                            <div class="mb-3">
+                                <label for="cupon" class="form-label">Cupón de descuento</label>
+                                <div class="input-group">
+                                    <input type="text" id="cupon" class="form-control" placeholder="Código de cupón">
+                                    <button class="btn btn-full-violet btn-sm" type="button" id="validarCupon">
+                                        <i class="bi bi-check"></i>
+                                    </button>
+                                </div>
+                            </div>
+          
+                            <div>
+                                <div class="d-flex justify-content-between">
+                                    <span><strong>Subtotal:</strong></span>
+                                    <span id="subtotal">$0.00</span>
+                                </div>
+            
+                                <div class="d-flex justify-content-between">
+                                    <span><strong>Total:</strong></span>
+                                    <span id="total">$0.00</span>
+                                </div>
+                            </div>
+
+                        <button id="btn-comprar-carrito" class="btn btn-full-violet mt-3 w-100 boton-comprar-carrito">Comprar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+          
+        <!-- <button id="btn-comprar-carrito" class="btn btn-full-violet mt-4 w-100 boton-comprar-carrito">Comprar</button> -->
+        </div>
+
+        <!-- Bootstrap iconos -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+        <!-- Bootstrap JS (incluye Popper) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Script modo oscuro / claro -->
+        <script src="../../scripts-front/modoOscuroClaro.js"></script>
+
+
+        <!-- Script para cargar elementos al carrito -->
+        <script src="../../scripts-front/cargarProductosCarrito.js"></script>
+
+
+        <script src="../../scripts-front/comprarCarrito.js"></script>
+
+        <script>
+            const textoUsuario = document.getElementById('saludo-usuario')
+            const usuario = JSON.parse(sessionStorage.getItem("usuarioActual"));
+
+            if(!usuario){
+                textoUsuario.textContent = "Sesión no iniciada, ingresa aquí!"
+            }else{
+                textoUsuario.textContent = `Bienvenido, ${usuario.nombre}`;
+            }
+        </script>
+
+
+    </body>
+
+</html>
