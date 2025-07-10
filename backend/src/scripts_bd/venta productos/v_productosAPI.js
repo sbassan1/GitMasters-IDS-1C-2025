@@ -46,7 +46,7 @@ router.get('/id/:id', async (req, res) => {
 
 router.get('/id_venta/:id_venta', async (req, res) => {
     try {
-        const v_productos = await venta_productosQuery.getVenta_ProductosByIdVenta(req.params.id_venta);
+        const v_productos = await venta_productosQuery.getVenta_ProductoByIdVenta(req.params.id_venta);
         if (!v_productos || v_productos.length === 0) {
             return res.status(404).json({ message: 'No se encontraron productos de venta para esta venta.' });
         }

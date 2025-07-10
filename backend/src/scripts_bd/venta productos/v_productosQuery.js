@@ -34,7 +34,7 @@ async function getVenta_ProductoByIdProducto(id_producto) {
 async function getVenta_ProductoByIdVenta(id_venta) {
     try {
         const response = await dbClient.query('SELECT * FROM Venta_Productos WHERE id_venta = $1;', [id_venta]);
-        return response.rows[0] || null;
+        return response.rows || null;
     } catch (error) {
         console.error('Error al obtener venta de producto por ID de venta:', error);
         throw new Error('No se pudo obtener la venta de producto');
