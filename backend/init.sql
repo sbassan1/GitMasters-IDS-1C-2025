@@ -72,7 +72,7 @@ INSERT INTO Sedes (nombre, horarios, dias_abiertos, direccion, dias_restock, tel
 
 INSERT INTO Usuarios (nombre, email, contrasena, cumpleanos, fecha_inicio)
 VALUES
-  ('Admin', 'admin@admin.com', 'admin', '2025-07-2', '2025-07-2')
+  ('Admin', 'admin@admin.com', 'admin', '2025-07-2', '2025-07-2');
 
 
 INSERT INTO Usuarios (nombre, email, contrasena, cumpleanos, fecha_inicio)
