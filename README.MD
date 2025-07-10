@@ -42,3 +42,9 @@ Trabajo práctico grupal para la materia **Introducción al Desarrollo de Softwa
         http://127.0.0.1:3001/frontend/html/user/main_user.html
 
         http://127.0.0.1:3000/frontend/html/user/main_user.html
+
+
+
+O alternativamente puedes utilizar:
+
+https://gitmasters-ids-1c-2025-1-front.onrender.com/html/user/index.html
