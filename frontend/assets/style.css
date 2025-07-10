@@ -94,6 +94,13 @@ body {
   z-index: 0;
 }
 
+@media (max-width: 1120px) {
+  .custom-device-left,
+  .custom-device-right {
+    display: none !important;
+  }
+}
+
 .light-prod-box p, .light-prod-box h2, .dark-prod-box p, .dark-prod-box h2 {
     color: black;
 }

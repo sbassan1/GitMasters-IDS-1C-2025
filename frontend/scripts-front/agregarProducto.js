@@ -196,25 +196,25 @@ function validarFormulario() {
 
 // Subir imagen
 async function subirImagen(archivo) {
-  const formData = new FormData()
-  formData.append("imagen", archivo)
+  const formData = new FormData(form); // Usa el formData del formulario
+  formData.set("imagen", archivo); // Asegura que la imagen sea la correcta
 
   try {
     const response = await fetch("http://localhost:3000/api/v1/upload-imagen", {
       method: "POST",
       body: formData,
-    })
+    });
 
     if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.error || "Error al subir imagen")
+      const error = await response.json();
+      throw new Error(error.error || "Error al subir imagen");
     }
 
-    const resultado = await response.json()
-    return resultado.rutaImagen
+    const resultado = await response.json();
+    return resultado.rutaImagen;
   } catch (error) {
-    console.error("Error al subir imagen:", error)
-    throw error
+    console.error("Error al subir imagen:", error);
+    throw error;
   }
 }
 
@@ -261,8 +261,8 @@ async function manejarEnvioFormulario(event) {
 
   try {
     // 1. Subir imagen
-    const archivoImagen = imagenInput.files[0]
-    const rutaImagen = await subirImagen(archivoImagen)
+    const archivoImagen = imagenInput.files[0];
+    const rutaImagen = await subirImagen(archivoImagen);
 
     // 2. Preparar datos del producto
     const datosProducto = {
@@ -270,7 +270,7 @@ async function manejarEnvioFormulario(event) {
       descripcion: document.getElementById("descripcion").value.trim(),
       stock: Number.parseInt(document.getElementById("stock").value),
       precio_venta: Number.parseInt(document.getElementById("precio").value),
-      tipo: document.getElementById("tipo").value,
+      tipo: document.getElementById("tipo").value, // Asegúrate de que el tipo se obtenga del formulario
       imagen: rutaImagen,
       sede_id: Number.parseInt(document.getElementById("sede").value),
     }
