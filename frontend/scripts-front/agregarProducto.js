@@ -69,7 +69,7 @@ function manejarCambioImagen(event) {
   const file = event.target.files[0]
 
   if (!file) {
-    imagenPreview.src = "/placeholder.svg?height=200&width=200"
+    imagenPreview.src = "images/placeholder.svg?height=200&width=200"
     imagenSubida = null
     return
   }
@@ -286,7 +286,7 @@ async function manejarEnvioFormulario(event) {
 
     // 5. Limpiar formulario
     form.reset()
-    imagenPreview.src = "/placeholder.svg?height=200&width=200"
+    imagenPreview.src = "../images/placeholder.svg?height=200&width=200"
 
     // 6. Redirigir después de un momento
     setTimeout(() => {

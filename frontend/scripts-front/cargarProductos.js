@@ -7,7 +7,7 @@ let productosFiltrados = [];
 
 // Función para construir URL de imagen de manera segura
 function construirUrlImagen(rutaImagen) {
-    if (!rutaImagen) return '/placeholder.svg?height=225&width=100%';
+    if (!rutaImagen) return 'images/placeholder.svg?height=225&width=100%';
 
     // Remover "backend/src/" del path
     const imagenPath = rutaImagen.replace('backend/src/', '');
@@ -33,7 +33,7 @@ async function verificarImagen(url) {
 async function crearTarjetaProducto(producto) {
     const imagenUrl = construirUrlImagen(producto.imagen);
     const imagenExiste = await verificarImagen(imagenUrl);
-    const imagenFinal = imagenExiste ? imagenUrl : '/placeholder.svg?height=225&width=100%';
+    const imagenFinal = imagenExiste ? imagenUrl : 'images/placeholder.svg?height=225&width=100%';
 
     return `
         <div class="col" data-tipo="${producto.tipo}">
@@ -42,7 +42,7 @@ async function crearTarjetaProducto(producto) {
                      class="card-img-top" 
                      alt="${producto.nombre}"
                      style="height: 225px; object-fit: cover;"
-                     onerror="this.src='/placeholder.svg?height=225&width=100%'">
+                     onerror="this.src='images/placeholder.svg?height=225&width=100%'">
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">${producto.nombre}</h5>
                     <p class="card-text flex-grow-1">${producto.descripcion}</p>
