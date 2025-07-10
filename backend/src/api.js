@@ -16,7 +16,7 @@ const port = 3000
 // Configurar CORS para permitir requests desde el frontend
 app.use(
   cors({
-    origin: ["http://localhost:5500", "http://127.0.0.1:5500", "http://localhost:3000", "http://127.0.0.1:3000", "http://127.0.0.1:3001"],
+    origin: ["http://localhost:5500", "http://127.0.0.1:5500", "http://localhost:3000", "http://127.0.0.1:3000", "http://127.0.0.1:3001", "https://gitmasters-ids-1c-2025.onrender.com/"],
     credentials: true,
   }),
 )
