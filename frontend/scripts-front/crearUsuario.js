@@ -104,7 +104,7 @@ async function registrarUsuario(userData) {
             registerForm.reset();
 
             setTimeout(() => {
-                window.location.href = "login.html"
+                window.location.href = "/html/autenticacion/login.html"
             }, 2000);
         } else {
             let mensajeError = "Error al crear la cuenta"
