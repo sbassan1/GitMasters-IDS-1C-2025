@@ -4,16 +4,31 @@
   "description": "",
   "main": "src/api.js",
   "scripts": {
+<<<<<<< HEAD
     "start": "node src/api.js",
     "dev": "nodemon src/api.js"
+=======
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd ./src && nodemon api.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+>>>>>>> 482ea1dca286923f6c0810359e626997363aeb1f
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.50.3",
     "cors": "^2.8.5",
+<<<<<<< HEAD
     "express": "^4.18.2",
     "multer": "^1.4.5-lts.1",
     "pg": "^8.11.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
+=======
+    "dotenv": "^17.1.0",
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
+>>>>>>> 482ea1dca286923f6c0810359e626997363aeb1f
   }
 }
