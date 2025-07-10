@@ -1,52 +1,3 @@
-<<<<<<< HEAD
-=======
-CREATE TABLE Sedes (
-    id SERIAL PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL UNIQUE, -- formato: 'Sede 1'
-    horarios VARCHAR(20) NOT NULL, -- formato: '08:00-18:00'
-    dias_abiertos VARCHAR(30), -- formato: 'DDD-DDD-DDD-DDD ó (DDD-DDD) si son dias seguidos'
-    direccion VARCHAR(50) NOT NULL,
-    dias_restock VARCHAR(30) NOT NULL, -- formato: 'D,D,D,D,D'
-    telefono VARCHAR(40) NOT NULL -- 11 5412-6738
-);
-
-CREATE TABLE Productos (
-    id SERIAL PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
-    descripcion VARCHAR(60) NOT NULL,
-    stock INT NOT NULL DEFAULT 0,
-    precio_venta INT NOT NULL,
-    tipo VARCHAR(20) NOT NULL,
-    imagen VARCHAR(100),
-    sede_id INT REFERENCES Sedes(id) ON DELETE SET NULL
-);
-
-CREATE TABLE Usuarios (
-    id SERIAL PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL UNIQUE,
-    contrasena VARCHAR(50) NOT NULL,
-    cumpleanos DATE,
-    fecha_inicio DATE NOT NULL
-);
-
-CREATE TABLE Ventas (
-    id SERIAL PRIMARY KEY,
-    valor INT NOT NULL DEFAULT 0,
-    fecha DATE NOT NULL,
-    id_usuario INT REFERENCES Usuarios(id) ON DELETE SET NULL,
-    metodo_pago VARCHAR(20)  
-);
-
-CREATE TABLE Venta_Productos (
-    id SERIAL PRIMARY KEY,
-    id_venta INT REFERENCES Ventas(id) ON DELETE CASCADE,
-    id_producto INT REFERENCES Productos(id) ON DELETE SET NULL,
-    cantidad INT NOT NULL
-);
-
-
->>>>>>> 482ea1dca286923f6c0810359e626997363aeb1f
 INSERT INTO Sedes (nombre, horarios, dias_abiertos, direccion, dias_restock, telefono) VALUES
 (
   'Sede Paseo Colón',
@@ -73,10 +24,25 @@ INSERT INTO Sedes (nombre, horarios, dias_abiertos, direccion, dias_restock, tel
   '11-4756-3312'
 );
 
+-- ESTE USUARIO VA A SER EL ADMIN!
 INSERT INTO Usuarios (nombre, email, contrasena, cumpleanos, fecha_inicio)
 VALUES
-  ('Admin', 'admin@admin.com', 'admin', '2025-07-2', '2025-07-2')
+  ('Admin', 'admin@admin.com', 'admin', '2025-07-2', '2025-07-2');
 
+
+INSERT INTO Usuarios (nombre, email, contrasena, cumpleanos, fecha_inicio)
+VALUES
+  ('Ana Torres', 'ana.torres@email.com', 'ana123', '1990-05-12', '1990-05-12'),
+  ('Luis Gómez', 'luis.gomez@email.com', 'luis456', '1985-11-23', '1990-05-12'),
+  ('María Pérez', 'maria.perez@email.com', 'maria789', '1988-03-17', '1990-05-12');
+
+
+INSERT INTO Sedes (nombre ,horarios, dias_abiertos, direccion, dias_restock, telefono)
+VALUES
+  ('Sede Belgrano','08:00-18:00', 'LUN-MAR-MIE-JUE-VIE', 'Av. Siempre Viva 742', 'LUN,MIE,VIER', '11 5412-6738');
+
+
+-- ACCESORIOS
 INSERT INTO Productos (nombre, descripcion, stock, precio_venta, tipo, imagen, sede_id) VALUES
 ('Bungee Mouse Razer', 'Soporte organizador de cable para mouse gaming Razer', 25, 8500, 'accesorio', 'backend/src/assets/accesorio/accesorio-bungee mouse-razer.png', 1),
 ('HA300 Scepter Pro', 'Soporte para auriculares gaming Redragon HA300 Scepter Pro', 30, 12000, 'accesorio', 'backend/src/assets/accesorio/accesorio-ha300 scepter pro-redragon.png', 1),
@@ -110,36 +76,3 @@ INSERT INTO Productos (nombre, descripcion, stock, precio_venta, tipo, imagen, s
 ('Kumara', 'Teclado mecánico gaming Redragon Kumara retroiluminado', 50, 25000, 'teclado', 'backend/src/assets/teclado/teclado-kumara-redragon.png', 1),
 ('Pro RGB', 'Teclado mecánico gaming Logitech Pro RGB para esports', 35, 48000, 'teclado', 'backend/src/assets/teclado/teclado-pro rgb-logitech.jpg', 1);
 
--- Insertar 3 ventas con productos
-
--- VENTA 1: Ana Torres compra setup básico gaming
-INSERT INTO Ventas (valor, fecha, id_usuario, metodo_pago) VALUES 
-(65000, '2025-07-01', 2, 'tarjeta_credito');
-
--- Productos de la venta 1 (ID de venta será 1)
-INSERT INTO Venta_Productos (id_venta, id_producto, cantidad) VALUES 
-(1, 21, 1), -- Teclado Kumara - 25000
-(1, 15, 1), -- Mouse G203 Lightsync - 22000  
-(1, 12, 1); -- Auriculares Lamia2 H320 - 18000
-
--- VENTA 2: Luis Gómez compra equipo premium
-INSERT INTO Ventas (valor, fecha, id_usuario, metodo_pago) VALUES 
-(198000, '2025-07-02', 3, 'transferencia');
-
--- Productos de la venta 2 (ID de venta será 2)
-INSERT INTO Venta_Productos (id_venta, id_producto, cantidad) VALUES 
-(2, 17, 1), -- Teclado Apex Pro TKL 3 - 95000
-(2, 14, 1), -- Mouse G Pro X Superlight - 65000
-(2, 22, 1), -- Teclado Pro RGB - 48000 (pero solo cuenta 38000 para llegar al total)
-(2, 1, 1);  -- Bungee Mouse Razer - 8500 (accesorio)
-
--- VENTA 3: María Pérez compra setup streaming
-INSERT INTO Ventas (valor, fecha, id_usuario, metodo_pago) VALUES 
-(128000, '2025-07-03', 4, 'efectivo');
-
--- Productos de la venta 3 (ID de venta será 3)
-INSERT INTO Venta_Productos (id_venta, id_producto, cantidad) VALUES 
-(3, 3, 1), -- Micrófono Blue Snowball - 35000
-(3, 5, 1), -- Stream Deck SS550 - 45000
-(3, 6, 1), -- Webcam Brio 105 - 28000
-(3, 9, 1); -- Auriculares Barracuda X Black - 45000
