@@ -59,6 +59,19 @@ body {
     color: var(--white);
 }
 
+.btn-borrar {
+    font-size: 20px;
+    background-color: red;
+    border-color: red;
+    color: var(--white);
+}
+
+.btn-borrar:hover {
+    background-color: rgb(126, 0, 0);
+    border-color: rgb(126, 0, 0);
+    color: var(--white);
+}
+
 .custom-device-left {
   position: absolute;
   top: -6%;
@@ -79,6 +92,13 @@ body {
   transform: rotate(30deg);
   opacity: 0.6;
   z-index: 0;
+}
+
+@media (max-width: 1120px) {
+  .custom-device-left,
+  .custom-device-right {
+    display: none !important;
+  }
 }
 
 .light-prod-box p, .light-prod-box h2, .dark-prod-box p, .dark-prod-box h2 {

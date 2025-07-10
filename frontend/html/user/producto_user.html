@@ -30,10 +30,10 @@
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="productos_user.html" class="nav-link px-4 li-header-black">Productos</a></li>
                 <li><a href="sucursales_user.html" class="nav-link px-4 li-header-black">Sucursales</a></li>
-                <li><a href="contacto_user.html" class="nav-link px-4 li-header-black">Contacto</a></li>
             </ul>
 
             <div class="col-md-3 text-end">
+                <div id="saludo-usuario"></div>
                 <div class="dropdown">
                     <button id="toggleTheme" class="btn btn-link">
                         <i id="themeIcon" class="bi bi-brightness-high-fill user-icon"></i>
@@ -45,8 +45,7 @@
                     </button>
 
                     <ul class="dropdown-menu" aria-labelledby="dropdownCart">
-                        <li><a class="dropdown-item" href="#">Mi Carrito</a></li>
-                        <li><a class="dropdown-item" href="#">Ver Productos</a></li>
+                        <li><a class="dropdown-item" href="./carrito_user.html">Mi Carrito</a></li>
                     </ul>
 
                     <button class="btn btn-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
@@ -100,8 +99,7 @@
                                 </div>
                             </div>
 
-                            <!-- Añadir al carro -->
-                            <a href="#" class="btn btn-full-violet mt-5" style="width: 100% !important;">Añadir al
+                            <a href="#" class="btn btn-full-violet mt-5 boton-compra" style="width: 100% !important;">Añadir al
                                 carrito</a>
                         </div>
                     </div>
@@ -120,6 +118,21 @@
 
         <!-- Script modo oscuro / claro -->
         <script src="../../scripts-front/modoOscuroClaro.js"></script>
+
+        <!-- Script para añadir producto al carrito -->
+        <script src="../../scripts-front/añadirCarrito.js"></script>
+
+        <script>
+            const textoUsuario = document.getElementById('saludo-usuario')
+            const usuario = JSON.parse(sessionStorage.getItem("usuarioActual"));
+
+            if(!usuario){
+                textoUsuario.textContent = "Sesión no iniciada, ingresa aquí!"
+            }else{
+                textoUsuario.textContent = `Bienvenido, ${usuario.nombre}`;
+            }
+        </script>
+
     </body>
 
 </html>

@@ -3,9 +3,12 @@ const usuariosAPI = require("./scripts_bd/usuarios/usuariosAPI") // Importar
 const sedesAPI = require("./scripts_bd/sedes/sedesAPI") // Importar
 const ventasAPI = require("./scripts_bd/ventas/ventasAPI") // Importar
 const v_productosAPI = require("./scripts_bd/venta productos/v_productosAPI") // Importar
+
 const express = require("express")
 const cors = require("cors")
 const path = require("path")
+const multer = require("multer")
+const fs = require("fs")
 
 const app = express()
 const port = 3000
@@ -21,6 +24,57 @@ app.use(
 // Middleware para servir archivos estáticos (imágenes)
 app.use("/assets", express.static(path.join(__dirname, "assets")))
 
+// Tipos de productos válidos
+const tiposProductosValidos = ["accesorio", "auriculares", "mouse", "teclado"]
+
+// Configurar multer para subida de archivos
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // Obtener el tipo de producto del body de la request
+    const tipoProducto = req.body.tipo
+
+    // Validar que el tipo sea válido
+    if (!tipoProducto || !tiposProductosValidos.includes(tipoProducto)) {
+      return cb(new Error("Tipo de producto no válido"), null)
+    }
+
+    // Crear la ruta basada en el tipo de producto
+    const uploadPath = path.join(__dirname, "assets", tipoProducto)
+
+    // Crear directorio si no existe
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true })
+    }
+
+    cb(null, uploadPath)
+  },
+  filename: (req, file, cb) => {
+    // Generar nombre único para el archivo
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9)
+    const extension = path.extname(file.originalname)
+    const tipoProducto = req.body.tipo
+
+    // Formato: tipo-producto-timestamp-random.ext
+    cb(null, `${tipoProducto}-producto-${uniqueSuffix}${extension}`)
+  },
+})
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB límite
+  },
+  fileFilter: (req, file, cb) => {
+    // Verificar que sea una imagen
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true)
+    } else {
+      cb(new Error("Solo se permiten archivos de imagen"), false)
+    }
+  },
+})
+
+app.use(express.json()) // Importante para recibir JSON
 
 app.get("/", (req, res) => {
   res.send("Hello World!")
@@ -29,8 +83,34 @@ app.get("/", (req, res) => {
 const dbClient = require("./database")
 
 // Prefijos de las API
-
 app.use(express.json()) // Importante para recibir JSON
+
+// Endpoint para subir imágenes organizadas por tipo
+app.post("/api/v1/upload-imagen", upload.single("imagen"), (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: "No se subió ningún archivo" })
+    }
+
+    if (!req.body.tipo) {
+      return res.status(400).json({ error: "Tipo de producto es requerido" })
+    }
+
+    // Construir la ruta relativa que se guardará en la base de datos
+    const rutaImagen = `backend/src/assets/${req.body.tipo}/${req.file.filename}`
+
+    res.json({
+      mensaje: "Imagen subida exitosamente",
+      rutaImagen: rutaImagen,
+      nombreArchivo: req.file.filename,
+      tipoProducto: req.body.tipo,
+      carpeta: req.body.tipo,
+    })
+  } catch (error) {
+    console.error("Error al subir imagen:", error)
+    res.status(500).json({ error: error.message || "Error al subir la imagen" })
+  }
+})
 
 app.use("/api/v1/productos", productosAPI)
 app.use("/api/v1/usuarios", usuariosAPI)

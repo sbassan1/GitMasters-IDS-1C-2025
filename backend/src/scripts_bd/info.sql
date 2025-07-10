@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 CREATE TABLE Sedes (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL UNIQUE, -- formato: 'Sede 1'
@@ -44,6 +45,8 @@ CREATE TABLE Venta_Productos (
 );
 
 
+=======
+>>>>>>> b9460e6ff0bd4c00633d5e0688990a1c365a4e35
 INSERT INTO Sedes (nombre, horarios, dias_abiertos, direccion, dias_restock, telefono) VALUES
 (
   'Sede Paseo Colón',
