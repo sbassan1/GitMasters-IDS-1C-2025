@@ -64,38 +64,76 @@
 
 
         <!-- Container de productos en la cesta -->
-        <div class="container d-flex flex-column align-items-center mt-5">
-            <ul class="list-group carrito-lista w-100">
-                <!-- Placeholder de producto -->
-                <li class="list-group-item d-flex justify-content-between p-4 align-items-center producto-carrito">
-                    <div class="d-flex align-items-center">
-                        <img src="" alt="Producto" class="img-thumbnail me-3" style="width: 80px; height: 80px; object-fit: cover;">
-                        <div>
-                            <h6 class="mb-1">Nombre del Producto</h6>
-                            <small class="text-muted">Cantidad: 2</small>
-                        </div>
+        <div class="container mt-5">
+            <!-- Mensaje y botón -->
+            <div id="mensaje" class="alert d-none mt-5" role="alert"></div>
+
+            <h4> Mi carrito</h4>
+                <div class="row w-100">
+                    <!-- Listado de productos -->
+                    <div class="col-md-8">
+                        <ul class="list-group carrito-lista w-100">
+                            <!-- Producto -->
+                            <li class="list-group-item d-flex justify-content-between p-4 align-items-center producto-carrito">
+                                <div class="d-flex align-items-center">
+                                    <img src="" alt="Producto" class="img-thumbnail me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                                    <div>
+                                        <h6 class="mb-1">Nombre del Producto</h6>
+                                        <small class="text-muted">Cantidad: 2</small>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-danger eliminar-producto">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </li>
+                        </ul>
                     </div>
-                    <button class="btn btn-sm btn-danger eliminar-producto">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </li>
-            </ul>
 
-            <!-- Menú desplegable -->
-            <div class="d-flex justify-content-center w-100">
-                <select class="form-select mt-5 w-80" aria-label="Forma de pago">
-                    <option id="forma-pago" selected> Efectivo </option>
-                    <option value="1">Efectivo</option>
-                    <option value="2">Crédito</option>
-                    <option value="3">Débito</option>
-                    <option value="4">QR</option>
-                </select>
+                    <div class="col-md-4">
+                        <div class="card p-3">
+                            <h5 class="mb-3">Detalles de compra</h5>
+          
+                            <!-- Selector de forma de pago -->
+                            <div class="mb-3">
+                                <label for="formaPago" class="form-label">Forma de pago</label>
+                                <select id="forma-pago" class="form-select w-80" aria-label="Forma de pago">
+                                    <option value="Efectivo" selected>Efectivo</option>
+                                    <option value="Crédito">Crédito</option>
+                                    <option value="Débito">Débito</option>
+                                    <option value="QR">QR</option>
+                                </select>
+                            </div>
+
+                            <!-- Cupón de descuento -->
+                            <div class="mb-3">
+                                <label for="cupon" class="form-label">Cupón de descuento</label>
+                                <div class="input-group">
+                                    <input type="text" id="cupon" class="form-control" placeholder="Código de cupón">
+                                    <button class="btn btn-full-violet btn-sm" type="button" id="validarCupon">
+                                        <i class="bi bi-check"></i>
+                                    </button>
+                                </div>
+                            </div>
+          
+                            <div>
+                                <div class="d-flex justify-content-between">
+                                    <span><strong>Subtotal:</strong></span>
+                                    <span id="subtotal">$0.00</span>
+                                </div>
+            
+                                <div class="d-flex justify-content-between">
+                                    <span><strong>Total:</strong></span>
+                                    <span id="total">$0.00</span>
+                                </div>
+                            </div>
+
+                        <button id="btn-comprar-carrito" class="btn btn-full-violet mt-3 w-100 boton-comprar-carrito">Comprar</button>
+                    </div>
+                </div>
             </div>
-
-            <div id="mensaje" class="alert d-none" role="alert"></div>
-
-            <!-- Boton para comprar -->
-            <button id="btn-comprar-carrito" class="btn btn-full-violet mt-5 w-100 boton-comprar-carrito">Comprar</button>
+        </div>
+          
+        <!-- <button id="btn-comprar-carrito" class="btn btn-full-violet mt-4 w-100 boton-comprar-carrito">Comprar</button> -->
         </div>
 
         <!-- Bootstrap iconos -->

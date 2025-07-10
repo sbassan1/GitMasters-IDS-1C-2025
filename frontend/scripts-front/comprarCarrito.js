@@ -11,14 +11,15 @@ const month = String(today.getMonth() + 1).padStart(2, '0'); // 01 a 12
 const year = today.getFullYear();                            // 2025
 const fechaHoy = `${year}-${month}-${day}`;
 
-
+const subtotalElement = document.getElementById("subtotal");
+const totalElement = document.getElementById("total");
+const botonCupon = document.getElementById("validarCupon");
 
 function mostrarMensaje(mensaje, tipo) {
     mensajeDiv.className = `alert alert-${tipo}`;
     mensajeDiv.textContent = mensaje;
     mensajeDiv.classList.remove("d-none");
 }
-
 
 async function comprarCarrito() {
 
@@ -56,7 +57,6 @@ async function comprarCarrito() {
 
 
 async function crearVentaProducto(dataProductoCesta) {
-        
     try{
         const res = await fetch("http://localhost:3000/api/v1/ventas_productos/", {
             method: "POST",
@@ -121,4 +121,71 @@ async function crearVenta(dataVenta) {
     }
 }
 
+function getProductosCarrito() {
+    return JSON.parse(sessionStorage.getItem("carrito")) || [];
+}
+
+document.addEventListener('click', function(event) {
+    if (event.target.closest('.eliminar-producto')) {
+        calcularSubtotal();
+    }
+});
+
+botonCupon.addEventListener("click", () => {
+    validarCupon();
+});
+
+function validarCupon() {
+    const codigoCupon = document.getElementById("cupon").value;
+  
+    if (codigoCupon === "APROBADOS10" || codigoCupon === "aprobados10" || codigoCupon === "Aprobados10") {
+        cuponValido = true;
+        mostrarMensaje("Cupón válido! 10% de descuento aplicado", "success");
+        calcularTotal();
+    } else {
+        cuponValido = false;
+        mostrarMensaje("Cupón inválido", "danger");
+        calcularTotal();
+    }
+}
+
+function calcularTotal() {
+    total = subtotal;
+    const codigoCupon = document.getElementById("cupon").value;
+  
+    if (codigoCupon === "Aprobados10" || codigoCupon === "APROBADOS10" || codigoCupon === "aprobados10") {
+        descuentoAplicado = subtotal * 0.1;
+        total = subtotal - descuentoAplicado;
+    } else {
+        descuentoAplicado = 0;
+    }
+  
+    actualizarValor(total, subtotal);
+}
+
+function calcularSubtotal() {
+    subtotal = 0;
+
+    console.log(getProductosCarrito())
+
+    getProductosCarrito().forEach(producto => {
+        const precioNumber = Number(producto.precio.replace(/,/g, ''));
+        subtotal += precioNumber * producto.cantidad;
+    });
+
+    calcularTotal();
+    actualizarValor(subtotal, subtotal);
+}
+  
+function actualizarValor(total, subtotal) {
+    if (subtotalElement) {
+        subtotalElement.textContent = `$${subtotal.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+    }
+      
+    if (totalElement) {
+        totalElement.textContent = `$${total.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+    }
+}
+
+calcularSubtotal();
 comprarCarrito();
