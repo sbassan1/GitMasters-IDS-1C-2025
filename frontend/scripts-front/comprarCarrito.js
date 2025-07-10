@@ -179,11 +179,17 @@ function calcularSubtotal() {
   
 function actualizarValor(total, subtotal) {
     if (subtotalElement) {
-        subtotalElement.textContent = `$${subtotal.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+        subtotalElement.textContent = `$${subtotal.toLocaleString("en-US", {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        })}`;
     }
-      
-    if (totalElement) {
-        totalElement.textContent = `$${total.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+    
+      if (totalElement) {
+        totalElement.textContent = `$${total.toLocaleString("en-US", {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        })}`;
     }
 }
 
