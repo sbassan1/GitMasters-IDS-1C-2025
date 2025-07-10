@@ -1,8 +1,10 @@
+const siteURL = "https://gitmasters-ids-1c-2025.onrender.com/"
+
 const container = document.querySelector('.ventas-lista');
 
 async function cargarProductos() {
     try {
-        const response = await fetch('http://localhost:3000/api/v1/ventas/');
+        const response = await fetch(siteURL + 'api/v1/ventas/');
         if (!response.ok) throw new Error('Error al cargar ventas');
 
         const todasLasVentas = await response.json();
@@ -18,14 +20,14 @@ async function cargarVentasProductos(ventas) {
     for (const venta of ventas) {
         try {
 
-            const usuarioResponse = await fetch(`http://localhost:3000/api/v1/usuarios/id/${encodeURIComponent(venta.id_usuario)}`);
+            const usuarioResponse = await fetch(siteURL + `api/v1/usuarios/id/${encodeURIComponent(venta.id_usuario)}`);
             const usuario = await usuarioResponse.json();
 
-            const ventaProductosResponse = await fetch(`http://localhost:3000/api/v1/ventas_productos/id_venta/${venta.id}`);
+            const ventaProductosResponse = await fetch(siteURL + `api/v1/ventas_productos/id_venta/${venta.id}`);
             const ventaProductos = await ventaProductosResponse.json();
 
             for (const ventaProducto of ventaProductos) {
-                const productoResponse = await fetch(`http://localhost:3000/api/v1/productos/id/${encodeURIComponent(ventaProducto.id_producto)}`);
+                const productoResponse = await fetch(siteURL + `api/v1/productos/id/${encodeURIComponent(ventaProducto.id_producto)}`);
                 const producto = await productoResponse.json();
 
                 const li = document.createElement("li");

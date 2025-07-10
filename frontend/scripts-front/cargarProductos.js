@@ -1,3 +1,6 @@
+const siteURL = "https://gitmasters-ids-1c-2025.onrender.com/"
+
+
 // Variables globales
 let todosLosProductos = [];
 let productosFiltrados = [];
@@ -13,7 +16,7 @@ function construirUrlImagen(rutaImagen) {
     const partesRuta = imagenPath.split('/');
     const rutaCodificada = partesRuta.map(parte => encodeURIComponent(parte)).join('/');
 
-    return `http://localhost:3000/${rutaCodificada}`;
+    return siteURL + `${rutaCodificada}`;
 }
 
 // Función para verificar si una imagen existe
@@ -63,7 +66,7 @@ async function cargarProductos() {
     const container = document.getElementById('productos-container');
 
     try {
-        const response = await fetch('http://localhost:3000/api/v1/productos/');
+        const response = await fetch(siteURL + 'api/v1/productos/');
 
         if (!response.ok) {
             throw new Error('Error al cargar productos');

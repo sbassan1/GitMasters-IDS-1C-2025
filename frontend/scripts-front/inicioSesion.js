@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/v1/usuarios/email/${encodeURIComponent(email)}`);
+      const response = await fetch(siteURL + `api/v1/usuarios/email/${encodeURIComponent(email)}`);
 
       if (!response.ok) {
         throw new Error('Error al conseguir usuario!');

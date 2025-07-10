@@ -1,3 +1,5 @@
+const siteURL = "https://gitmasters-ids-1c-2025.onrender.com/"
+
 // Función para obtener el ID del producto desde la URL
 function obtenerIdProducto() {
     const params = new URLSearchParams(window.location.search);
@@ -15,7 +17,7 @@ function construirUrlImagen(rutaImagen) {
     const partesRuta = imagenPath.split('/');
     const rutaCodificada = partesRuta.map(parte => encodeURIComponent(parte)).join('/');
 
-    return `http://localhost:3000/${rutaCodificada}`;
+    return siteURL + `${rutaCodificada}`;
 }
 
 // Función para verificar si una imagen existe
@@ -39,7 +41,7 @@ async function cargarProducto() {
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/api/v1/productos/id/${idProducto}`);
+        const response = await fetch(siteURL + `api/v1/productos/id/${idProducto}`);
 
         if (!response.ok) {
             throw new Error('Producto no encontrado');

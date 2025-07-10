@@ -49,7 +49,7 @@ function marcarDiasEnCheckboxes(diasString, tipo) {
 
 window.editarSede = async (sedeId) => {
     try {
-        const res = await fetch(`http://localhost:3000/api/v1/sedes/id/${sedeId}`)
+        const res = await fetch(siteURL + `api/v1/sedes/id/${sedeId}`)
   
         if (!res.ok) {
             console.log(res);
@@ -292,7 +292,7 @@ function mostrarMensajeSede(mensaje, tipo) {
 async function guardarSede(sedeData) {
     try {
         // si mododEdicion es true, se hace un put con el id de la sede. sino, hace un post (creacion de sede)
-        const url = modoEdicion ? `http://localhost:3000/api/v1/sedes/${sedeEditandoId}` : siteURL+"api/v1/sedes/";
+        const url = modoEdicion ? siteURL + `api/v1/sedes/${sedeEditandoId}` : siteURL+"api/v1/sedes/";
         const method = modoEdicion ? "PUT" : "POST";
   
         const res = await fetch(url, {
