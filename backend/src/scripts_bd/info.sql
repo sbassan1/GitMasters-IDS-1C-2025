@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 CREATE TABLE Sedes (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL UNIQUE, -- formato: 'Sede 1'
@@ -45,8 +44,6 @@ CREATE TABLE Venta_Productos (
 );
 
 
-=======
->>>>>>> b9460e6ff0bd4c00633d5e0688990a1c365a4e35
 INSERT INTO Sedes (nombre, horarios, dias_abiertos, direccion, dias_restock, telefono) VALUES
 (
   'Sede Paseo Colón',
@@ -109,37 +106,3 @@ INSERT INTO Productos (nombre, descripcion, stock, precio_venta, tipo, imagen, s
 ('K70 Pro Mini', 'Teclado mecánico compacto Corsair K70 Pro Mini RGB', 30, 58000, 'teclado', 'backend/src/assets/teclado/teclado-k70 pro mini-corsair.jpg', 1),
 ('Kumara', 'Teclado mecánico gaming Redragon Kumara retroiluminado', 50, 25000, 'teclado', 'backend/src/assets/teclado/teclado-kumara-redragon.png', 1),
 ('Pro RGB', 'Teclado mecánico gaming Logitech Pro RGB para esports', 35, 48000, 'teclado', 'backend/src/assets/teclado/teclado-pro rgb-logitech.jpg', 1);
-
--- Insertar 3 ventas con productos
-
--- VENTA 1: Ana Torres compra setup básico gaming
-INSERT INTO Ventas (valor, fecha, id_usuario, metodo_pago) VALUES 
-(65000, '2025-07-01', 2, 'tarjeta_credito');
-
--- Productos de la venta 1 (ID de venta será 1)
-INSERT INTO Venta_Productos (id_venta, id_producto, cantidad) VALUES 
-(1, 21, 1), -- Teclado Kumara - 25000
-(1, 15, 1), -- Mouse G203 Lightsync - 22000  
-(1, 12, 1); -- Auriculares Lamia2 H320 - 18000
-
--- VENTA 2: Luis Gómez compra equipo premium
-INSERT INTO Ventas (valor, fecha, id_usuario, metodo_pago) VALUES 
-(198000, '2025-07-02', 3, 'transferencia');
-
--- Productos de la venta 2 (ID de venta será 2)
-INSERT INTO Venta_Productos (id_venta, id_producto, cantidad) VALUES 
-(2, 17, 1), -- Teclado Apex Pro TKL 3 - 95000
-(2, 14, 1), -- Mouse G Pro X Superlight - 65000
-(2, 22, 1), -- Teclado Pro RGB - 48000 (pero solo cuenta 38000 para llegar al total)
-(2, 1, 1);  -- Bungee Mouse Razer - 8500 (accesorio)
-
--- VENTA 3: María Pérez compra setup streaming
-INSERT INTO Ventas (valor, fecha, id_usuario, metodo_pago) VALUES 
-(128000, '2025-07-03', 4, 'efectivo');
-
--- Productos de la venta 3 (ID de venta será 3)
-INSERT INTO Venta_Productos (id_venta, id_producto, cantidad) VALUES 
-(3, 3, 1), -- Micrófono Blue Snowball - 35000
-(3, 5, 1), -- Stream Deck SS550 - 45000
-(3, 6, 1), -- Webcam Brio 105 - 28000
-(3, 9, 1); -- Auriculares Barracuda X Black - 45000
